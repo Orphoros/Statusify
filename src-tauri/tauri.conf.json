@@ -1,0 +1,102 @@
+{
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist",
+    "withGlobalTauri": false
+  },
+  "package": {
+    "productName": "Statusify",
+    "version": "0.0.1"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      },
+      "window": {
+        "show": true,
+        "startDragging": true,
+        "all": true
+      },
+      "dialog": {
+        "message": true
+      },
+      "notification": {
+        "all": true
+      },
+      "fs": {
+        "scope": ["$RESOURCE/images/*"],
+        "readFile": true,
+        "readDir": true
+      },
+      "path": {
+        "all": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "category": "Utility",
+      "copyright": "Copyright © 2023 Orphoros",
+      "publisher": "Orphoros",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "com.orphoros.statusify",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null,
+        "minimumSystemVersion": "10.13",
+        "license": "../LICENSE"
+      },
+      "resources": [
+        "images/*"
+      ],
+      "targets": "all",
+      "longDescription": "Graphical user interface for to set custom rich presence on Discord",
+      "shortDescription": "Custom rich presence for Discord",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://releases.myapp.com/{{target}}/{{arch}}/{{current_version}}"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEJDNENCRTgzRkUzNDY1QkMKUldTOFpUVCtnNzVNdkhQZEcwZzI0a1didVF2eVBCRnJMR3FqcHBTMzNhKzQ2STJuaDNrY1lCVEMK"
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 880,
+        "resizable": true,
+        "title": "Statusify",
+        "width": 1000,
+        "minHeight": 500,
+        "minWidth": 1000,
+        "visible": false
+      }
+    ]
+  }
+}
