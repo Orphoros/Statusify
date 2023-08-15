@@ -25,11 +25,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Release Changelog Builder
+      # for projects that use labels and PRs: https://github.com/mikepenz/release-changelog-builder-action
+      - name: Build Changelog
         id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@v4.0.0-rc07
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "changelog=- ADD CHANGELOG" >> $GITHUB_OUTPUT
 
       - name: Node.js setup
         uses: actions/setup-node@v3
