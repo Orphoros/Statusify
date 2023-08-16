@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "notes": "Various bugfixes and improvements",
+  "pub_date": "2023-08-15T14:08:48.460Z",
+  "platforms": {
+    "darwin-x86_64": {
+      "signature": "signature-string",
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify_x64.app.tar.gz"
+    },
+    "darwin-aarch64": {
+      "signature": "signature-string",
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify.darwin-aarch64.app.tar.gz"
+    },
+    "linux-x86_64": {
+      "signature": "signature-string",
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/statusify.linux-x86_64.tar.gz"
+    },
+    "windows-x86_64": {
+      "signature": "signature-string",
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify.windows-x86_64.zip"
+    }
+  }
+}
