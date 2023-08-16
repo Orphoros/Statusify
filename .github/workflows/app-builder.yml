@@ -7,20 +7,14 @@ on:
 
 jobs:
   release:
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            rust_target: x86_64-unknown-linux-gnu
-          - os: macos-latest
-            rust_target: x86_64-apple-darwin
-          - os: macos-latest
-            rust_target: aarch64-apple-darwin
-          - os: windows-latest
-            rust_target: x86_64-pc-windows-msvc
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
     runs-on: ${{ matrix.platform }}
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
