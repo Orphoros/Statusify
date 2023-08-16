@@ -2,10 +2,21 @@
   "name": "statusify",
   "private": true,
   "version": "0.0.1",
-  "author": "Orphoros",
+  "author": {
+    "name": "Orphoros",
+    "email": "contact@orphoros.com"
+  },
   "description": "Discord rich presence configurator",
   "license": "GPL-3.0",
   "type": "module",
+  "bugs": {
+    "url": "https://github.com/Orphoros/Statusify/issues"
+  },
+  "homepage": "https://github.com/Orphoros/Statusify#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Orphoros/Statusify.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
