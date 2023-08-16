@@ -98,6 +98,10 @@ export default function ImageOptionForm(prop: ImageOptionProps) {
 						<span className={`${largeImageTooltipHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>tooltip</span>
 					</div>
 				}
+				onClear={() => {
+					setLargeImageTooltip('');
+					setLargeImageTooltipEnabled(false);
+				}}
 				onChange={e => {
 					const {value} = e.target;
 					setLargeImageTooltip(value);
