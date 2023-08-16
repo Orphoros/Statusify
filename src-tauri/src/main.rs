@@ -15,22 +15,23 @@ struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
 
 #[tauri::command(rename_all = "camelCase")]
-fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>, system_state: State<SysInfo>) -> Result<(), String> {
-    info!("Called rpc start command");
-    debug!("Ipc command params: id: {}, state: {:?}, start_time: {:?}, party: {:?}, buttons: {:?}, details: {:?}, large_image: {:?}, large_image_text: {:?}, small_image: {:?}, small_image_text: {:?}", id, state, start_time, party, buttons, details, large_image, large_image_text, small_image, small_image_text);
-    info!("Checking if Discord is available");
-    if !is_discord_running(system_state) {
-        error!("Discord is not running");
-        return Err("Discord is not running".to_string());
-    }
+fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>) -> Result<(), String> {
+    info!("called rpc start command");
+    debug!("received ipc command params: id: {}, state: {:?}, start_time: {:?}, party: {:?}, buttons: {:?}, details: {:?}, large_image: {:?}, large_image_text: {:?}, small_image: {:?}, small_image_text: {:?}", id, state, start_time, party, buttons, details, large_image, large_image_text, small_image, small_image_text);
 
     let mut client = client_state.0.lock().unwrap();
 
     debug!("Got client lock, creating new IPC client for Discord");
-    *client = DiscordIpcClient::new(id).map_err(|e| e.to_string())?;
+    *client = DiscordIpcClient::new(id).map_err(|e| {
+        error!("could not initiate new ipc client with id {}: {}", id, e);
+        return "Invalid settings";
+    })?;
 
     debug!("Establishing IPC");
-    client.connect().map_err(|e| e.to_string())?;
+    client.connect().map_err(|e| {
+        error!("ipc connection failed: {}", e);
+        return "Could not connect to Discord";
+    })?;
 
     let mut activity = activity::Activity::new();
 
@@ -75,43 +76,53 @@ fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Opti
         activity = activity.buttons(buttons);
     }
 
-    info!("Setting activity");
-    client.set_activity(activity).map_err(|e| e.to_string())?;
+    info!("setting activity");
+    client.set_activity(activity).map_err(|e| {
+        error!("could not send rpc client activity: {}", e);
+        return "App ID is invalid";
+    })?;
+
+    let result =  client.recv().map_err(|e| {
+        error!("could not send rpc due to ipc error: {}", e);
+        return "App ID is invalid";
+    })?;
+
+    info!("Code: {:?}", result);
     
     Ok(())
 }
 
 #[tauri::command]
 fn is_discord_running(c: State<SysInfo>) -> bool {
-    trace!("Controlling Discord process");
+    trace!("controlling Discord process");
 
     let mut sys = c.0.lock().unwrap();
 
     sys.refresh_processes();
 
-    trace!("Refreshed process list");
+    trace!("refreshed process list");
     for _ in sys.processes_by_name("Discord") {
-        trace!("Found Discord process");
+        trace!("found Discord process");
         return true;
     }
-    trace!("Did not find Discord process");
+    trace!("did not find Discord process");
     
     false
 }
 
 #[tauri::command]
 fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>) -> Result<(), String> {
-    info!("Called rpc stop command");
+    info!("called rpc stop command");
 
-    info!("Checking if Discord is available");
+    info!("checking if Discord is available");
     if !is_discord_running(system_state) {
-        error!("Discord is not running");
+        error!("discord is not running");
         return Err("Discord is not running".to_string());
     }
 
     let mut client = client_state.0.lock().unwrap();
 
-    debug!("Got client lock, stopping current activity");
+    debug!("got client lock, stopping current activity");
 
     client.clear_activity().map_err(|e| e.to_string())?;
 

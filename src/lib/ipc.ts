@@ -65,8 +65,7 @@ export async function stopIpc(): Promise<boolean> {
 		return isStopConfirmed;
 	} catch (err) {
 		void debug('Showing system notification for RPC cancelation failure');
-		message('Could not properly stop current activity properly. Close Statusify or create a new activity!' as string, {title: 'Statusify', type: 'error'}).catch(error);
-		void error(err as string);
+		message(err as string, {title: 'Statusify', type: 'error'}).catch(error);
 
 		return true;
 	}
