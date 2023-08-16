@@ -21,13 +21,13 @@ fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Opti
 
     let mut client = client_state.0.lock().unwrap();
 
-    debug!("Got client lock, creating new IPC client for Discord");
+    debug!("got client lock, creating new IPC client for Discord");
     *client = DiscordIpcClient::new(id).map_err(|e| {
         error!("could not initiate new ipc client with id {}: {}", id, e);
         return "Invalid settings";
     })?;
 
-    debug!("Establishing IPC");
+    debug!("establishing IPC");
     client.connect().map_err(|e| {
         error!("ipc connection failed: {}", e);
         return "Could not connect to Discord";

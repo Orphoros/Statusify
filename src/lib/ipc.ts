@@ -53,18 +53,20 @@ export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
 }
 
 export async function stopIpc(): Promise<boolean> {
-	void debug('Attempting to stop RPC');
+	void debug('attempting to stop RPC...');
 
 	try {
 		const isStopConfirmed = await ask('Are you sure you want to stop the current activity?', {title: 'Statusify', type: 'warning'});
 		if (isStopConfirmed) {
 			await invoke('stop_rpc');
-			void debug('Showing system notification for RPC cancelation success');
+			void debug('showing system notification for RPC cancelation success');
 		}
+
+		void debug(`rpc cancelation confirmed: ${isStopConfirmed ? 'yes' : 'no'}`);
 
 		return isStopConfirmed;
 	} catch (err) {
-		void debug('Showing system notification for RPC cancelation failure');
+		void debug('showing system notification for RPC cancelation failure');
 		message(err as string, {title: 'Statusify', type: 'error'}).catch(error);
 
 		return true;

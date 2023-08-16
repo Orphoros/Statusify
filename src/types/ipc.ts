@@ -19,13 +19,13 @@ export type IpcProps = {
 	largeImageEnabled?: boolean;
 	largeImageTooltip?: string;
 	largeImageTooltipEnabled?: boolean;
+	largeImageTooltipError?: boolean;
 
 	smallImage?: string;
 	smallImageEnabled?: boolean;
 	smallImageTooltip?: string;
 	smallImageTooltipEnabled?: boolean;
-
-	imageError?: boolean;
+	smallImageTooltipError?: boolean;
 
 	timeAsStart?: number;
 	timeIsCurrent?: boolean;

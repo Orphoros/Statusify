@@ -30,7 +30,7 @@ function App() {
 			})
 			.catch(async err => {
 				setIsDiscordRunning(false);
-				void error(`Error while checking Discord's status: ${err as string}`);
+				void error(`error while checking Discord's status: ${err as string}`);
 			});
 	};
 
@@ -49,10 +49,10 @@ function App() {
 			disableMenu();
 
 			await appWindow.show().catch(async () => {
-				await error('Failed to show window');
+				await error('failed to show window');
 			});
 
-			void info('App initialized');
+			void info('app initialized');
 		};
 
 		init().catch(console.error);

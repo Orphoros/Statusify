@@ -17,12 +17,12 @@ export const AppContext = React.createContext<AppContextType>({
 	isSessionRunning: false,
 	ipcProps: {},
 	setIsDiscordRunning() {
-		void warn('App context ipc state setter called before initialization');
+		void warn('app context ipc state setter called before initialization');
 	},
 	setIsSessionRunning() {
-		void warn('App context session watcher state setter called before initialization');
+		void warn('app context session watcher state setter called before initialization');
 	},
 	setIpcProps() {
-		void warn('App context ipc props setter called before initialization');
+		void warn('app context ipc props setter called before initialization');
 	},
 });

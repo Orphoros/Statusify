@@ -5,7 +5,7 @@ import {resolveResource} from '@tauri-apps/api/path';
 import {type AppContextType, AppContext} from '@/context';
 import {error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
-import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showParty, showSmallImage, showState} from '@/lib';
+import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState} from '@/lib';
 
 export default function PreviewCard() {
 	const {ipcProps} = useContext<AppContextType>(AppContext);
@@ -24,7 +24,7 @@ export default function PreviewCard() {
 				const smallSvg = await readTextFile(s);
 				setSmallImage(smallSvg);
 			} catch (err) {
-				void error(`Error while setting images: ${err as string}`);
+				void error(`error while setting images: ${err as string}`);
 			}
 		};
 
@@ -71,11 +71,11 @@ export default function PreviewCard() {
 					<div className='flex gap-3 mb-4'>
 						{showLargeImage(ipcProps)
 						&& <Badge draggable={false} disableAnimation className='w-8 h-8 min-w-8 min-h-8 bottom-[12%] right-[12%]' isInvisible={!showSmallImage(ipcProps)} isOneChar content={
-							<Tooltip isDisabled={!ipcProps.smallImageTooltipEnabled} content={ipcProps.smallImageTooltip}>
+							<Tooltip isDisabled={!showSmallImageText(ipcProps)} content={ipcProps.smallImageTooltip}>
 								<Image draggable={false} radius='full' src={`data:image/svg+xml;utf8,${encodeURIComponent(smallImage)}`} alt='Small image'/>
 							</Tooltip>
 						} placement='bottom-right'>
-							<Tooltip isDisabled={!ipcProps.largeImageTooltipEnabled} content={ipcProps.largeImageTooltip}>
+							<Tooltip isDisabled={!showLargeImageText(ipcProps)} content={ipcProps.largeImageTooltip}>
 								<Avatar
 									draggable={false}
 									radius='sm'

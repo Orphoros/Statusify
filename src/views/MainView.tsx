@@ -36,8 +36,8 @@ function MainView() {
 					onTooltipChange={(large, small, largeEnable, smallEnable) => {
 						setIpcProps(prev => ({...prev, largeImageTooltip: large, smallImageTooltip: small, largeImageTooltipEnabled: largeEnable, smallImageTooltipEnabled: smallEnable}));
 					}}
-					onImageError={e => {
-						setIpcProps(prev => ({...prev, imageError: e}));
+					onImageError={(lErr, sErr) => {
+						setIpcProps(prev => ({...prev, largeImageTooltipError: lErr, smallImageTooltipError: sErr}));
 					}}
 					onTimeChange={(t, useCurrent, enabled) => {
 						const epoch = t.getTime();
