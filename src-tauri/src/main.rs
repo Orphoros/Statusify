@@ -154,7 +154,6 @@ fn main() {
         }
     )
     .build())
-    .plugin(tauri_plugin_store::Builder::default().build())
     .manage(DiscordClient(Mutex::new(client)))
     .manage(SysInfo(Mutex::new(System::new())))
         .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running])

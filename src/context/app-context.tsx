@@ -1,7 +1,6 @@
 import {type IpcProps} from '@/types';
 import React from 'react';
 import {warn} from 'tauri-plugin-log-api';
-import {Store} from 'tauri-plugin-store-api';
 
 export type AppContextType = {
 	isDiscordRunning: boolean;
