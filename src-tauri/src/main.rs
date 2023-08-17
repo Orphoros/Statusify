@@ -15,7 +15,7 @@ struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
 
 #[tauri::command(rename_all = "camelCase")]
-fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>) -> Result<(), String> {
+fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>) -> Result<(), u8> {
     info!("called rpc start command");
     debug!("received ipc command params: id: {}, state: {:?}, start_time: {:?}, party: {:?}, buttons: {:?}, details: {:?}, large_image: {:?}, large_image_text: {:?}, small_image: {:?}, small_image_text: {:?}", id, state, start_time, party, buttons, details, large_image, large_image_text, small_image, small_image_text);
 
@@ -24,13 +24,13 @@ fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Opti
     debug!("got client lock, creating new IPC client for Discord");
     *client = DiscordIpcClient::new(id).map_err(|e| {
         error!("could not initiate new ipc client with id {}: {}", id, e);
-        return "Invalid settings";
+        return 101;
     })?;
 
     debug!("establishing IPC");
     client.connect().map_err(|e| {
         error!("ipc connection failed: {}", e);
-        return "Could not connect to Discord";
+        return 102;
     })?;
 
     let mut activity = activity::Activity::new();
@@ -79,15 +79,15 @@ fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Opti
     info!("setting activity");
     client.set_activity(activity).map_err(|e| {
         error!("could not send rpc client activity: {}", e);
-        return "App ID is invalid";
+        return 103;
     })?;
 
     let result =  client.recv().map_err(|e| {
         error!("could not send rpc due to ipc error: {}", e);
-        return "App ID is invalid";
+        return 104;
     })?;
 
-    info!("Code: {:?}", result);
+    debug!("ipc recv: {:?}", result);
     
     Ok(())
 }
@@ -124,8 +124,11 @@ fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>) ->
 
     debug!("got client lock, stopping current activity");
 
-    client.clear_activity().map_err(|e| e.to_string())?;
-
+    client.clear_activity().map_err(|e| {
+        let msg = "could not clear activity";
+        error!("{}: {}", msg, e);
+        return msg;
+    })?;
     Ok(())
 }
 

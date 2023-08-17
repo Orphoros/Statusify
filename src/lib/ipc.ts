@@ -4,6 +4,13 @@ import {ask, message} from '@tauri-apps/api/dialog';
 import {debug, error} from 'tauri-plugin-log-api';
 import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState} from './props';
 
+enum IpcError {
+	ClientCreationErr = 101,
+	DiscordConnectionErr = 102,
+	ActivitySetErr = 103,
+	IpcRecvErr = 104,
+}
+
 export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
 	void debug('Attempting to start RPC');
 
@@ -45,8 +52,7 @@ export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
 
 		return true;
 	} catch (err) {
-		void debug('Showing system notification for RPC creation failure');
-		message(err as string, {title: 'Statusify', type: 'error'}).catch(error);
+		handleIpcError(err as IpcError);
 
 		return false;
 	}
@@ -66,9 +72,29 @@ export async function stopIpc(): Promise<boolean> {
 
 		return isStopConfirmed;
 	} catch (err) {
-		void debug('showing system notification for RPC cancelation failure');
-		message(err as string, {title: 'Statusify', type: 'error'}).catch(error);
+		handleIpcError(err as IpcError);
 
 		return true;
+	}
+}
+
+function handleIpcError(err: IpcError): void {
+	void debug('showing system notification for RPC cancelation failure');
+
+	switch (err) {
+		case IpcError.ClientCreationErr:
+			message('Could not create client for Discord. Check your settings', {title: 'Statusify', type: 'error'}).catch(error);
+			break;
+		case IpcError.DiscordConnectionErr:
+			message('Could not connect to Discord. Discord might be closed', {title: 'Statusify', type: 'error'}).catch(error);
+			break;
+		case IpcError.ActivitySetErr:
+			message('App ID is invalid', {title: 'Statusify', type: 'error'}).catch(error);
+			break;
+		case IpcError.IpcRecvErr:
+			message('App ID or your settings are invalid', {title: 'Statusify', type: 'error'}).catch(error);
+			break;
+		default:
+			message('Unknown error', {title: 'Statusify', type: 'error'}).catch(error);
 	}
 }

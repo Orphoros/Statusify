@@ -35,7 +35,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		void debug('Initializing GUI...');
+		void debug('initializing GUI...');
 
 		const init = async () => {
 			await attachConsole();
