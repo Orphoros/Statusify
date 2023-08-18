@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Button, Chip} from '@nextui-org/react';
-import {AppContext, type AppContextType} from '@/context';
+import {useTauriContext} from '@/context';
 import {startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';
 
 export default function TitleBar() {
-	const {isDiscordRunning, isSessionRunning, setIsSessionRunning, ipcProps} = useContext<AppContextType>(AppContext);
+	const {isDiscordRunning, isSessionRunning, setIsSessionRunning, ipcProps} = useTauriContext();
 
 	const buttonDisabled = !isDiscordRunning || isSessionRunning || !ipcProps.id || ipcProps.idError;
 

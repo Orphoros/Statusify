@@ -1,14 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Button, Card, Tooltip, Badge, Avatar, CardHeader, Divider, CardBody} from '@nextui-org/react';
 import {message} from '@tauri-apps/api/dialog';
 import {resolveResource} from '@tauri-apps/api/path';
-import {type AppContextType, AppContext} from '@/context';
+import {useTauriContext} from '@/context';
 import {error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
 import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState} from '@/lib';
 
 export default function PreviewCard() {
-	const {ipcProps} = useContext<AppContextType>(AppContext);
+	const {ipcProps} = useTauriContext();
 
 	const [largeImage, setLargeImage] = useState<string>('');
 	const [smallImage, setSmallImage] = useState<string>('');

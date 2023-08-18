@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {TitleBar, EditCard, PreviewCard} from '@/components';
-import {type AppContextType, AppContext} from '@/context';
+import {useTauriContext} from '@/context';
 
 function MainView() {
-	const {ipcProps, setIpcProps} = useContext<AppContextType>(AppContext);
+	const {ipcProps, setIpcProps} = useTauriContext();
 
 	return (
 		<div className='flex flex-col h-screen overflow-none'>

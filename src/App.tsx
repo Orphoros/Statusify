@@ -1,16 +1,12 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {appWindow} from '@tauri-apps/api/window';
 import {attachConsole, debug, error, info} from 'tauri-plugin-log-api';
 import {MainView} from '@/views';
 import {invoke} from '@tauri-apps/api';
-import {AppContext} from '@/context';
-import {type IpcProps} from '@/types';
+import {useTauriContext} from '@/context';
 
 function App() {
-	const [isDiscordRunning, setIsDiscordRunning] = useState<boolean>(false);
-	const [isSessionRunning, setIsSessionRunning] = useState<boolean>(false);
-	const [ipcProps, setIpcProps] = useState<IpcProps>({});
-
+	const {setIsDiscordRunning, setIsSessionRunning} = useTauriContext();
 	const ipcCheckInterval = 500;
 
 	const disableMenu = () => {
@@ -59,16 +55,7 @@ function App() {
 	}, []);
 
 	return (
-		<AppContext.Provider value={{
-			isDiscordRunning,
-			setIsDiscordRunning,
-			isSessionRunning,
-			setIsSessionRunning,
-			ipcProps,
-			setIpcProps,
-		}}>
-			<MainView />
-		</AppContext.Provider>
+		<MainView />
 	);
 }
 

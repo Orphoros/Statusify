@@ -1,8 +1,8 @@
 import {type IpcProps} from '@/types';
-import React from 'react';
+import React, {useContext} from 'react';
 import {warn} from 'tauri-plugin-log-api';
 
-export type AppContextType = {
+export type TauriContextType = {
 	isDiscordRunning: boolean;
 	isSessionRunning: boolean;
 	ipcProps: IpcProps;
@@ -11,7 +11,7 @@ export type AppContextType = {
 	setIpcProps: React.Dispatch<React.SetStateAction<IpcProps>>;
 };
 
-export const AppContext = React.createContext<AppContextType>({
+export const TauriContext = React.createContext<TauriContextType>({
 	isDiscordRunning: false,
 	isSessionRunning: false,
 	ipcProps: {},
@@ -25,3 +25,5 @@ export const AppContext = React.createContext<AppContextType>({
 		void warn('app context ipc props setter called before initialization');
 	},
 });
+
+export const useTauriContext = () => useContext(TauriContext);
