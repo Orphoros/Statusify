@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {appWindow} from '@tauri-apps/api/window';
 import {attachConsole, debug, error, info} from 'tauri-plugin-log-api';
 import {MainView} from '@/views';
@@ -34,7 +34,7 @@ function App() {
 			});
 	};
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		void debug('initializing GUI...');
 
 		const init = async () => {
