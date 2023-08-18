@@ -72,7 +72,13 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "nsis": {
+          "license": "../LICENSE"
+        },
+        "wix": {
+          "license": "../LICENSE"
+        }
       }
     },
     "security": {
