@@ -159,6 +159,7 @@ fn main() {
     .build())
     .manage(DiscordClient(Mutex::new(client)))
     .manage(SysInfo(Mutex::new(System::new())))
+    .plugin(tauri_plugin_store::Builder::default().build())
         .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

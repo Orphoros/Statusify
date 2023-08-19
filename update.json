@@ -5,19 +5,19 @@
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify_x64.app.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify-update.darwin-x86_64.tar.gz"
     },
     "darwin-aarch64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify.darwin-aarch64.app.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify-update.darwin-aarch64.tar.gz"
     },
     "linux-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/statusify.linux-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify-update.linux-x86_64.tar.gz"
     },
     "windows-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify.windows-x86_64.zip"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.1/Statusify-update.windows-x86_64.zip"
     }
   }
 }
