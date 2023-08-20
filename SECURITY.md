@@ -6,7 +6,7 @@ Statusify is currently in development and not yet ready for production use.
 
 The security of software products, which includes all source code repositories managed through GitHub, is a top priority and all efforts are made to ensure that the codebase is secure.
 
-If you believe you have found a security vulnerability in any repository owned by Orphoros, please report it to as described below.
+If you believe you have found a security vulnerability in any repository owned by Orphoros, please report it as described below.
 
 ## Reporting Security Issues
 
