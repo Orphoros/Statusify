@@ -6,7 +6,7 @@
 use discord_rich_presence::activity::Party;
 use log::{debug, info, error, trace};
 use sysinfo::{System, SystemExt};
-use tauri::State;
+use tauri::{State, Manager};
 use std::sync::Mutex;
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use tauri_plugin_log::LogTarget;
@@ -157,6 +157,14 @@ fn main() {
         }
     )
     .build())
+    .on_window_event(|event| match event.event() {
+        tauri::WindowEvent::CloseRequested { api, .. } => {
+            #[cfg(target_os = "macos")]
+            tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
+            api.prevent_close();
+        }
+        _ => {}
+      })
     .manage(DiscordClient(Mutex::new(client)))
     .manage(SysInfo(Mutex::new(System::new())))
     .plugin(tauri_plugin_store::Builder::default().build())
