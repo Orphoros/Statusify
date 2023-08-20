@@ -1,33 +1,18 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import {Input, Switch} from '@nextui-org/react';
 import {isDigit, validateNumberInput} from '@/lib';
+import {useTauriContext} from '@/context';
 
-type PartyOptionProps = {
-	enabled: boolean;
-	onChange?: (min: string, max: string, enabled: boolean) => void;
-	onError?: (minError: boolean, maxError: boolean) => void;
-};
+export default function PartyOptionForm() {
+	const {ipcProps, setIpcProps} = useTauriContext();
 
-export default function PartyOptionForm(prop: PartyOptionProps) {
-	const {onChange, onError, enabled} = prop;
-
-	const [min, setMin] = useState<string>('');
-	const [max, setMax] = useState<string>('');
-	const [partyEnabled, setPartyEnabled] = useState<boolean>(false);
-
-	const minHelper = useMemo(() => validateNumberInput({text: min, min: 0, max: 100}), [min]);
-	const maxHelper = useMemo(() => validateNumberInput({text: max, min: 0, max: 100}), [max]);
+	const minHelper = useMemo(() => validateNumberInput({text: ipcProps.partySize?.toString(), min: 0, max: 100}), [ipcProps.partySize]);
+	const maxHelper = useMemo(() => validateNumberInput({text: ipcProps.partyMax?.toString(), min: 0, max: 100}), [ipcProps.partyMax]);
 
 	useEffect(() => {
-		if (onChange) {
-			onChange(min, max, partyEnabled);
-		}
-
-		if (onError) {
-			onError(minHelper.error, maxHelper.error);
-		}
-	}, [min, max, partyEnabled, minHelper.error, maxHelper.error]);
+		setIpcProps(prev => ({...prev, partyError: minHelper.error || maxHelper.error}));
+	}, [minHelper.error, maxHelper.error]);
 
 	return (<>
 		<p>Party Settings</p>
@@ -36,42 +21,36 @@ export default function PartyOptionForm(prop: PartyOptionProps) {
 				variant='underlined'
 				label='Current'
 				placeholder='0'
+				defaultValue={ipcProps.partySize?.toString()}
 				errorMessage={minHelper.text}
 				color={minHelper.color}
-				isDisabled={!enabled}
+				isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
 				className='h-20'
 				width='100%'
 				onChange={e => {
-					const {value} = e.target;
-					setMin(value);
-					if (isDigit(value) && isDigit(max)) {
-						setPartyEnabled(true);
-					} else {
-						setPartyEnabled(false);
-					}
+					setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value) && isDigit(ipcProps.partyMax?.toString() ?? '')}));
 				}}
 			/>
 			<Input
 				variant='underlined'
 				label='Max'
 				placeholder='0'
+				defaultValue={ipcProps.partyMax?.toString()}
 				errorMessage={maxHelper.text}
 				color={maxHelper.color}
-				isDisabled={!enabled}
+				isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
 				className='h-14'
 				width='100%'
 				onChange={e => {
-					const {value} = e.target;
-					setMax(value);
-					if (isDigit(min) && isDigit(value)) {
-						setPartyEnabled(true);
-					} else {
-						setPartyEnabled(false);
-					}
+					setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value) && isDigit(ipcProps.partySize?.toString() ?? '')}));
 				}}
 			/>
 
-			<Switch className='self-start mt-4' isSelected={partyEnabled} isDisabled={!enabled} onValueChange={setPartyEnabled}/>
+			<Switch className='self-start mt-4' isSelected={ipcProps.partyEnabled} isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled} onValueChange={
+				enabled => {
+					setIpcProps(prev => ({...prev, partyEnabled: enabled}));
+				}
+			}/>
 		</div>
 	</>
 	);

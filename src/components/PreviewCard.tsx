@@ -31,6 +31,8 @@ export default function PreviewCard() {
 		init().catch(console.error);
 	}, []);
 
+	// FIXME: On component refresh, the seconds elapsed resets to 0
+
 	let time = new Date();
 	const [currentTime, changeTime] = useState(time);
 	const handler = async () => {

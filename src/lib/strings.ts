@@ -6,7 +6,11 @@ import {type FormValidation} from '@/types';
  * @param text string to check
  * @returns true if text contains any non-whitespace characters
  */
-export function containsText(text: string): boolean {
+export function containsText(text: string | undefined): boolean {
+	if (!text) {
+		return false;
+	}
+
 	return text.length > 0 && text.replaceAll(' ', '').length > 0;
 }
 
@@ -46,7 +50,7 @@ export function isAtLength(text: string, length: number): boolean {
  * @returns FormValidation object
  * @see FormValidation
  */
-export const validateTextInput = ((prop: string, maxStrLength: number) => {
+export const validateTextInput = ((prop: string | undefined, maxStrLength: number) => {
 	const def: FormValidation = {
 		text: '',
 		color: 'primary',
@@ -84,7 +88,7 @@ export const validateTextInput = ((prop: string, maxStrLength: number) => {
  * @returns FormValidation object
  * @see FormValidation
  */
-export const validateUrlInput = ((prop: string) => {
+export const validateUrlInput = ((prop: string | undefined) => {
 	const def: FormValidation = {
 		text: '',
 		color: 'primary',

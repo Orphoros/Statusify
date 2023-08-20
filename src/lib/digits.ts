@@ -26,7 +26,7 @@ export function isDigitBetween(text: string, min: number, max: number): boolean 
  * Type for the parameters of validateNumberInput
  */
 type NumberValidation = {
-	text: string;
+	text: string | undefined;
 	min?: number;
 	max?: number;
 	length?: number;
@@ -65,7 +65,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 		} satisfies FormValidation;
 	}
 
-	if (!isDigit(text)) {
+	if (!isDigit(text!)) {
 		return {
 			text: 'Only positive whole numbers',
 			color: 'danger',
@@ -74,7 +74,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 		} satisfies FormValidation;
 	}
 
-	if (isDefined(length) && !isAtLength(text, length!)) {
+	if (isDefined(length) && !isAtLength(text!, length!)) {
 		return {
 			text: `Number must be ${length!} digits long`,
 			color: 'danger',
@@ -83,7 +83,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 		} satisfies FormValidation;
 	}
 
-	if (isDefined(min) && isDefined(max) && !isDigitBetween(text, min!, max!)) {
+	if (isDefined(min) && isDefined(max) && !isDigitBetween(text!, min!, max!)) {
 		return {
 			text: `Number must be between ${min!} and ${max!}`,
 			color: 'danger',

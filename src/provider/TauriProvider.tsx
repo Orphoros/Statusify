@@ -6,7 +6,11 @@ import {useTauriStore} from '@/store/TauriStore';
 export default function TauriProvider({children}: {children: React.ReactNode}) {
 	const [isDiscordRunning, setIsDiscordRunning] = useState<boolean>(false);
 	const [isSessionRunning, setIsSessionRunning] = useState<boolean>(false);
-	const [ipcProps, setIpcProps] = useTauriStore<IpcProps>('ipcProps', {}, 'ipc.dat');
+	const [ipcProps, setIpcProps, loading] = useTauriStore<IpcProps>('ipcProps', {}, 'ipc.dat');
+
+	// TODO: Show loading screen while loading
+
+	// TODO: Move title bar to provider and always show it
 
 	return (
 		<TauriContext.Provider value={{
@@ -17,7 +21,7 @@ export default function TauriProvider({children}: {children: React.ReactNode}) {
 			ipcProps,
 			setIpcProps,
 		}}>
-			{children}
+			{!loading && children}
 		</TauriContext.Provider>
 	);
 }

@@ -47,7 +47,7 @@ export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
 			smallImageText,
 		});
 
-		void debug('Showing system notification for RPC creation success');
+		void debug('showing system notification for RPC creation success');
 		message('RPC Started!', {title: 'Statusify', type: 'info'}).catch(error);
 
 		return true;

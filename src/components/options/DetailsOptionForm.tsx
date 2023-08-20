@@ -1,34 +1,18 @@
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useMemo, useEffect} from 'react';
 
 import {Input, Switch} from '@nextui-org/react';
 import {containsText, validateTextInput} from '@/lib';
+import {useTauriContext} from '@/context';
 
-type DetailsOptionProps = {
-	onChange?: (details: string, state: string, detailsEnabled: boolean, stateEnabled: boolean) => void;
-	onError?: (detailsError: boolean, stateError: boolean) => void;
-	enabled: boolean;
-};
+export default function DetailsOptionForm() {
+	const {ipcProps, setIpcProps} = useTauriContext();
 
-export default function DetailsOptionForm(props: DetailsOptionProps) {
-	const {onChange, onError, enabled} = props;
-
-	const [detailsEnabled, setDetailsEnabled] = useState<boolean>(false);
-	const [stateEnabled, setStateEnabled] = useState<boolean>(false);
-	const [details, setDetails] = useState<string>('');
-	const [state, setState] = useState<string>('');
-
-	const detailsHelper = useMemo(() => validateTextInput(details, 35), [details]);
-	const stateHelper = useMemo(() => validateTextInput(state, 20), [state]);
+	const detailsHelper = useMemo(() => validateTextInput(ipcProps.details, 35), [ipcProps.details]);
+	const stateHelper = useMemo(() => validateTextInput(ipcProps.state, 20), [ipcProps.state]);
 
 	useEffect(() => {
-		if (onChange) {
-			onChange(details, state, detailsEnabled, stateEnabled);
-		}
-
-		if (onError) {
-			onError(detailsHelper.error, stateHelper.error);
-		}
-	}, [detailsEnabled, stateEnabled, details, state, detailsHelper.error]);
+		setIpcProps(prev => ({...prev, detailsError: detailsHelper.error, stateError: stateHelper.error}));
+	}, [detailsHelper.error, detailsHelper.error]);
 
 	return (<>
 		<p>Main Settings</p>
@@ -38,42 +22,35 @@ export default function DetailsOptionForm(props: DetailsOptionProps) {
 				className='h-14'
 				isClearable
 				placeholder='main cation'
+				defaultValue={ipcProps.details}
 				width='100%'
 				errorMessage={detailsHelper.text}
 				color={detailsHelper.color}
-				isDisabled={!enabled}
+				isDisabled={ipcProps.idError}
 				startContent={
 					<div className='pointer-events-none flex shrink-0 items-center w-16'>
 						<span className={`${detailsHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>details</span>
 					</div>
 				}
 				onClear={() => {
-					setDetails('');
-					setDetailsEnabled(false);
+					setIpcProps(prev => ({...prev, details: '', detailsEnabled: false}));
 				}}
 				onChange={e => {
-					const {value} = e.target;
-					setDetails(value);
-					if (containsText(value)) {
-						setDetailsEnabled(true);
-						if (containsText(state)) {
-							setStateEnabled(true);
-						} else {
-							setStateEnabled(false);
-						}
-					} else {
-						setDetailsEnabled(false);
-						setStateEnabled(false);
-					}
+					setIpcProps(prev => ({...prev, details: e.target.value, detailsEnabled: containsText(e.target.value), stateEnabled: containsText(ipcProps.state)}));
 				}}
 			/>
-			<Switch className='self-start mt-1' isSelected={detailsEnabled} isDisabled={!enabled} onValueChange={setDetailsEnabled}/>
+			<Switch className='self-start mt-1' isSelected={ipcProps.detailsEnabled} isDisabled={ipcProps.idError} onValueChange={
+				enabled => {
+					setIpcProps(prev => ({...prev, detailsEnabled: enabled}));
+				}
+			}/>
 		</div>
 		<div className='flex gap-6'>
 			<Input
 				variant='underlined'
 				className='h-14'
 				isClearable
+				defaultValue={ipcProps.state}
 				placeholder='the current state'
 				errorMessage={stateHelper.text}
 				color={stateHelper.color}
@@ -83,22 +60,19 @@ export default function DetailsOptionForm(props: DetailsOptionProps) {
 						<span className={`${stateHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>state</span>
 					</div>
 				}
-				isDisabled={!enabled || !detailsEnabled}
+				isDisabled={ipcProps.idError! || !ipcProps.detailsEnabled || !containsText(ipcProps.details)}
 				onClear={() => {
-					setState('');
-					setStateEnabled(false);
+					setIpcProps(prev => ({...prev, state: '', stateEnabled: false}));
 				}}
 				onChange={e => {
-					const {value} = e.target;
-					setState(value);
-					if (containsText(value)) {
-						setStateEnabled(true);
-					} else {
-						setStateEnabled(false);
-					}
+					setIpcProps(prev => ({...prev, state: e.target.value, stateEnabled: containsText(e.target.value)}));
 				}}
 			/>
-			<Switch className='self-start mt-1' isSelected={stateEnabled} isDisabled={!enabled || !detailsEnabled} onValueChange={setStateEnabled}/>
+			<Switch className='self-start mt-1' isSelected={ipcProps.stateEnabled} isDisabled={ipcProps.idError! || !ipcProps.detailsEnabled || !containsText(ipcProps.details)} onValueChange={
+				enabled => {
+					setIpcProps(prev => ({...prev, stateEnabled: enabled}));
+				}
+			}/>
 		</div>
 	</>
 	);

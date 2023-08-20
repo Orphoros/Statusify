@@ -1,34 +1,18 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import {Input, Switch} from '@nextui-org/react';
 import {containsText, validateTextInput, validateUrlInput} from '@/lib';
+import {useTauriContext} from '@/context';
 
-type ButtonOptionProps = {
-	enabled: boolean;
-	onChange?: (text: string, url: string, protocol: string, enabled: boolean) => void;
-	onError?: (buttonError: boolean) => void;
-};
+export default function ButtonOptionForm() {
+	const {ipcProps, setIpcProps} = useTauriContext();
 
-export default function ButtonOptionForm(props: ButtonOptionProps) {
-	const {enabled, onChange, onError} = props;
-
-	const [buttonEnabled, setButtonEnabled] = useState<boolean>(false);
-	const [protocol, setProtocol] = useState<string>('https://');
-	const [text, setText] = useState<string>('');
-	const [url, setUrl] = useState<string>('');
-
-	const buttonUrlHelper = useMemo(() => validateUrlInput(url), [url]);
-	const buttonTextHelper = useMemo(() => validateTextInput(text, 20), [text]);
+	const buttonUrlHelper = useMemo(() => validateUrlInput(ipcProps.buttonUrl), [ipcProps.buttonUrl]);
+	const buttonTextHelper = useMemo(() => validateTextInput(ipcProps.buttonText, 20), [ipcProps.buttonText]);
 
 	useEffect(() => {
-		if (onChange) {
-			onChange(text, url, protocol, buttonEnabled);
-		}
-
-		if (onError) {
-			onError(buttonUrlHelper.error || buttonTextHelper.error);
-		}
-	}, [text, url, protocol, buttonEnabled, buttonUrlHelper.error, buttonTextHelper.error]);
+		setIpcProps(prev => ({...prev, buttonError: buttonUrlHelper.error || buttonTextHelper.error}));
+	}, [buttonUrlHelper.error, buttonTextHelper.error]);
 
 	return (<>
 		<p>Button Settings</p>
@@ -42,10 +26,10 @@ export default function ButtonOptionForm(props: ButtonOptionProps) {
 				className='h-14'
 				errorMessage={buttonTextHelper.text}
 				color={buttonTextHelper.color}
-				isDisabled={!enabled}
+				isDisabled={ipcProps.idError}
+				defaultValue={ipcProps.buttonText}
 				onClear={() => {
-					setText('');
-					setButtonEnabled(false);
+					setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
 				}}
 				startContent={
 					<div className='pointer-events-none flex shrink-0 items-center w-16'>
@@ -53,13 +37,7 @@ export default function ButtonOptionForm(props: ButtonOptionProps) {
 					</div>
 				}
 				onChange={e => {
-					const {value} = e.target;
-					setText(value);
-					if (containsText(value) && containsText(url)) {
-						setButtonEnabled(true);
-					} else {
-						setButtonEnabled(false);
-					}
+					setIpcProps(prev => ({...prev, buttonText: e.target.value, buttonEnabled: containsText(e.target.value) && containsText(ipcProps.buttonUrl)}));
 				}}
 			/>
 			<Input
@@ -69,33 +47,34 @@ export default function ButtonOptionForm(props: ButtonOptionProps) {
 				className='h-16'
 				color={buttonUrlHelper.color}
 				errorMessage={buttonUrlHelper.text}
-				isDisabled={!enabled}
-				value={url}
+				isDisabled={ipcProps.idError}
+				value={ipcProps.buttonUrl}
 				onClear={() => {
-					setUrl('');
-					setButtonEnabled(false);
+					setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));
 				}}
 				startContent={
 					<div className='pointer-events-none flex items-center w-16'>
-						<span className={`${buttonUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{protocol}</span>
+						<span className={`${buttonUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{ipcProps.buttonProtocol}</span>
 					</div>
 				}
 				onChange={e => {
 					const {value} = e.target;
+					let protocol = ipcProps.buttonProtocol;
+
 					if (value.includes('http://') || value.includes('https://')) {
-						setProtocol(value.split('://')[0] + '://');
+						protocol = value.split('://')[0] + '://';
 					}
 
-					setUrl(value.replace('http://', '').replace('https://', ''));
+					const url = value.replace('http://', '').replace('https://', '');
 
-					if (containsText(value) && containsText(text)) {
-						setButtonEnabled(true);
-					} else {
-						setButtonEnabled(false);
-					}
+					setIpcProps(prev => ({...prev, buttonProtocol: protocol, buttonUrl: url, buttonEnabled: containsText(value) && containsText(ipcProps.buttonText)}));
 				}}
 			/>
-			<Switch className='self-start mt-1' isSelected={buttonEnabled} isDisabled={!enabled} onValueChange={setButtonEnabled}/>
+			<Switch className='self-start mt-1' isSelected={ipcProps.buttonEnabled} isDisabled={ipcProps.idError} onValueChange={
+				enabled => {
+					setIpcProps(prev => ({...prev, buttonEnabled: enabled}));
+				}
+			}/>
 		</div>
 	</>
 	);

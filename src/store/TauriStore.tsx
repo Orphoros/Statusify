@@ -1,7 +1,7 @@
 import type React from 'react';
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {Store} from 'tauri-plugin-store-api';
-import {warn} from 'tauri-plugin-log-api';
+import {debug, warn} from 'tauri-plugin-log-api';
 
 const SaveDelay = 500;
 
@@ -28,6 +28,8 @@ export function useTauriStore<T>(key: string, defaultValue: T, storeName = 'data
 			.then(value => {
 				if (value === null) {
 					void warn(`key ${key} not found in store ${storeName}`);
+				} else {
+					void debug(`loaded ${key} from ${storeName}: ${JSON.stringify(value)}`);
 				}
 
 				if (allow && value !== null) {

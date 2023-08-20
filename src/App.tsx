@@ -6,7 +6,7 @@ import {invoke} from '@tauri-apps/api';
 import {useTauriContext} from '@/context';
 
 function App() {
-	const {setIsDiscordRunning, setIsSessionRunning} = useTauriContext();
+	const {setIsDiscordRunning, setIsSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 	const ipcCheckInterval = 500;
 
 	const disableMenu = () => {
@@ -30,6 +30,27 @@ function App() {
 			});
 	};
 
+	const correctIpcTime = () => {
+		if (ipcProps.timeAsStart !== undefined) {
+			const time = new Date(ipcProps.timeAsStart);
+			const today = new Date();
+
+			if (time.getTime() < Date.now() - 86400000) {
+				time.setFullYear(today.getFullYear());
+				time.setMonth(today.getMonth());
+				time.setDate(today.getDate());
+				void debug(`corrected cached ipc date to ${time.toISOString()}`);
+			}
+
+			if (time.getTime() > Date.now()) {
+				time.setDate(time.getDate() - 1);
+				void debug(`corrected cached ipc time to ${time.toISOString()} to prevent future date`);
+			}
+
+			setIpcProps(prev => ({...prev, timeAsStart: time.getTime()}));
+		}
+	};
+
 	useLayoutEffect(() => {
 		void debug('initializing GUI...');
 
@@ -43,6 +64,8 @@ function App() {
 			}, ipcCheckInterval);
 
 			disableMenu();
+
+			correctIpcTime();
 
 			await appWindow.show().catch(async () => {
 				await error('failed to show window');
