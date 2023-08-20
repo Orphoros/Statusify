@@ -94,6 +94,7 @@
     },
     "windows": [
       {
+        "label": "main",
         "fullscreen": false,
         "height": 880,
         "resizable": true,

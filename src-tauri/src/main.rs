@@ -157,6 +157,7 @@ fn main() {
         }
     )
     .build())
+    .plugin(tauri_plugin_window_state::Builder::default().build())
     .on_window_event(|event| match event.event() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
             #[cfg(target_os = "macos")]
@@ -164,6 +165,12 @@ fn main() {
             api.prevent_close();
         }
         _ => {}
+      })
+      .setup(|app| {
+        let main_window = app.get_window("main").unwrap();
+        main_window.hide().unwrap();
+
+        Ok(())
       })
     .manage(DiscordClient(Mutex::new(client)))
     .manage(SysInfo(Mutex::new(System::new())))
