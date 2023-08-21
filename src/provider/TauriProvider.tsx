@@ -6,7 +6,10 @@ import {useTauriStore} from '@/store/TauriStore';
 export default function TauriProvider({children}: {children: React.ReactNode}) {
 	const [isDiscordRunning, setIsDiscordRunning] = useState<boolean>(false);
 	const [isSessionRunning, setIsSessionRunning] = useState<boolean>(false);
-	const [ipcProps, setIpcProps, loading] = useTauriStore<IpcProps>('ipcProps', {}, 'ipc.dat');
+	const [ipcProps, setIpcProps, loading] = useTauriStore<IpcProps>('ipcProps', {
+		timeAsStart: Date.now(),
+		timeIsCurrent: true,
+	}, 'ipc.dat');
 
 	// TODO: Show loading screen while loading
 

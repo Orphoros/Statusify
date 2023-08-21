@@ -8,7 +8,7 @@ export default function TimeOptionForm() {
 
 	const today = new Date();
 
-	const time = new Date(ipcProps.timeAsStart ?? today);
+	const time = new Date(ipcProps.timeAsStart!);
 
 	return (<>
 		<p>Timer Settings</p>
@@ -38,7 +38,6 @@ export default function TimeOptionForm() {
 					}}
 				/>
 				<Checkbox
-					defaultSelected
 					isDisabled={ipcProps.idError}
 					isSelected={ipcProps.timeIsCurrent}
 					onValueChange={
