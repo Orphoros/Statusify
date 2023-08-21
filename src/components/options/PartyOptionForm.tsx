@@ -39,7 +39,7 @@ export default function PartyOptionForm() {
 				errorMessage={maxHelper.text}
 				color={maxHelper.color}
 				isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
-				className='h-14'
+				className='h-20'
 				width='100%'
 				onChange={e => {
 					setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value) && isDigit(ipcProps.partySize?.toString() ?? '')}));

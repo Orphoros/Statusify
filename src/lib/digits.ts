@@ -85,7 +85,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 
 	if (isDefined(min) && isDefined(max) && !isDigitBetween(text!, min!, max!)) {
 		return {
-			text: `Number must be between ${min!} and ${max!}`,
+			text: `Must be between ${min!} and ${max!}`,
 			color: 'danger',
 			error: true,
 			validation: 'invalid',
