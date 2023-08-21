@@ -54,7 +54,7 @@ export default function ButtonOptionForm() {
 				}}
 				startContent={
 					<div className='pointer-events-none flex items-center w-16'>
-						<span className={`${buttonUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{ipcProps.buttonProtocol}</span>
+						<span className={`${buttonUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{ipcProps.buttonProtocol ?? 'https://'}</span>
 					</div>
 				}
 				onChange={e => {
