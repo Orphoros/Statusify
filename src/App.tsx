@@ -1,5 +1,4 @@
 import React, {useLayoutEffect} from 'react';
-import {appWindow} from '@tauri-apps/api/window';
 import {attachConsole, debug, error, info} from 'tauri-plugin-log-api';
 import {MainView} from '@/views';
 import {invoke} from '@tauri-apps/api';
@@ -52,7 +51,7 @@ function App() {
 	};
 
 	useLayoutEffect(() => {
-		void debug('initializing GUI...');
+		void debug('initializing app...');
 
 		const init = async () => {
 			await attachConsole();
@@ -66,10 +65,6 @@ function App() {
 			disableMenu();
 
 			correctIpcTime();
-
-			await appWindow.show().catch(async () => {
-				await error('failed to show window');
-			});
 
 			void info('app initialized');
 		};

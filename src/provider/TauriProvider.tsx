@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {TauriContext} from '@/context';
 import {type IpcProps} from '@/types';
 import {useTauriStore} from '@/store/TauriStore';
+import {appWindow} from '@tauri-apps/api/window';
+import {error} from 'tauri-plugin-log-api';
+import {LoadingView} from '@/views';
 
 export default function TauriProvider({children}: {children: React.ReactNode}) {
 	const [isDiscordRunning, setIsDiscordRunning] = useState<boolean>(false);
@@ -11,9 +14,11 @@ export default function TauriProvider({children}: {children: React.ReactNode}) {
 		timeIsCurrent: true,
 	}, 'ipc.dat');
 
-	// TODO: Show loading screen while loading
-
-	// TODO: Move title bar to provider and always show it
+	useLayoutEffect(() => {
+		void appWindow.show().catch(async () => {
+			await error('failed to show main app window');
+		});
+	}, []);
 
 	return (
 		<TauriContext.Provider value={{
@@ -24,7 +29,10 @@ export default function TauriProvider({children}: {children: React.ReactNode}) {
 			ipcProps,
 			setIpcProps,
 		}}>
-			{!loading && children}
+			{loading
+				? <LoadingView/>
+				: children
+			}
 		</TauriContext.Provider>
 	);
 }
