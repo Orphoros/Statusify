@@ -3,7 +3,7 @@ import {Image, Button, Card, Tooltip, Badge, Avatar, CardHeader, Divider, CardBo
 import {message} from '@tauri-apps/api/dialog';
 import {resolveResource} from '@tauri-apps/api/path';
 import {useTauriContext} from '@/context';
-import {error} from 'tauri-plugin-log-api';
+import {debug, error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
 import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState} from '@/lib';
 
@@ -31,7 +31,27 @@ export default function PreviewCard() {
 		init().catch(console.error);
 	}, []);
 
-	// FIXME: On component refresh, the seconds elapsed resets to 0
+	const [intervalId, setIntervalId] = useState<NodeJS.Timer | undefined>(undefined);
+
+	const startInterval = () => {
+		const id = setInterval(() => {
+			const today = new Date();
+			changeTime(today);
+		}, 1000);
+		setIntervalId(id);
+	};
+
+	const stopInterval = () => {
+		if (intervalId !== undefined) {
+			clearInterval(intervalId);
+			setIntervalId(undefined);
+		}
+	};
+
+	useEffect(() => {
+		startInterval();
+		return stopInterval;
+	}, []);
 
 	let time = new Date();
 	const [currentTime, changeTime] = useState(time);

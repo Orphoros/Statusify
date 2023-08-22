@@ -34,6 +34,8 @@ export default function TimeOptionForm() {
 							today.setDate(today.getDate() - 1);
 						}
 
+						today.setSeconds(0);
+
 						setIpcProps(prev => ({...prev, timeAsStart: today.getTime(), timeEnabled: true}));
 					}}
 				/>
