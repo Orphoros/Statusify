@@ -12,6 +12,7 @@ export default function TauriProvider({children}: {children: React.ReactNode}) {
 	const [ipcProps, setIpcProps, loading] = useTauriStore<IpcProps>('ipcProps', {
 		timeAsStart: Date.now(),
 		timeIsCurrent: true,
+		buttonProtocol: 'https://',
 	}, 'ipc.dat');
 
 	useLayoutEffect(() => {

@@ -28,7 +28,7 @@ export default function PartyOptionForm() {
 				className='h-20'
 				width='100%'
 				onChange={e => {
-					setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value) && isDigit(ipcProps.partyMax?.toString() ?? '')}));
+					setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
 				}}
 			/>
 			<Input
@@ -42,7 +42,7 @@ export default function PartyOptionForm() {
 				className='h-20'
 				width='100%'
 				onChange={e => {
-					setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value) && isDigit(ipcProps.partySize?.toString() ?? '')}));
+					setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
 				}}
 			/>
 

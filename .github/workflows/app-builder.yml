@@ -54,7 +54,7 @@ jobs:
         with:
           # tauri-action replaces \_\_VERSION\_\_ with the app version
           tagName: ${{ github.ref_name }}
-          releaseName: "[Pre-Alpha] Statusify v__VERSION__"
+          releaseName: "[Alpha] Statusify v__VERSION__"
           releaseBody: |
             ${{steps.build_changelog.outputs.changelog}}
           releaseDraft: true

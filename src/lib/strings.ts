@@ -1,5 +1,6 @@
 import React from 'react';
 import {type FormValidation} from '@/types';
+import {isDefined} from './control';
 
 /**
  * Check if a text contains any characters
@@ -7,11 +8,11 @@ import {type FormValidation} from '@/types';
  * @returns true if text contains any non-whitespace characters
  */
 export function containsText(text: string | undefined): boolean {
-	if (!text) {
+	if (!isDefined(text)) {
 		return false;
 	}
 
-	return text.length > 0 && text.replaceAll(' ', '').length > 0;
+	return text!.length > 0 && text!.replaceAll(' ', '').length > 0;
 }
 
 /**

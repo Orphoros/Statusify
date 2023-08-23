@@ -1,5 +1,5 @@
 import {type FormValidation} from '@/types';
-import {isAtLength} from './strings';
+import {containsText, isAtLength} from './strings';
 import {isDefined} from './control';
 
 /**
@@ -8,6 +8,10 @@ import {isDefined} from './control';
  * @returns true if text is a digit
  */
 export function isDigit(text: string): boolean {
+	if (!containsText(text)) {
+		return false;
+	}
+
 	return /^\d+$/.test(text);
 }
 
