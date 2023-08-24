@@ -30,27 +30,14 @@ export default function PreviewCard() {
 
 		init().catch(console.error);
 	}, []);
-
-	const [intervalId, setIntervalId] = useState<NodeJS.Timer | undefined>(undefined);
-
-	const startInterval = () => {
+	useEffect(() => {
 		const id = setInterval(() => {
 			const today = new Date();
 			changeTime(today);
 		}, 1000);
-		setIntervalId(id);
-	};
-
-	const stopInterval = () => {
-		if (intervalId !== undefined) {
-			clearInterval(intervalId);
-			setIntervalId(undefined);
-		}
-	};
-
-	useEffect(() => {
-		startInterval();
-		return stopInterval;
+		return () => {
+			clearInterval(id);
+		};
 	}, []);
 
 	let time = new Date();
