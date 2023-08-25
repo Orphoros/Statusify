@@ -90,6 +90,9 @@
         "https://gist.githubusercontent.com/Orphoros/88c8102cd788b7fb569141e2a75ca528/raw/"
       ],
       "dialog": true,
+      "windows": {
+        "installMode": "quiet"
+      },
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEJDNENCRTgzRkUzNDY1QkMKUldTOFpUVCtnNzVNdkhQZEcwZzI0a1didVF2eVBCRnJMR3FqcHBTMzNhKzQ2STJuaDNrY1lCVEMK"
     },
     "windows": [
