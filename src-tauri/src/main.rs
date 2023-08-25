@@ -160,9 +160,10 @@ fn main() {
     .plugin(tauri_plugin_window_state::Builder::default().build())
     .on_window_event(|event| match event.event() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
-            // on Windows, close the app
-            #[cfg(target_os = "windows")]
-            std::process::exit(0);
+            // if not on macOS, close the app
+            #[cfg(not(target_os = "macos"))]
+                std::process::exit(0);
+
             // on macOS, hide the window
             #[cfg(target_os = "macos")]
             tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
