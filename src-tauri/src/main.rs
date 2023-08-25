@@ -162,7 +162,7 @@ fn main() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
             // if not on macOS, close the app
             #[cfg(not(target_os = "macos"))]
-                std::process::exit(0);
+            event.window().close().unwrap();
 
             // on macOS, hide the window
             #[cfg(target_os = "macos")]
