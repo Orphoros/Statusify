@@ -22,10 +22,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "upgrade": "npx npm-check-updates -u && npm i"
+    "upgrade": "npx npm-check-updates -u",
+    "lock": "npm i --package-lock-only"
   },
   "dependencies": {
-    "@nextui-org/react": "^2.1.5",
+    "@nextui-org/react": "^2.1.7",
     "@tauri-apps/api": "^1.4.0",
     "framer-motion": "^10.16.1",
     "next-themes": "^0.2.1",
@@ -36,18 +37,18 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.4.0",
-    "@types/node": "^20.5.6",
+    "@types/node": "^20.5.7",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
-    "@typescript-eslint/parser": "^6.4.1",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.15",
-    "eslint": "^8.47.0",
+    "eslint": "^8.48.0",
     "eslint-config-xo": "^0.43.1",
     "eslint-config-xo-typescript": "^1.0.1",
     "eslint-plugin-react": "^7.33.2",
-    "postcss": "^8.4.28",
+    "postcss": "^8.4.29",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
