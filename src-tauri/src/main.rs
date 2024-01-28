@@ -5,7 +5,7 @@
 
 use discord_rich_presence::activity::Party;
 use log::{debug, info, error, trace};
-use sysinfo::{System, SystemExt};
+use sysinfo::{Pid, ProcessExt, System, SystemExt};
 use tauri::{State, Manager};
 use std::sync::Mutex;
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
@@ -13,6 +13,7 @@ use tauri_plugin_log::LogTarget;
 
 struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
+struct DiscordPid(Mutex<Option<Pid>>);
 
 #[tauri::command(rename_all = "camelCase")]
 fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>) -> Result<(), u8> {
@@ -93,16 +94,30 @@ fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Opti
 }
 
 #[tauri::command]
-fn is_discord_running(c: State<SysInfo>) -> bool {
+fn is_discord_running(c: State<SysInfo>, d_pid: State<DiscordPid>) -> bool {
     trace!("controlling Discord process");
 
     let mut sys = c.0.lock().unwrap();
+    let mut d_pid = d_pid.0.lock().unwrap();
 
+    // check if we already have a pid
+    if let Some(pid) = *d_pid {
+        trace!("found pid {}", pid);
+        let is_discord_running = sys.refresh_process(pid);
+        // check if the process is still running
+        if is_discord_running {
+            trace!("process {} is still running", pid);
+            return true;
+        }
+        trace!("process {} is no longer running", pid);
+        *d_pid = None;
+    }
     sys.refresh_processes();
-
     trace!("refreshed process list");
-    for _ in sys.processes_by_name("Discord") {
-        trace!("found Discord process");
+    for p in sys.processes_by_name("Discord") {
+        let pid = p.pid();
+        trace!("found {} with pid {}", p.name(), pid);
+        *d_pid = Some(pid);
         return true;
     }
     trace!("did not find Discord process");
@@ -111,11 +126,11 @@ fn is_discord_running(c: State<SysInfo>) -> bool {
 }
 
 #[tauri::command]
-fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>) -> Result<(), String> {
+fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>, discord_pid_state: State<DiscordPid>) -> Result<(), String> {
     info!("called rpc stop command");
 
     info!("checking if Discord is available");
-    if !is_discord_running(system_state) {
+    if !is_discord_running(system_state,discord_pid_state) {
         error!("discord is not running");
         return Err("Discord is not running".to_string());
     }
@@ -179,6 +194,7 @@ fn main() {
       })
     .manage(DiscordClient(Mutex::new(client)))
     .manage(SysInfo(Mutex::new(System::new())))
+    .manage(DiscordPid(Mutex::new(None)))
     .plugin(tauri_plugin_store::Builder::default().build())
         .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running])
         .run(tauri::generate_context!())
