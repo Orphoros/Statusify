@@ -3,7 +3,7 @@ import {Image, Button, Card, Tooltip, Badge, Avatar, CardHeader, Divider, CardBo
 import {message} from '@tauri-apps/api/dialog';
 import {resolveResource} from '@tauri-apps/api/path';
 import {useTauriContext} from '@/context';
-import {debug, error} from 'tauri-plugin-log-api';
+import {error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
 import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState} from '@/lib';
 

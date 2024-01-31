@@ -12,7 +12,7 @@ export default function DetailsOptionForm() {
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, detailsError: detailsHelper.error, stateError: stateHelper.error}));
-	}, [detailsHelper.error, detailsHelper.error]);
+	}, [detailsHelper.error, stateHelper.error]);
 
 	return (<div>
 		<p>Main Settings</p>
