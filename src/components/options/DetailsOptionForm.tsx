@@ -14,7 +14,7 @@ export default function DetailsOptionForm() {
 		setIpcProps(prev => ({...prev, detailsError: detailsHelper.error, stateError: stateHelper.error}));
 	}, [detailsHelper.error, detailsHelper.error]);
 
-	return (<>
+	return (<div>
 		<p>Main Settings</p>
 		<div className='flex gap-6'>
 			<Input
@@ -39,7 +39,7 @@ export default function DetailsOptionForm() {
 					setIpcProps(prev => ({...prev, details: e.target.value, detailsEnabled: containsText(e.target.value), stateEnabled: containsText(ipcProps.state)}));
 				}}
 			/>
-			<Switch className='self-start mt-1' isSelected={ipcProps.detailsEnabled} isDisabled={ipcProps.idError} onValueChange={
+			<Switch className='self-start mt-4' isSelected={ipcProps.detailsEnabled} isDisabled={ipcProps.idError} onValueChange={
 				enabled => {
 					setIpcProps(prev => ({...prev, detailsEnabled: enabled}));
 				}
@@ -68,12 +68,12 @@ export default function DetailsOptionForm() {
 					setIpcProps(prev => ({...prev, state: e.target.value, stateEnabled: containsText(e.target.value)}));
 				}}
 			/>
-			<Switch className='self-start mt-1' isSelected={ipcProps.stateEnabled} isDisabled={ipcProps.idError! || !ipcProps.detailsEnabled || !containsText(ipcProps.details)} onValueChange={
+			<Switch className='self-start mt-4' isSelected={ipcProps.stateEnabled} isDisabled={ipcProps.idError! || !ipcProps.detailsEnabled || !containsText(ipcProps.details)} onValueChange={
 				enabled => {
 					setIpcProps(prev => ({...prev, stateEnabled: enabled}));
 				}
 			}/>
 		</div>
-	</>
+	</div>
 	);
 }

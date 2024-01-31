@@ -14,44 +14,45 @@ export default function PartyOptionForm() {
 		setIpcProps(prev => ({...prev, partyError: minHelper.error || maxHelper.error}));
 	}, [minHelper.error, maxHelper.error]);
 
-	return (<>
-		<p>Party Settings</p>
-		<div className='flex gap-6'>
-			<Input
-				variant='underlined'
-				label='Current'
-				placeholder='0'
-				defaultValue={ipcProps.partySize?.toString()}
-				errorMessage={minHelper.text}
-				color={minHelper.color}
-				isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
-				className='h-20'
-				width='100%'
-				onChange={e => {
-					setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
-				}}
-			/>
-			<Input
-				variant='underlined'
-				label='Max'
-				placeholder='0'
-				defaultValue={ipcProps.partyMax?.toString()}
-				errorMessage={maxHelper.text}
-				color={maxHelper.color}
-				isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
-				className='h-20'
-				width='100%'
-				onChange={e => {
-					setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
-				}}
-			/>
+	return (
+		<div>
+			<p>Party Settings</p>
+			<div className='flex gap-6'>
+				<Input
+					variant='underlined'
+					label='Current'
+					placeholder='0'
+					defaultValue={ipcProps.partySize?.toString()}
+					errorMessage={minHelper.text}
+					color={minHelper.color}
+					isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
+					className='h-20'
+					width='100%'
+					onChange={e => {
+						setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
+					}}
+				/>
+				<Input
+					variant='underlined'
+					label='Max'
+					placeholder='0'
+					defaultValue={ipcProps.partyMax?.toString()}
+					errorMessage={maxHelper.text}
+					color={maxHelper.color}
+					isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
+					className='h-20'
+					width='100%'
+					onChange={e => {
+						setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
+					}}
+				/>
 
-			<Switch className='self-start mt-4' isSelected={ipcProps.partyEnabled} isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled} onValueChange={
-				enabled => {
-					setIpcProps(prev => ({...prev, partyEnabled: enabled}));
-				}
-			}/>
+				<Switch className='self-start mt-4' isSelected={ipcProps.partyEnabled} isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled} onValueChange={
+					enabled => {
+						setIpcProps(prev => ({...prev, partyEnabled: enabled}));
+					}
+				}/>
+			</div>
 		</div>
-	</>
 	);
 }
