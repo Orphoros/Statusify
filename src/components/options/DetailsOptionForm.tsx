@@ -16,9 +16,9 @@ export default function DetailsOptionForm() {
 
 	return (<div>
 		<p>Main Settings</p>
-		<div className='flex gap-6'>
+		<div className='flex gap-6 mb-2'>
 			<Input
-				variant='underlined'
+				variant='bordered'
 				className='h-14'
 				isClearable
 				placeholder='main cation'
@@ -47,7 +47,7 @@ export default function DetailsOptionForm() {
 		</div>
 		<div className='flex gap-6'>
 			<Input
-				variant='underlined'
+				variant='bordered'
 				className='h-14'
 				isClearable
 				defaultValue={ipcProps.state}

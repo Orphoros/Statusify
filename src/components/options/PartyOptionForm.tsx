@@ -19,7 +19,7 @@ export default function PartyOptionForm() {
 			<p>Party Settings</p>
 			<div className='flex gap-6'>
 				<Input
-					variant='underlined'
+					variant='bordered'
 					label='Current'
 					placeholder='0'
 					defaultValue={ipcProps.partySize?.toString()}
@@ -33,7 +33,7 @@ export default function PartyOptionForm() {
 					}}
 				/>
 				<Input
-					variant='underlined'
+					variant='bordered'
 					label='Max'
 					placeholder='0'
 					defaultValue={ipcProps.partyMax?.toString()}

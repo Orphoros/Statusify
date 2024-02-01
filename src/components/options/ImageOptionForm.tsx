@@ -18,9 +18,9 @@ export default function ImageOptionForm() {
 		<div>
 			<p>Image Settings</p>
 			<p className='text-primary-500 text-sm'>Large Image Settings</p>
-			<div className='flex gap-6'>
+			<div className='flex gap-6 mb-2'>
 				<Input
-					variant='underlined'
+					variant='bordered'
 					isClearable
 					placeholder='large image resource name'
 					className='h-14'
@@ -48,7 +48,7 @@ export default function ImageOptionForm() {
 			</div>
 			<div className='flex gap-6 mb-6'>
 				<Input
-					variant='underlined'
+					variant='bordered'
 					isClearable
 					placeholder='large image tooltip'
 					className='h-14'
@@ -78,9 +78,9 @@ export default function ImageOptionForm() {
 				</div>
 			</div>
 			<p className='text-primary-500 text-sm'>Small Image Settings</p>
-			<div className='flex gap-6'>
+			<div className='flex gap-6 mb-2'>
 				<Input
-					variant='underlined'
+					variant='bordered'
 					isClearable
 					className='h-14'
 					placeholder='small image resource name'
@@ -108,7 +108,7 @@ export default function ImageOptionForm() {
 			</div>
 			<div className='flex gap-6'>
 				<Input
-					variant='underlined'
+					variant='bordered'
 					isClearable
 					placeholder='small image tooltip'
 					className='h-14'

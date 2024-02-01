@@ -20,7 +20,7 @@ export default function ButtonOptionForm() {
 			<p className='text-primary-500 text-sm'>Button</p>
 			<div className='flex gap-6'>
 				<Input
-					variant='underlined'
+					variant='bordered'
 					placeholder='button text'
 					isClearable
 					width='100%'
