@@ -26,7 +26,7 @@ export default function ImageOptionForm() {
 					className='h-14'
 					color='primary'
 					width='100%'
-					defaultValue={ipcProps.largeImage}
+					value={ipcProps.largeImage}
 					isDisabled={ipcProps.idError}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-16'>
@@ -55,7 +55,7 @@ export default function ImageOptionForm() {
 					errorMessage={largeImageTooltipHelper.text}
 					color={largeImageTooltipHelper.color}
 					width='100%'
-					defaultValue={ipcProps.largeImageTooltip}
+					value={ipcProps.largeImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-16'>
@@ -86,7 +86,7 @@ export default function ImageOptionForm() {
 					placeholder='small image resource name'
 					color='primary'
 					width='100%'
-					defaultValue={ipcProps.smallImage}
+					value={ipcProps.smallImage}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-16'>
@@ -115,7 +115,7 @@ export default function ImageOptionForm() {
 					width='100%'
 					errorMessage={smallImageTooltipHelper.text}
 					color={smallImageTooltipHelper.color}
-					defaultValue={ipcProps.smallImageTooltip}
+					value={ipcProps.smallImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled || !ipcProps.smallImageEnabled}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-16'>

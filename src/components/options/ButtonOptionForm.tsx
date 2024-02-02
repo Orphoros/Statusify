@@ -28,7 +28,7 @@ export default function ButtonOptionForm() {
 					errorMessage={buttonTextHelper.text}
 					color={buttonTextHelper.color}
 					isDisabled={ipcProps.idError}
-					defaultValue={ipcProps.buttonText}
+					value={ipcProps.buttonText}
 					onClear={() => {
 						setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
 					}}

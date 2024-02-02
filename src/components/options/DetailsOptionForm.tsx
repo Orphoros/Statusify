@@ -22,7 +22,7 @@ export default function DetailsOptionForm() {
 				className='h-14'
 				isClearable
 				placeholder='main cation'
-				defaultValue={ipcProps.details}
+				value={ipcProps.details}
 				width='100%'
 				errorMessage={detailsHelper.text}
 				color={detailsHelper.color}
@@ -50,7 +50,7 @@ export default function DetailsOptionForm() {
 				variant='bordered'
 				className='h-14'
 				isClearable
-				defaultValue={ipcProps.state}
+				value={ipcProps.state}
 				placeholder='the current state'
 				errorMessage={stateHelper.text}
 				color={stateHelper.color}
