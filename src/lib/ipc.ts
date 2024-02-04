@@ -12,7 +12,7 @@ enum IpcError {
 }
 
 export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
-	void debug('Attempting to start RPC');
+	void debug('attempting to start RPC');
 
 	const party = showParty(ipcProps) ? [ipcProps.partySize, ipcProps.partyMax] : undefined;
 	const buttons = showButton(ipcProps) ? [[ipcProps.buttonText, ipcProps.buttonProtocol! + ipcProps.buttonUrl!]] : undefined;

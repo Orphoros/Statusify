@@ -10,10 +10,12 @@ use tauri::{State, Manager};
 use std::sync::Mutex;
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use tauri_plugin_log::LogTarget;
+use std::thread;
 
 struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
 struct DiscordPid(Mutex<Option<Pid>>);
+struct DiscordState(Mutex<bool>);
 
 #[tauri::command(rename_all = "camelCase")]
 fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>) -> Result<(), u8> {
@@ -172,7 +174,6 @@ fn main() {
         }
     )
     .build())
-    .plugin(tauri_plugin_window_state::Builder::default().build())
     .on_window_event(|event| match event.event() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
             // if not on macOS, close the app
@@ -186,19 +187,39 @@ fn main() {
         }
         _ => {}
       })
-      .setup(|app| {
-        let main_window = app.get_window("main").unwrap();
-        main_window.hide().unwrap();
-
-        Ok(())
-      })
     .manage(DiscordClient(Mutex::new(client)))
     .manage(SysInfo(Mutex::new(System::new())))
     .manage(DiscordPid(Mutex::new(None)))
+    .manage(DiscordState(Mutex::new(false)))
     .plugin(tauri_plugin_store::Builder::default().build())
-        .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+    .setup(|app| {
+        let main_window = app.get_window("main").unwrap();
+        main_window.hide().unwrap();
+        let handle = app.handle();
 
-    info!("Exiting");
+        thread::spawn(move || {
+            loop {
+                thread::sleep(std::time::Duration::from_millis(500));
+                let system_state = handle.state::<SysInfo>();
+                let discord_pid_state = handle.state::<DiscordPid>();
+                let discord_state = handle.state::<DiscordState>();
+
+                let is_running = is_discord_running(system_state, discord_pid_state);
+                let mut state = discord_state.0.lock().unwrap();
+
+                if *state != is_running {
+                    *state = is_running;
+                    handle.emit_all("discord-state-change", is_running).unwrap();
+                }
+            }
+        });
+
+        Ok(())
+      })
+    .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running])
+    .plugin(tauri_plugin_window_state::Builder::default().build())
+    .run(tauri::generate_context!())
+    .expect("error while running tauri application");
+
+    info!("exiting");
 }
