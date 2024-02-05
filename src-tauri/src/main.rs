@@ -17,6 +17,8 @@ struct SysInfo(Mutex<System>);
 struct DiscordPid(Mutex<Option<Pid>>);
 struct DiscordState(Mutex<bool>);
 
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 #[tauri::command(rename_all = "camelCase")]
 fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>) -> Result<(), u8> {
     info!("called rpc start command");
@@ -193,6 +195,7 @@ fn main() {
     .manage(DiscordState(Mutex::new(false)))
     .plugin(tauri_plugin_store::Builder::default().build())
     .setup(|app| {
+        debug!("setting up app (v{})", VERSION);
         let main_window = app.get_window("main").unwrap();
         main_window.hide().unwrap();
         let handle = app.handle();
