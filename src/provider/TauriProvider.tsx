@@ -16,9 +16,11 @@ export default function TauriProvider({children}: {children: React.ReactNode}) {
 	}, 'ipc.dat');
 
 	useLayoutEffect(() => {
-		void appWindow.show().catch(async () => {
-			await error('failed to show main app window');
-		});
+		setTimeout(() => {
+			void appWindow.show().catch(async () => {
+				await error('failed to show main app window');
+			});
+		}, 300); // Wait a bit so the window is ready and no flickering occurs
 	}, []);
 
 	return (
