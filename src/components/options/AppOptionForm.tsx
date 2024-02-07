@@ -18,7 +18,7 @@ export default function AppOptionForm() {
 			<div className='flex justify-center mt-2'>
 				<Input
 					isRequired
-					className='max-w-[11.5rem]'
+					className='max-w-[11.5rem] h-[4.5rem]'
 					size='sm'
 					defaultValue={ipcProps.id}
 					label='App ID'

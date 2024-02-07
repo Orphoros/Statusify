@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - [No ETA]
+
+### Fixed
+ 
+- App ID input field height is now static and does not move when the error message is shown
  
 ## [0.0.4] - 2024-02-07
  
