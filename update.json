@@ -1,23 +1,23 @@
 {
-  "version": "0.0.3",
-  "notes": "Bug fixes and performance improvements",
-  "pub_date": "2024-02-01T20:16:00.000Z",
+  "version": "0.0.4",
+  "notes": "Fixed input clear button bug and made the interface more compact",
+  "pub_date": "2024-02-07T09:26:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.3/Statusify-update.darwin-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.darwin-x86_64.tar.gz"
     },
     "darwin-aarch64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.3/Statusify-update.darwin-aarch64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.darwin-aarch64.tar.gz"
     },
     "linux-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.3/Statusify-update.linux-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.linux-x86_64.tar.gz"
     },
     "windows-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.3/Statusify-update.windows-x86_64.zip"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.windows-x86_64.zip"
     }
   }
 }
