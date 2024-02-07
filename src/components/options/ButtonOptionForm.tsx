@@ -17,14 +17,16 @@ export default function ButtonOptionForm() {
 	return (
 		<div>
 			<p>Button Settings</p>
-			<p className='text-primary-500 text-sm'>Button</p>
+			<p className='text-primary-500 text-sm mb-5'>Button</p>
 			<div className='flex gap-6'>
 				<Input
 					variant='bordered'
 					placeholder='button text'
 					isClearable
 					width='100%'
-					className='h-14'
+					className='h-11'
+					labelPlacement='outside'
+					size='sm'
 					errorMessage={buttonTextHelper.text}
 					color={buttonTextHelper.color}
 					isDisabled={ipcProps.idError}
@@ -33,7 +35,7 @@ export default function ButtonOptionForm() {
 						setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
 					}}
 					startContent={
-						<div className='pointer-events-none flex shrink-0 items-center w-16'>
+						<div className='pointer-events-none flex shrink-0 items-center w-11'>
 							<span className={`${buttonTextHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>label</span>
 						</div>
 					}
@@ -45,7 +47,9 @@ export default function ButtonOptionForm() {
 					variant='bordered'
 					isClearable
 					width='100%'
-					className='h-16'
+					className='h-11'
+					labelPlacement='outside'
+					size='sm'
 					color={buttonUrlHelper.color}
 					errorMessage={buttonUrlHelper.text}
 					isDisabled={ipcProps.idError}
@@ -54,7 +58,7 @@ export default function ButtonOptionForm() {
 						setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));
 					}}
 					startContent={
-						<div className='pointer-events-none flex items-center w-16'>
+						<div className='pointer-events-none flex items-center w-11'>
 							<span className={`${buttonUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{ipcProps.buttonProtocol}</span>
 						</div>
 					}
@@ -71,7 +75,7 @@ export default function ButtonOptionForm() {
 						setIpcProps(prev => ({...prev, buttonProtocol: protocol, buttonUrl: url, buttonEnabled: containsText(value) && containsText(ipcProps.buttonText)}));
 					}}
 				/>
-				<Switch className='self-start mt-4' isSelected={ipcProps.buttonEnabled} isDisabled={ipcProps.idError} onValueChange={
+				<Switch className='self-start mt-0' isSelected={ipcProps.buttonEnabled} isDisabled={ipcProps.idError} onValueChange={
 					enabled => {
 						setIpcProps(prev => ({...prev, buttonEnabled: enabled}));
 					}

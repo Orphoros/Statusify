@@ -13,7 +13,7 @@ export default function TimeOptionForm() {
 	return (
 		<div>
 			<p>Timer Settings</p>
-			<p className='text-primary-500 text-sm mb-4'>Start from:</p>
+			<p className='text-primary-500 text-sm mb-5'>Start from:</p>
 			<div className='flex gap-6 items-center'>
 				<div className='flex flex-grow gap-3 items-center'>
 					<Input
@@ -21,7 +21,9 @@ export default function TimeOptionForm() {
 						radius='full'
 						type='time'
 						color='primary'
-						className='max-w-[9rem]'
+						className='max-w-[7rem]'
+						labelPlacement='outside'
+						size='sm'
 						defaultValue={`${time.getHours() < 10 ? '0' : ''}${time.getHours()}:${time.getMinutes() < 10 ? '0' : ''}${time.getMinutes()}`}
 						isDisabled={ipcProps.idError! || ipcProps.timeIsCurrent}
 						onChange={e => {

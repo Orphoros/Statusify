@@ -16,7 +16,7 @@ export default function PartyOptionForm() {
 
 	return (
 		<div>
-			<p>Party Settings</p>
+			<p className='mb-5'>Party Settings</p>
 			<div className='flex gap-6'>
 				<Input
 					variant='bordered'
@@ -26,7 +26,9 @@ export default function PartyOptionForm() {
 					errorMessage={minHelper.text}
 					color={minHelper.color}
 					isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
-					className='h-20'
+					className='h-11'
+					labelPlacement='outside'
+					size='sm'
 					width='100%'
 					onChange={e => {
 						setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
@@ -40,14 +42,16 @@ export default function PartyOptionForm() {
 					errorMessage={maxHelper.text}
 					color={maxHelper.color}
 					isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
-					className='h-20'
+					className='h-11'
+					labelPlacement='outside'
+					size='sm'
 					width='100%'
 					onChange={e => {
 						setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
 					}}
 				/>
 
-				<Switch className='self-start mt-4' isSelected={ipcProps.partyEnabled} isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled} onValueChange={
+				<Switch className='self-start mt-6' isSelected={ipcProps.partyEnabled} isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled} onValueChange={
 					enabled => {
 						setIpcProps(prev => ({...prev, partyEnabled: enabled}));
 					}
