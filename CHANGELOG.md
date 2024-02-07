@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
  
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
- 
+
 ## [Unreleased] - [No ETA]
+ 
+## [0.0.4] - 2024-02-07
  
 ### Added
 
@@ -16,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Client detection is now sent in events instead of running a command from the frontend
+- Input fields are smaller to make the app more compact
  
 ### Fixed
  
