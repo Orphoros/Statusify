@@ -9,6 +9,8 @@ enum IpcError {
 	DiscordConnectionErr = 102,
 	ActivitySetErr = 103,
 	IpcRecvErr = 104,
+	DiscordNotRunning = 105,
+	DiscordError = 106,
 }
 
 export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
@@ -93,6 +95,12 @@ function handleIpcError(err: IpcError): void {
 			break;
 		case IpcError.IpcRecvErr:
 			message('App ID or your settings are invalid', {title: 'Statusify', type: 'error'}).catch(error);
+			break;
+		case IpcError.DiscordNotRunning:
+			message('Discord is not running', {title: 'Statusify', type: 'error'}).catch(error);
+			break;
+		case IpcError.DiscordError:
+			message('Could not perform action due to an error on Discord\'s side. Discord might be closed', {title: 'Statusify', type: 'error'}).catch(error);
 			break;
 		default:
 			message('Unknown error', {title: 'Statusify', type: 'error'}).catch(error);

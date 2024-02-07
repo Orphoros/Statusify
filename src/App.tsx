@@ -1,42 +1,15 @@
 import React, {useLayoutEffect} from 'react';
-import {attachConsole, debug, error, info} from 'tauri-plugin-log-api';
-import {listen} from '@tauri-apps/api/event';
+import {attachConsole, debug, info} from 'tauri-plugin-log-api';
 import {MainView} from '@/views';
 import {useTauriContext} from '@/context';
-import {invoke} from '@tauri-apps/api/tauri';
 
 function App() {
-	const {setIsDiscordRunning, setIsSessionRunning, ipcProps, setIpcProps} = useTauriContext();
+	const {ipcProps, setIpcProps} = useTauriContext();
 
 	const disableMenu = () => {
 		window.addEventListener('contextmenu', e => {
 			e.preventDefault();
 		}, false);
-	};
-
-	const checkDiscordRunning = async () => {
-		invoke('is_discord_running')
-			.then(result => {
-				const isRunning = result as boolean;
-				setIsDiscordRunning(isRunning);
-				void debug(`found client on startup: ${isRunning}`);
-				if (!isRunning) {
-					setIsSessionRunning(false);
-				}
-			})
-			.catch(async err => {
-				setIsDiscordRunning(false);
-				void error(`error while checking client's status: ${err as string}`);
-			});
-
-		await listen('discord-state-change', event => {
-			const isRunning = event.payload as boolean;
-			void debug(`client state changed to: ${isRunning}`);
-			setIsDiscordRunning(isRunning);
-			if (!isRunning) {
-				setIsSessionRunning(false);
-			}
-		});
 	};
 
 	const correctIpcTime = () => {
@@ -65,8 +38,6 @@ function App() {
 
 		const init = async () => {
 			await attachConsole();
-
-			await checkDiscordRunning();
 
 			disableMenu();
 

@@ -10,7 +10,6 @@ use tauri::{State, Manager};
 use std::sync::Mutex;
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use tauri_plugin_log::LogTarget;
-use std::thread;
 
 struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
@@ -130,13 +129,13 @@ fn is_discord_running(c: State<SysInfo>, d_pid: State<DiscordPid>) -> bool {
 }
 
 #[tauri::command]
-fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>, discord_pid_state: State<DiscordPid>) -> Result<(), String> {
+fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>, discord_pid_state: State<DiscordPid>) -> Result<(), u8> {
     info!("called rpc stop command");
 
     info!("checking if Discord is available");
     if !is_discord_running(system_state,discord_pid_state) {
         error!("discord is not running");
-        return Err("Discord is not running".to_string());
+        return Err(105);
     }
 
     let mut client = client_state.0.lock().unwrap();
@@ -146,7 +145,7 @@ fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>, di
     client.clear_activity().map_err(|e| {
         let msg = "could not clear activity";
         error!("{}: {}", msg, e);
-        return msg;
+        return 106;
     })?;
     Ok(())
 }
@@ -199,25 +198,6 @@ fn main() {
         debug!("setting up app (v{})", VERSION);
         let main_window = app.get_window("main").unwrap();
         main_window.hide().unwrap();
-        let handle = app.handle();
-
-        thread::spawn(move || {
-            loop {
-                thread::sleep(std::time::Duration::from_millis(500));
-                let system_state = handle.state::<SysInfo>();
-                let discord_pid_state = handle.state::<DiscordPid>();
-                let discord_state = handle.state::<DiscordState>();
-
-                let is_running = is_discord_running(system_state, discord_pid_state);
-                let mut state = discord_state.0.lock().unwrap();
-
-                if *state != is_running {
-                    *state = is_running;
-                    handle.emit_all("discord-state-change", is_running).unwrap();
-                }
-            }
-        });
-
         Ok(())
       })
     .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running])

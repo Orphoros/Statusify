@@ -5,12 +5,12 @@ import {startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';
 
 export default function TitleBar() {
-	const {isDiscordRunning, isSessionRunning, setIsSessionRunning, ipcProps} = useTauriContext();
+	const {isSessionRunning, setIsSessionRunning, ipcProps} = useTauriContext();
 
-	const buttonDisabled = !isDiscordRunning || isSessionRunning || !ipcProps.id || ipcProps.idError;
+	const buttonDisabled = isSessionRunning || !ipcProps.id || ipcProps.idError;
 
-	const indicatorColor = isDiscordRunning ? (isSessionRunning ? 'success' : 'warning') : 'danger' as ColorBrand;
-	const indicatorText = isDiscordRunning ? (isSessionRunning ? 'Displaying activity' : 'Connected to Discord') : 'Disconnected from Discord';
+	const indicatorColor = isSessionRunning ? 'success' : 'warning' as ColorBrand;
+	const indicatorText = isSessionRunning ? 'Displaying activity' : 'Idle';
 	const [showLoading, setShowLoading] = React.useState<boolean>(false);
 
 	return (

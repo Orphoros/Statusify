@@ -7,7 +7,6 @@ import {error} from 'tauri-plugin-log-api';
 import {LoadingView} from '@/views';
 
 export default function TauriProvider({children}: {children: React.ReactNode}) {
-	const [isDiscordRunning, setIsDiscordRunning] = useState<boolean>(false);
 	const [isSessionRunning, setIsSessionRunning] = useState<boolean>(false);
 	const [ipcProps, setIpcProps, loading] = useTauriStore<IpcProps>('ipcProps', {
 		timeAsStart: Date.now(),
@@ -25,8 +24,6 @@ export default function TauriProvider({children}: {children: React.ReactNode}) {
 
 	return (
 		<TauriContext.Provider value={{
-			isDiscordRunning,
-			setIsDiscordRunning,
 			isSessionRunning,
 			setIsSessionRunning,
 			ipcProps,

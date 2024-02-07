@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
  
 - App ID input field height is now static and does not move when the error message is shown
+- Removed automatic client detection to save resources
  
 ## [0.0.4] - 2024-02-07
  
