@@ -155,27 +155,28 @@ fn main() {
     let client = DiscordIpcClient::new("-1").unwrap();
 
     tauri::Builder::default()
-    .plugin(tauri_plugin_log::Builder::default().level(
-        log::LevelFilter::Debug,
+    .plugin(tauri_plugin_log::Builder::default()
+        .level(
+            log::LevelFilter::Debug,
+        )
+        .targets([
+            LogTarget::Stdout,
+            LogTarget::LogDir,
+        ])
+        .format(
+            |callback, message, record| {
+                let format =
+                time::format_description::parse("[[[year]-[month]-[day]][[[hour]:[minute]:[second]]")
+                    .unwrap();
+                callback.finish(format_args!(
+                    "{}[{}] {}",
+                    time::OffsetDateTime::now_utc().format(&format).unwrap(),
+                    record.level(),
+                    message
+                ))
+            }
+        ).build()
     )
-    .targets([
-        LogTarget::Stdout,
-        LogTarget::LogDir,
-    ])
-    .format(
-        |callback, message, record| {
-            let format =
-            time::format_description::parse("[[[year]-[month]-[day]][[[hour]:[minute]:[second]]")
-                .unwrap();
-            callback.finish(format_args!(
-                "{}[{}] {}",
-                time::OffsetDateTime::now_utc().format(&format).unwrap(),
-                record.level(),
-                message
-            ))
-        }
-    )
-    .build())
     .on_window_event(|event| match event.event() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
             // if not on macOS, close the app
