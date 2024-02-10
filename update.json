@@ -1,23 +1,23 @@
 {
-  "version": "0.0.4",
-  "notes": "Fixed input clear button bug and made the interface more compact",
+  "version": "0.0.5",
+  "notes": "Client is no longer autodetected if it is running to save resources.",
   "pub_date": "2024-02-07T09:26:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.darwin-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.5/Statusify-update.darwin-x86_64.tar.gz"
     },
     "darwin-aarch64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.darwin-aarch64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.5/Statusify-update.darwin-aarch64.tar.gz"
     },
     "linux-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.linux-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.5/Statusify-update.linux-x86_64.tar.gz"
     },
     "windows-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.4/Statusify-update.windows-x86_64.zip"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.5/Statusify-update.windows-x86_64.zip"
     }
   }
 }

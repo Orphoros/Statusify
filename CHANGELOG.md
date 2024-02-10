@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - [No ETA]
 
+## [0.0.5] - 2024-02-10
+
 ### Fixed
- 
+
 - App ID input field height is now static and does not move when the error message is shown
 - Removed automatic client detection to save resources
+- Text overflow in the preview is now hidden with an ellipsis
  
 ## [0.0.4] - 2024-02-07
  
