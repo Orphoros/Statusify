@@ -97,9 +97,9 @@ export default function PreviewCard() {
 								/>
 							</Tooltip>
 						</Badge>}
-						<div className='flex flex-col align justify-center'>
+						<div className='flex flex-col align justify-center truncate'>
 							<p className='text-sm font-bold'>Your app name</p>
-							{showDetails(ipcProps) && <p className='text-sm'>{ipcProps.details ?? ''}</p>}
+							{showDetails(ipcProps) && <p className='text-sm text-ellipsis overflow-hidden'>{ipcProps.details ?? ''}</p>}
 							{showState(ipcProps) && <p className='text-sm'>{(ipcProps.state ?? '') + (showParty(ipcProps) ? (` (${ipcProps.partySize ?? 0} of ${ipcProps.partyMax ?? 0})`) : '')}</p>}
 							{showGivenTime(ipcProps) && <p className='text-sm'>{`${hoursElapsed > 0 ? `${hoursToDisplay}:` : ''}${minutesToDisplay}:${secondsToDisplay} elapsed`}</p>}
 							{showCurrentTime(ipcProps) && <p className='text-sm'>Current time here once started</p>}
