@@ -20,14 +20,6 @@ export default function TauriProvider({children, osType}: TauriProviderProps) {
 		buttonProtocol: 'https://',
 	}, 'ipc.dat');
 
-	useLayoutEffect(() => {
-		setTimeout(() => {
-			void appWindow.show().catch(async () => {
-				await error('failed to show main app window');
-			});
-		}, 300); // Wait a bit so the window is ready and no flickering occurs
-	}, []);
-
 	return (
 		<TauriContext.Provider value={{
 			osType,

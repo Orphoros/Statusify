@@ -109,7 +109,7 @@
         "width": 1000,
         "minHeight": 500,
         "minWidth": 1000,
-        "visible": false,
+        "visible": true,
         "transparent": true
       }
     ]

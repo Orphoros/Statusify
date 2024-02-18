@@ -204,7 +204,6 @@ fn main() {
     .setup(|app| {
         info!("setting up app (v{})", VERSION);
         let main_window = app.get_window("main").unwrap();
-        main_window.hide().unwrap();
 
         #[cfg(target_os = "macos")]
         apply_vibrancy(&main_window, NSVisualEffectMaterial::Sidebar, None, None)

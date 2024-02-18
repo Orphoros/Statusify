@@ -16,16 +16,17 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 			void debug('initializing app...');
 
 			const platformName = await type();
+
 			setPlatformName(platformName);
 			void debug(`running on ${platformName}`);
-			if (platformName === 'Windows_NT' || platformName === 'Darwin') {
-				void debug('disabling window background to enable window vibrancy');
+			if (platformName !== 'Windows_NT' && platformName !== 'Darwin') {
+				void warn('running on unsupported OS for window vibrancy, disabling transparency');
 				const html = document.querySelector('html');
 				if (html) {
-					html.style.setProperty('background', 'transparent', 'important');
+					html.style.removeProperty('background');
 				}
 			} else {
-				void warn('running on unsupported OS for window vibrancy');
+				void debug('window vibrancy supported, keeping transparency');
 			}
 		};
 
