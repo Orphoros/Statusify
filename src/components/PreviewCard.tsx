@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Button, Card, Tooltip, Badge, Avatar, CardHeader, Divider, CardBody} from '@nextui-org/react';
+import {
+	Image, Button, Card, Tooltip, Badge, Avatar, CardHeader, Divider, CardBody,
+} from '@nextui-org/react';
 import {message} from '@tauri-apps/api/dialog';
 import {resolveResource} from '@tauri-apps/api/path';
 import {useTauriContext} from '@/context';
 import {error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
-import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState} from '@/lib';
+import {
+	showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
+} from '@/lib';
 
 export default function PreviewCard() {
-	const {ipcProps} = useTauriContext();
+	const {ipcProps, showVibrancy} = useTauriContext();
 
 	const [largeImage, setLargeImage] = useState<string>('');
 	const [smallImage, setSmallImage] = useState<string>('');
@@ -69,7 +73,7 @@ export default function PreviewCard() {
 	setInterval(checkTime, 1000);
 
 	return (
-		<Card className='w-[380px] h-[300px] bg-content2' shadow='none'>
+		<Card className={`w-[380px] h-[300px] ${showVibrancy ? 'bg-content1  bg-opacity-50' : 'bg-content2'} m-14 rounded-2xl`} shadow='none'>
 			<CardHeader>
 				<p>Preview</p>
 			</CardHeader>

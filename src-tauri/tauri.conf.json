@@ -13,6 +13,9 @@
   "tauri": {
     "allowlist": {
       "all": false,
+      "os": {
+        "all": true
+      },
       "shell": {
         "all": false,
         "open": true
@@ -95,6 +98,7 @@
       },
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEJDNENCRTgzRkUzNDY1QkMKUldTOFpUVCtnNzVNdkhQZEcwZzI0a1didVF2eVBCRnJMR3FqcHBTMzNhKzQ2STJuaDNrY1lCVEMK"
     },
+    "macOSPrivateApi": true,
     "windows": [
       {
         "label": "main",
@@ -105,7 +109,8 @@
         "width": 1000,
         "minHeight": 500,
         "minWidth": 1000,
-        "visible": false
+        "visible": false,
+        "transparent": true
       }
     ]
   }

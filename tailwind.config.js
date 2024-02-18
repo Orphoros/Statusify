@@ -7,17 +7,17 @@ export default {
 		'./src/**/*.{js,jsx,ts,tsx}',
 		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
 	],
-	theme: {
-		extend: {},
-	},
+
 	darkMode: 'class',
 	plugins: [nextui({
 		themes: {
 			light: {
+				extend: 'light',
 				layout: {},
 				colors: {},
 			},
 			dark: {
+				extend: 'dark',
 				layout: {},
 				colors: {},
 			},

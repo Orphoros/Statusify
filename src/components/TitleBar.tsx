@@ -5,7 +5,7 @@ import {startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';
 
 export default function TitleBar() {
-	const {isSessionRunning, setIsSessionRunning, ipcProps} = useTauriContext();
+	const {isSessionRunning, setIsSessionRunning, ipcProps, showVibrancy} = useTauriContext();
 
 	const buttonDisabled = isSessionRunning || !ipcProps.id || ipcProps.idError;
 
@@ -14,9 +14,9 @@ export default function TitleBar() {
 	const [showLoading, setShowLoading] = React.useState<boolean>(false);
 
 	return (
-		<div className='p-2 m-0 bg-primary flex justify-between items-center'>
-			<Chip className='border-0 text-white' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
-			{!isSessionRunning && <Button className='bg-white w-20 text-primary-400 disabled:bg-gray-300 disabled:text-gray-500' variant='solid' color='default' size='sm' disabled={buttonDisabled} isLoading={showLoading} onClick={
+		<div className={`p-2 m-0 ${showVibrancy ? 'bg-content1 bg-opacity-50' : 'bg-content2'} flex justify-between items-center`}>
+			<Chip className='border-0' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
+			{!isSessionRunning && <Button className='w-20' variant='solid' color='primary' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
 				async () => {
 					setShowLoading(true);
 					const isSuccess = await startIpc(ipcProps);

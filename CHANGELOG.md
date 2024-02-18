@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - [No ETA]
 
+### Added
+
+- New window vibrancy (blurred transparency) design for macOS and Windows to allow for a more native and modern look
+- New simplified design for Linux
+
 ## [0.0.5] - 2024-02-10
 
 ### Fixed

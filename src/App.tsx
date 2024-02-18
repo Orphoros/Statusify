@@ -1,5 +1,5 @@
 import React, {useLayoutEffect} from 'react';
-import {attachConsole, debug, info} from 'tauri-plugin-log-api';
+import {debug, info} from 'tauri-plugin-log-api';
 import {MainView} from '@/views';
 import {useTauriContext} from '@/context';
 
@@ -34,11 +34,7 @@ function App() {
 	};
 
 	useLayoutEffect(() => {
-		void debug('initializing app...');
-
 		const init = async () => {
-			await attachConsole();
-
 			disableMenu();
 
 			correctIpcTime();
