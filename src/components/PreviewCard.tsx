@@ -73,7 +73,7 @@ export default function PreviewCard() {
 	setInterval(checkTime, 1000);
 
 	return (
-		<Card className={`w-[380px] h-[300px] ${showVibrancy ? 'bg-content1  bg-opacity-50' : 'bg-content2'} m-14 rounded-2xl`} shadow='none'>
+		<Card className={`w-[380px] h-[300px] ${showVibrancy ? 'bg-content1  bg-opacity-50' : 'bg-content2'} rounded-2xl`} shadow='none'>
 			<CardHeader>
 				<p>Preview</p>
 			</CardHeader>
