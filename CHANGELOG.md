@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- New window vibrancy (blurred transparency) design for macOS and Windows to allow for a more native and modern look
-- New simplified design for Linux
+- New window vibrancy (blurred transparency) design for macOS to allow for a more native and modern look
+- New simplified design for Linux and Windows
 
 ### Fixed
 
