@@ -1,9 +1,7 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {TauriContext} from '@/context';
 import {type IpcProps} from '@/types';
 import {useTauriStore} from '@/store/TauriStore';
-import {appWindow} from '@tauri-apps/api/window';
-import {error} from 'tauri-plugin-log-api';
 import {LoadingView} from '@/views';
 import {type OsType} from '@tauri-apps/api/os';
 
@@ -22,8 +20,7 @@ export default function TauriProvider({children, osType}: TauriProviderProps) {
 
 	return (
 		<TauriContext.Provider value={{
-			osType,
-			showVibrancy: osType === 'Windows_NT' || osType === 'Darwin',
+			osType,			showVibrancy: osType === 'Darwin',
 			isSessionRunning,
 			setIsSessionRunning,
 			ipcProps,
