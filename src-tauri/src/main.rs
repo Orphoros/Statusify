@@ -16,7 +16,7 @@ use std::env;
 use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 
 #[cfg(target_os = "windows")]
-use window_vibrancy::apply_blur;
+use window_vibrancy::apply_acrylic;
 
 struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
@@ -210,7 +210,7 @@ fn main() {
             .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
 
         #[cfg(target_os = "windows")]
-        apply_blur(&main_window, Some((0, 0, 0, 10)))
+        apply_acrylic(&main_window, Some((0, 0, 0, 10)))
             .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
 
         Ok(())
