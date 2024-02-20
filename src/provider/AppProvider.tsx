@@ -19,14 +19,14 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 
 			setPlatformName(platformName);
 			void debug(`running on ${platformName}`);
-			if (platformName !== 'Windows_NT' && platformName !== 'Darwin') {
+			if (platformName === 'Darwin') {
+				void debug('window vibrancy supported, keeping transparency');
+			} else {
 				void warn('running on unsupported OS for window vibrancy, disabling transparency');
 				const html = document.querySelector('html');
 				if (html) {
 					html.style.removeProperty('background');
 				}
-			} else {
-				void debug('window vibrancy supported, keeping transparency');
 			}
 		};
 
