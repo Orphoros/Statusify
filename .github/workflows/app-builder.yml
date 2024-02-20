@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # for projects that use labels and PRs: https://github.com/mikepenz/release-changelog-builder-action
       - name: Build Changelog
@@ -22,7 +22,7 @@ jobs:
         run: echo "changelog=- ADD CHANGELOG" >> $GITHUB_OUTPUT
 
       - name: Node.js setup
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         # NOTE: enterprise developers may hard code a version
         with:
           node-version: latest
