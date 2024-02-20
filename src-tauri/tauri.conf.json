@@ -21,15 +21,10 @@
         "open": true
       },
       "window": {
-        "show": true,
-        "startDragging": true,
-        "all": true
+        "startDragging": true
       },
       "dialog": {
         "message": true
-      },
-      "notification": {
-        "all": true
       },
       "fs": {
         "scope": ["$RESOURCE/images/*"],
