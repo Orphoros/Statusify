@@ -41,6 +41,13 @@
       }
     },
     "bundle": {
+      "targets": [
+        "deb",
+        "appimage",
+        "nsis",
+        "dmg",
+        "updater"
+      ],
       "active": true,
       "category": "Utility",
       "copyright": "Copyright © 2024 Orphoros",
@@ -69,7 +76,6 @@
       "resources": [
         "images/*"
       ],
-      "targets": "all",
       "longDescription": "Graphical user interface for to set custom rich presence on Discord",
       "shortDescription": "Custom rich presence for Discord",
       "windows": {
