@@ -7,9 +7,19 @@
     <title>Statusify</title>
     <script>
       const html = document.querySelector('html');
-				if (html) {
+      const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+      const isMac = navigator.userAgent.indexOf('Mac OS X') != -1;
+      if (isMac) {
+        if (html) {
 					html.style.setProperty('background', 'transparent', 'important');
 				}
+      } else {
+        if (darkThemeMq.matches) {
+          html.style.setProperty('background', 'black', 'important');
+        } else {
+          html.style.setProperty('background', 'white', 'important');
+        }
+      }
     </script>
   </head>
 
