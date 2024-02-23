@@ -7,8 +7,8 @@ import {useTauriContext} from '@/context';
 export default function PartyOptionForm() {
 	const {ipcProps, setIpcProps} = useTauriContext();
 
-	const minHelper = useMemo(() => validateNumberInput({text: ipcProps.partySize?.toString(), min: 0, max: 100}), [ipcProps.partySize]);
-	const maxHelper = useMemo(() => validateNumberInput({text: ipcProps.partyMax?.toString(), min: 0, max: 100}), [ipcProps.partyMax]);
+	const minHelper = useMemo(() => validateNumberInput({text: ipcProps.partySize?.toString(), min: 1, max: 100}), [ipcProps.partySize]);
+	const maxHelper = useMemo(() => validateNumberInput({text: ipcProps.partyMax?.toString(), min: 1, max: 100}), [ipcProps.partyMax]);
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, partyError: minHelper.error || maxHelper.error}));
