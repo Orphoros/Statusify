@@ -1,7 +1,7 @@
 {
   "version": "0.0.6",
   "notes": "New glassy design for macOS and modern simplified design for Windows and Linux",
-  "pub_date": "2024-02-230T11:34:00.000Z",
+  "pub_date": "2024-02-23T11:34:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
