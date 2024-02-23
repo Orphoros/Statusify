@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - [No ETA]
+## [0.0.6] - 2024-02-23
 
 ### Added
 
@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Removed white splashing and window spawning bugs on load
+- Make the white splashing and window spawning bugs on load less noticeable
 
 ## [0.0.5] - 2024-02-10
 
