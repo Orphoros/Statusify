@@ -10,6 +10,12 @@ function App() {
 		window.addEventListener('contextmenu', e => {
 			e.preventDefault();
 		}, false);
+
+		return () => {
+			window.removeEventListener('contextmenu', e => {
+				e.preventDefault();
+			}, false);
+		};
 	};
 
 	const correctIpcTime = () => {

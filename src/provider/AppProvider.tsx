@@ -11,7 +11,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 	const [platformName, setPlatformName] = useState<OsType | undefined>(undefined);
 	useLayoutEffect(() => {
 		const init = async () => {
-			await attachConsole();
+			const detachConsole = await attachConsole();
 
 			void debug('initializing app...');
 
@@ -28,6 +28,8 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 					html.style.removeProperty('background');
 				}
 			}
+
+			detachConsole();
 		};
 
 		init().catch(error);

@@ -35,10 +35,7 @@ export default function PreviewCard() {
 		init().catch(console.error);
 	}, []);
 	useEffect(() => {
-		const id = setInterval(() => {
-			const today = new Date();
-			changeTime(today);
-		}, 1000);
+		const id = setInterval(checkTime, 1000);
 		return () => {
 			clearInterval(id);
 		};
@@ -69,8 +66,6 @@ export default function PreviewCard() {
 		time = new Date();
 		changeTime(time);
 	}
-
-	setInterval(checkTime, 1000);
 
 	return (
 		<Card className={`w-[380px] h-[300px] ${showVibrancy ? 'bg-content1  bg-opacity-50' : 'bg-content2'} rounded-2xl`} shadow='none'>
