@@ -10,3 +10,4 @@ export const showSmallImage = (ipcProps: IpcProps) => showLargeImage(ipcProps) &
 export const showButton = (ipcProps: IpcProps) => !ipcProps.idError && ipcProps.buttonEnabled && !ipcProps.buttonError && ipcProps.buttonUrl && ipcProps.buttonText;
 export const showSmallImageText = (ipcProps: IpcProps) => showSmallImage(ipcProps) && ipcProps.smallImageTooltipEnabled && ipcProps.smallImageTooltip && !ipcProps.smallImageTooltipError;
 export const showLargeImageText = (ipcProps: IpcProps) => showLargeImage(ipcProps) && ipcProps.largeImageTooltipEnabled && ipcProps.largeImageTooltip && !ipcProps.largeImageTooltipError;
+export const isFormCorrect = (ipcProps: IpcProps) => !ipcProps.idError && !ipcProps.partyError && !ipcProps.stateError && !ipcProps.buttonError && !ipcProps.detailsError && !ipcProps.largeImageTooltipError && !ipcProps.smallImageTooltipError;

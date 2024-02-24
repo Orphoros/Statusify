@@ -1,13 +1,13 @@
 import React from 'react';
 import {Button, Chip} from '@nextui-org/react';
 import {useTauriContext} from '@/context';
-import {startIpc, stopIpc} from '@/lib';
+import {isFormCorrect, startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, showVibrancy} = useTauriContext();
 
-	const buttonDisabled = isSessionRunning || !ipcProps.id || ipcProps.idError;
+	const buttonDisabled = isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps);
 
 	const indicatorColor = isSessionRunning ? 'success' : 'warning' as ColorBrand;
 	const indicatorText = isSessionRunning ? 'Displaying activity' : 'Idle';
