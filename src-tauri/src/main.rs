@@ -3,6 +3,9 @@
     windows_subsystem = "windows"
 )]
 
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+
 use discord_rich_presence::activity::Party;
 use log::{debug, info, error, trace};
 use sysinfo::{Pid, ProcessExt, System, SystemExt};

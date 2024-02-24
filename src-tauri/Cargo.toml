@@ -19,7 +19,7 @@ discord-rich-presence = "0.2.3"
 tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "dev" }
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
-
+mimalloc = "0.1"
 log = "0.4.18"
 sysinfo = "0.27.7"
 time = "0.3.17"
@@ -29,7 +29,7 @@ window-vibrancy = "0.4"
 panic = "abort"
 codegen-units = 1 # Compile crates one after another so the compiler can optimize better
 lto = true
-opt-level = "s"
+opt-level = "z"
 strip = true
 
 [features]
