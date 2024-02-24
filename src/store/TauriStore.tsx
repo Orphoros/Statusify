@@ -1,9 +1,11 @@
 import type React from 'react';
-import {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {
+	useEffect, useLayoutEffect, useRef, useState,
+} from 'react';
 import {Store} from 'tauri-plugin-store-api';
 import {debug, warn} from 'tauri-plugin-log-api';
 
-const SaveDelay = 500;
+const SaveDelay = 2000;
 
 const stores: Record<string, Store> = {};
 
