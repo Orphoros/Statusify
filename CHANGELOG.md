@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - [No ETA]
 
+## [0.0.7] - 2024-02-25
+
+### Added
+
+- New memory allocation (mimalloc) to improve RAM usage
+
 ### Fixed
 
-- Make the white splashing and window spawning bugs on load less noticeable
+- Party size can no longer be less than one
+- App no longer uses a lot of memory and CPU
+- Start activity button is now disabled when any of the form inputs are invalid
 
 ## [0.0.6] - 2024-02-23
 
