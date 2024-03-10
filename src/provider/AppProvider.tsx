@@ -6,6 +6,7 @@ import {type OsType, type} from '@tauri-apps/api/os';
 import {
 	attachConsole, debug, error, warn,
 } from 'tauri-plugin-log-api';
+import {appWindow} from '@tauri-apps/api/window';
 
 export default function AppProvider({children}: {children: React.ReactNode}) {
 	const [platformName, setPlatformName] = useState<OsType | undefined>(undefined);
@@ -28,6 +29,8 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 					html.style.removeProperty('background');
 				}
 			}
+
+			void appWindow.show();
 
 			detachConsole();
 		};
