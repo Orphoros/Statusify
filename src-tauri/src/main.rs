@@ -216,7 +216,6 @@ fn main() {
         tauri_plugin_window_state::StateFlags::FULLSCREEN
             | tauri_plugin_window_state::StateFlags::MAXIMIZED
             | tauri_plugin_window_state::StateFlags::POSITION
-            | tauri_plugin_window_state::StateFlags::DECORATIONS
             | tauri_plugin_window_state::StateFlags::SIZE
     ).build())
     .run(tauri::generate_context!())
