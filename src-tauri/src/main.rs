@@ -7,6 +7,7 @@
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 use discord_rich_presence::activity::Party;
+use tauri_plugin_window_state::{WindowExt, StateFlags, AppHandleExt};
 use log::{debug, info, error, trace};
 use sysinfo::{Pid, ProcessExt, System, SystemExt};
 use tauri::{State, Manager};
@@ -157,6 +158,26 @@ fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>, di
     Ok(())
 }
 
+#[tauri::command]
+fn show_main_window(window: tauri::Window) {
+    let main_window = window.get_window("main").unwrap();
+
+    #[cfg(not(target_os = "macos"))]
+    main_window.set_decorations(false).unwrap();
+    
+    main_window.show().unwrap();
+
+    #[cfg(not(target_os = "macos"))]
+    main_window.set_decorations(true).unwrap();
+    
+    main_window.restore_state(
+        tauri_plugin_window_state::StateFlags::FULLSCREEN
+        | tauri_plugin_window_state::StateFlags::MAXIMIZED
+        | tauri_plugin_window_state::StateFlags::POSITION
+        | tauri_plugin_window_state::StateFlags::SIZE
+    ).unwrap();
+}
+
 fn main() {
     let client = DiscordIpcClient::new("-1").unwrap();
 
@@ -185,6 +206,7 @@ fn main() {
     )
     .on_window_event(|event| match event.event() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
+            event.window().app_handle().save_window_state(StateFlags::all()).unwrap();
             // if not on macOS, close the app
             #[cfg(not(target_os = "macos"))]
             event.window().close().unwrap();
@@ -211,13 +233,13 @@ fn main() {
 
         Ok(())
       })
-    .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running])
+    .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running, show_main_window])
     .plugin(tauri_plugin_window_state::Builder::default().with_state_flags(
         tauri_plugin_window_state::StateFlags::FULLSCREEN
             | tauri_plugin_window_state::StateFlags::MAXIMIZED
             | tauri_plugin_window_state::StateFlags::POSITION
             | tauri_plugin_window_state::StateFlags::SIZE
-    ).build())
+    ).with_denylist(&["main"]).build())
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 

@@ -6,7 +6,7 @@ import {type OsType, type} from '@tauri-apps/api/os';
 import {
 	attachConsole, debug, error, warn,
 } from 'tauri-plugin-log-api';
-import {appWindow} from '@tauri-apps/api/window';
+import {invoke} from '@tauri-apps/api';
 
 export default function AppProvider({children}: {children: React.ReactNode}) {
 	const [platformName, setPlatformName] = useState<OsType | undefined>(undefined);
@@ -20,7 +20,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 
 			setPlatformName(platformName);
 			void debug(`running on ${platformName}`);
-			if (platformName === 'Darwin') {
+			if (platformName === 'Darwin' || platformName === 'Windows_NT') {
 				void debug('window vibrancy supported, keeping transparency');
 			} else {
 				void warn('running on unsupported OS for window vibrancy, disabling transparency');
@@ -30,7 +30,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 				}
 			}
 
-			void appWindow.show();
+			void invoke('show_main_window');
 
 			detachConsole();
 		};
