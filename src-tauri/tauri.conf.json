@@ -49,7 +49,10 @@
       "copyright": "Copyright © 2024 Orphoros",
       "publisher": "Orphoros",
       "deb": {
-        "depends": []
+        "depends": [],
+        "changelog": "../CHANGELOG.md",
+        "section": "main",
+        "priority": "standard"
       },
       "externalBin": [],
       "icon": [
