@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- The main app window now longed flickers when the app is launched on Windows
+- The main app window no longer flickers when the app is launched on Windows
 - Resizing the app no longer causes the main window to flicker on Windows
 
 ## [0.0.7] - 2024-02-25
