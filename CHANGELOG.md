@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - [No ETA]
 
+## [0.0.8] - 2024-03-15
+
+### Added
+
+- Defined priority, section, and changelog for the Debian package
+
+### Fixed
+
+- The main app window now longed flickers when the app is launched on Windows
+- Resizing the app no longer causes the main window to flicker on Windows
+
 ## [0.0.7] - 2024-02-25
 
 ### Added
