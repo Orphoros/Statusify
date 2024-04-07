@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TauriContext} from '@/context';
-import {type IpcProps} from '@/types';
+import {type LaunchConfProps, type IpcProps} from '@/types';
 import {useTauriStore} from '@/store/TauriStore';
 import {LoadingView} from '@/views';
 import {type OsType} from '@tauri-apps/api/os';
@@ -12,21 +12,29 @@ type TauriProviderProps = {
 
 export default function TauriProvider({children, osType}: TauriProviderProps) {
 	const [isSessionRunning, setIsSessionRunning] = useState<boolean>(false);
-	const [ipcProps, setIpcProps, loading] = useTauriStore<IpcProps>('ipcProps', {
+
+	const [ipcProps, setIpcProps, ipcStoreLoading] = useTauriStore<IpcProps>('ipcProps', {
 		timeAsStart: Date.now(),
 		timeIsCurrent: true,
 		buttonProtocol: 'https://',
 	}, 'ipc.dat');
 
+	const [launchConfProps, setLaunchConfProps, sysConfStoreLoading] = useTauriStore<LaunchConfProps>('launchOption', {
+		startIpcOnLaunch: false,
+	}, 'launch.conf');
+
 	return (
 		<TauriContext.Provider value={{
-			osType,			showVibrancy: osType === 'Darwin',
+			osType,
+			showVibrancy: osType === 'Darwin',
 			isSessionRunning,
+			setLaunchConfProps,
+			launchConfProps,
 			setIsSessionRunning,
 			ipcProps,
 			setIpcProps,
 		}}>
-			{loading
+			{ipcStoreLoading || sysConfStoreLoading
 				? <LoadingView/>
 				: children
 			}

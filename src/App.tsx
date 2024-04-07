@@ -1,10 +1,12 @@
-import React, {useLayoutEffect} from 'react';
-import {debug, info} from 'tauri-plugin-log-api';
+import React, {useEffect} from 'react';
+import {debug, error, info} from 'tauri-plugin-log-api';
 import {MainView} from '@/views';
 import {useTauriContext} from '@/context';
+import {startIpc} from './lib';
 
 function App() {
-	const {ipcProps, setIpcProps} = useTauriContext();
+	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning} = useTauriContext();
+	const [isIpcLoading, setIsIpcLoading] = React.useState<boolean>(false);
 
 	const disableMenu = () => {
 		window.addEventListener('contextmenu', e => {
@@ -39,20 +41,40 @@ function App() {
 		}
 	};
 
-	useLayoutEffect(() => {
-		const init = async () => {
+	const initIpcOnLaunch = async () => {
+		try {
+			void debug('checking if ipc should start on launch');
+			if (launchConfProps.startIpcOnLaunch) {
+				const isSuccess = await startIpc(ipcProps, true);
+				if (isSuccess) {
+					setIsSessionRunning(true);
+					void info('ipc started on launch');
+				} else {
+					void error('failed to start ipc on launch');
+				}
+			}
+		} catch (e) {
+			void error('failed to call startIpc on launch');
+		} finally {
+			setIsIpcLoading(false);
+			void debug('ipc on launch finalized');
+		}
+	};
+
+	useEffect(() => {
+		(async () => {
 			disableMenu();
 
 			correctIpcTime();
 
-			void info('app initialized');
-		};
+			await initIpcOnLaunch();
 
-		init().catch(console.error);
+			void info('app initialized');
+		})();
 	}, []);
 
 	return (
-		<MainView />
+		<MainView/>
 	);
 }
 

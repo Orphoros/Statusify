@@ -1,4 +1,5 @@
 export * from './ipc';
+export * from './launchconf';
 
 /**
  * FormValidation is a type alias for a form validation object that stores the result of a form validation.

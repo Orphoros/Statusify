@@ -2,7 +2,9 @@ import {type IpcProps} from '@/types';
 import {invoke} from '@tauri-apps/api';
 import {ask, message} from '@tauri-apps/api/dialog';
 import {debug, error} from 'tauri-plugin-log-api';
-import {showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState} from './props';
+import {
+	showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
+} from './props';
 
 enum IpcError {
 	ClientCreationErr = 101,
@@ -13,7 +15,7 @@ enum IpcError {
 	DiscordError = 106,
 }
 
-export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
+export async function startIpc(ipcProps: IpcProps, disableConfirmMsg = false): Promise<boolean> {
 	void debug('attempting to start RPC');
 
 	const party = showParty(ipcProps) ? [ipcProps.partySize, ipcProps.partyMax] : undefined;
@@ -50,7 +52,9 @@ export async function startIpc(ipcProps: IpcProps): Promise<boolean> {
 		});
 
 		void debug('showing system notification for RPC creation success');
-		message('RPC Started!', {title: 'Statusify', type: 'info'}).catch(error);
+		if (!disableConfirmMsg) {
+			message('RPC Started!', {title: 'Statusify', type: 'info'}).catch(error);
+		}
 
 		return true;
 	} catch (err) {
@@ -102,7 +106,5 @@ function handleIpcError(err: IpcError): void {
 		case IpcError.DiscordError:
 			message('Could not perform action due to an error on Discord\'s side. Discord might be closed', {title: 'Statusify', type: 'error'}).catch(error);
 			break;
-		default:
-			message('Unknown error', {title: 'Statusify', type: 'error'}).catch(error);
 	}
 }
