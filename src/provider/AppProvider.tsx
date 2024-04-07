@@ -11,7 +11,7 @@ import {invoke} from '@tauri-apps/api';
 export default function AppProvider({children}: {children: React.ReactNode}) {
 	const [platformName, setPlatformName] = useState<OsType | undefined>(undefined);
 	useLayoutEffect(() => {
-		const init = async () => {
+		(async () => {
 			const detachConsole = await attachConsole();
 
 			void debug('initializing app...');
@@ -25,13 +25,11 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 			void invoke('show_main_window');
 
 			detachConsole();
-		};
-
-		init().catch(error);
+		})();
 	}, []);
 
 	return (
-		<div className={platformName === 'Darwin' ? '' : 'bg-background'}>
+		<div className={platformName === 'Windows_NT' || platformName === 'Linux' ? 'bg-background' : ''}>
 			<NextUIProvider>
 				<NextThemesProvider attribute='class' defaultTheme='system'>
 					<TauriProvider osType={platformName}>
