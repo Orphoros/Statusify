@@ -4,7 +4,7 @@ import {ThemeProvider as NextThemesProvider} from 'next-themes';
 import TauriProvider from './TauriProvider';
 import {type OsType, type} from '@tauri-apps/api/os';
 import {
-	attachConsole, debug, error,
+	attachConsole, debug,
 } from 'tauri-plugin-log-api';
 import {invoke} from '@tauri-apps/api';
 
