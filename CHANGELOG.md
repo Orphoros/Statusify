@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - [No ETA]
 
+### Added
+
+- Option to automatically start the rich presence when the app is launched
+
+### Fixed
+
+- Switching between the light and dark theme while the app is running works again
+
 ## [0.0.8] - 2024-03-15
 
 ### Added
