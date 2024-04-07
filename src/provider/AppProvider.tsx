@@ -4,7 +4,7 @@ import {ThemeProvider as NextThemesProvider} from 'next-themes';
 import TauriProvider from './TauriProvider';
 import {type OsType, type} from '@tauri-apps/api/os';
 import {
-	attachConsole, debug, error, warn,
+	attachConsole, debug, error,
 } from 'tauri-plugin-log-api';
 import {invoke} from '@tauri-apps/api';
 
@@ -19,16 +19,8 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 			const platformName = await type();
 
 			setPlatformName(platformName);
+
 			void debug(`running on ${platformName}`);
-			if (platformName === 'Darwin' || platformName === 'Windows_NT') {
-				void debug('window vibrancy supported, keeping transparency');
-			} else {
-				void warn('running on unsupported OS for window vibrancy, disabling transparency');
-				const html = document.querySelector('html');
-				if (html) {
-					html.style.removeProperty('background');
-				}
-			}
 
 			void invoke('show_main_window');
 
@@ -39,12 +31,14 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 	}, []);
 
 	return (
-		<NextUIProvider>
-			<NextThemesProvider attribute='class' defaultTheme='system'>
-				<TauriProvider osType={platformName}>
-					{children}
-				</TauriProvider>
-			</NextThemesProvider>
-		</NextUIProvider>
+		<div className={platformName === 'Darwin' ? '' : 'bg-background'}>
+			<NextUIProvider>
+				<NextThemesProvider attribute='class' defaultTheme='system'>
+					<TauriProvider osType={platformName}>
+						{children}
+					</TauriProvider>
+				</NextThemesProvider>
+			</NextUIProvider>
+		</div>
 	);
 }

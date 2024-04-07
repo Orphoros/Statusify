@@ -6,7 +6,6 @@ import {startIpc} from './lib';
 
 function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning} = useTauriContext();
-	const [isIpcLoading, setIsIpcLoading] = React.useState<boolean>(false);
 
 	const disableMenu = () => {
 		window.addEventListener('contextmenu', e => {
@@ -56,7 +55,6 @@ function App() {
 		} catch (e) {
 			void error('failed to call startIpc on launch');
 		} finally {
-			setIsIpcLoading(false);
 			void debug('ipc on launch finalized');
 		}
 	};
