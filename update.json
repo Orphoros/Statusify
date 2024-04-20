@@ -1,7 +1,7 @@
 {
-  "version": "0.0.0",
+  "version": "0.0.9",
   "notes": "Added the option to start the rich presence automatically on launch",
-  "pub_date": "2024-04-20T18:36:00.000Z",
+  "pub_date": "2024-04-20T18:37:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
