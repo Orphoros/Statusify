@@ -10,8 +10,8 @@
 </div>
 
 <p align="middle">
-    <img src="./img/statusify_v0.0.6_macos_darktheme.png" width="40%" />
-    <img src="./img/statusify_v0.0.6_macos_lighttheme.png" width="40%" />
+    <img src="./img/statusify_v0.0.9_macos_darktheme.png" width="40%" />
+    <img src="./img/statusify_v0.0.9_macos_lighttheme.png" width="40%" />
 </p>
 
 ## About
