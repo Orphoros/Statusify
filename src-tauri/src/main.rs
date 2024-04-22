@@ -6,6 +6,7 @@
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
+use tauri::{CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
 use discord_rich_presence::activity::Party;
 use tauri_plugin_window_state::{WindowExt, StateFlags, AppHandleExt};
 use log::{debug, info, error, trace};
@@ -22,7 +23,6 @@ use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
 struct DiscordPid(Mutex<Option<Pid>>);
-struct DiscordState(Mutex<bool>);
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
@@ -181,7 +181,15 @@ fn show_main_window(window: tauri::Window) {
 fn main() {
     let client = DiscordIpcClient::new("-1").unwrap();
 
+    let quit = CustomMenuItem::new("quit".to_string(), "Exit");
+    let visibility = CustomMenuItem::new("visibility".to_string(), "Show / hide");
+    let tray_menu = SystemTrayMenu::new()
+    .add_item(visibility)
+    .add_native_item(SystemTrayMenuItem::Separator)
+    .add_item(quit);
+
     tauri::Builder::default()
+    .system_tray(SystemTray::new().with_menu(tray_menu))
     .plugin(tauri_plugin_log::Builder::default()
         .level(
             log::LevelFilter::Debug,
@@ -221,7 +229,6 @@ fn main() {
     .manage(DiscordClient(Mutex::new(client)))
     .manage(SysInfo(Mutex::new(System::new())))
     .manage(DiscordPid(Mutex::new(None)))
-    .manage(DiscordState(Mutex::new(false)))
     .plugin(tauri_plugin_store::Builder::default().build())
     .setup(|app| {
         info!("setting up app (v{})", VERSION);
@@ -240,8 +247,26 @@ fn main() {
             | tauri_plugin_window_state::StateFlags::POSITION
             | tauri_plugin_window_state::StateFlags::SIZE
     ).with_denylist(&["main"]).build())
+    .on_system_tray_event(|app, event| match event {
+        SystemTrayEvent::MenuItemClick { id, .. } => {
+            match id.as_str() {
+                "quit" => {
+                    std::process::exit(0);
+                }
+                "visibility" => {
+                    let window = app.get_window("main").unwrap();
+                    if window.is_visible().unwrap() {
+                         window.hide().unwrap();
+                    } else {
+                        window.show().unwrap();
+                    }
+                }
+                _ => {}
+            }
+        }
+        _ => {}
+    })
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
-
     info!("exiting");
 }
