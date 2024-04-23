@@ -215,13 +215,8 @@ fn main() {
     .on_window_event(|event| match event.event() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
             event.window().app_handle().save_window_state(StateFlags::all()).unwrap();
-            // if not on macOS, close the app
-            #[cfg(not(target_os = "macos"))]
-            event.window().close().unwrap();
-
-            // on macOS, hide the window
-            #[cfg(target_os = "macos")]
-            tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
+            // hide the window instead of closing it
+            event.window().hide().unwrap();
             api.prevent_close();
         }
         _ => {}
@@ -232,6 +227,8 @@ fn main() {
     .plugin(tauri_plugin_store::Builder::default().build())
     .setup(|app| {
         info!("setting up app (v{})", VERSION);
+
+        #[cfg(target_os = "macos")]
         let main_window = app.get_window("main").unwrap();
 
         #[cfg(target_os = "macos")]
@@ -251,7 +248,7 @@ fn main() {
         SystemTrayEvent::MenuItemClick { id, .. } => {
             match id.as_str() {
                 "quit" => {
-                    std::process::exit(0);
+                    app.exit(0);
                 }
                 "visibility" => {
                     let window = app.get_window("main").unwrap();
