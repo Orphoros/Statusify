@@ -3,6 +3,7 @@ import {debug, error, info} from 'tauri-plugin-log-api';
 import {MainView} from '@/views';
 import {useTauriContext} from '@/context';
 import {startIpc} from './lib';
+import {listen} from '@tauri-apps/api/event';
 
 function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning} = useTauriContext();
@@ -67,7 +68,16 @@ function App() {
 
 			await initIpcOnLaunch();
 
+			const unlisten = await listen('rpc-running-change', event => {
+				const {running} = event.payload as {running: boolean};
+				setIsSessionRunning(running);
+			});
+
 			void info('app initialized');
+
+			return () => {
+				unlisten();
+			};
 		})();
 	}, []);
 

@@ -6,7 +6,7 @@
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-use tauri::{CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
+use tauri::{AppHandle, CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
 use discord_rich_presence::activity::Party;
 use tauri_plugin_window_state::{WindowExt, StateFlags, AppHandleExt};
 use log::{debug, info, error, trace};
@@ -20,6 +20,11 @@ use std::env;
 #[cfg(target_os = "macos")]
 use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 
+#[derive(Clone, serde::Serialize)]
+struct RpcStatePayload {
+  running: bool,
+}
+
 struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
 struct DiscordPid(Mutex<Option<Pid>>);
@@ -27,7 +32,7 @@ struct DiscordPid(Mutex<Option<Pid>>);
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 #[tauri::command(rename_all = "camelCase")]
-fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>) -> Result<(), u8> {
+fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Option<(i32, i32)>, buttons: Option<Vec<(&str, &str)>>, details: Option<&str>, large_image: Option<&str>, large_image_text: Option<&str>, small_image: Option<&str>, small_image_text: Option<&str>, client_state: State<DiscordClient>, app_handle: AppHandle) -> Result<(), u8> {
     info!("called rpc start command");
     debug!("received ipc command params: id: {}, state: {:?}, start_time: {:?}, party: {:?}, buttons: {:?}, details: {:?}, large_image: {:?}, large_image_text: {:?}, small_image: {:?}, small_image_text: {:?}", id, state, start_time, party, buttons, details, large_image, large_image_text, small_image, small_image_text);
 
@@ -100,6 +105,8 @@ fn start_rpc(id: &str, state: Option<&str>, start_time: Option<i64>, party: Opti
     })?;
 
     debug!("ipc recv: {:?}", result);
+
+    app_handle.tray_handle().get_item("stop").set_enabled(true).unwrap();
     
     Ok(())
 }
@@ -176,6 +183,8 @@ fn show_main_window(window: tauri::Window) {
         | tauri_plugin_window_state::StateFlags::POSITION
         | tauri_plugin_window_state::StateFlags::SIZE
     ).unwrap();
+
+    main_window.set_focus().unwrap();
 }
 
 fn main() {
@@ -183,10 +192,13 @@ fn main() {
 
     let quit = CustomMenuItem::new("quit".to_string(), "Exit");
     let visibility = CustomMenuItem::new("visibility".to_string(), "Show / hide");
+    let stop = CustomMenuItem::new("stop".to_string(), "Stop RPC").disabled();
     let tray_menu = SystemTrayMenu::new()
-    .add_item(visibility)
-    .add_native_item(SystemTrayMenuItem::Separator)
-    .add_item(quit);
+        .add_item(stop)
+        .add_native_item(SystemTrayMenuItem::Separator)
+        .add_item(visibility)
+        .add_native_item(SystemTrayMenuItem::Separator)
+        .add_item(quit);
 
     tauri::Builder::default()
     .system_tray(SystemTray::new().with_menu(tray_menu).with_tooltip("Statusify"))
@@ -221,6 +233,7 @@ fn main() {
 
             #[cfg(target_os = "macos")]
             tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
+
             api.prevent_close();
         }
         _ => {}
@@ -252,20 +265,38 @@ fn main() {
         SystemTrayEvent::LeftClick { .. } => {
             let window = app.get_window("main").unwrap();
             if !window.is_visible().unwrap() {
-                window.show().unwrap();
+                show_main_window(window);
+            }else {
+                window.set_focus().unwrap();
             }
         }
         SystemTrayEvent::MenuItemClick { id, .. } => {
             match id.as_str() {
+                "stop" => {
+                    let stop = app.tray_handle().get_item("stop");
+                    stop.set_enabled(false).unwrap();
+                    
+                    let client_state = app.state::<DiscordClient>();
+                    let system_state = app.state::<SysInfo>();
+                    let discord_pid_state = app.state::<DiscordPid>();
+
+                    let _ = stop_rpc(client_state, system_state, discord_pid_state);
+
+                    app.emit_all("rpc-running-change", RpcStatePayload { running: false }).unwrap();
+                }
                 "quit" => {
                     app.exit(0);
                 }
                 "visibility" => {
                     let window = app.get_window("main").unwrap();
                     if window.is_visible().unwrap() {
-                         window.hide().unwrap();
+                        #[cfg(not(target_os = "macos"))]
+                        window.hide().unwrap();
+            
+                        #[cfg(target_os = "macos")]
+                        tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
                     } else {
-                        window.show().unwrap();
+                        show_main_window(window);
                     }
                 }
                 _ => {}
