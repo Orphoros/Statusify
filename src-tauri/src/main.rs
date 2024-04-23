@@ -215,6 +215,11 @@ fn main() {
     .on_window_event(|event| match event.event() {
         tauri::WindowEvent::CloseRequested { api, .. } => {
             event.window().app_handle().save_window_state(StateFlags::all()).unwrap();
+
+            #[cfg(not(target_os = "macos"))]
+            event.window().hide().unwrap();
+
+            #[cfg(target_os = "macos")]
             tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
             api.prevent_close();
         }
@@ -244,6 +249,12 @@ fn main() {
             | tauri_plugin_window_state::StateFlags::SIZE
     ).with_denylist(&["main"]).build())
     .on_system_tray_event(|app, event| match event {
+        SystemTrayEvent::LeftClick { .. } => {
+            let window = app.get_window("main").unwrap();
+            if !window.is_visible().unwrap() {
+                window.show().unwrap();
+            }
+        }
         SystemTrayEvent::MenuItemClick { id, .. } => {
             match id.as_str() {
                 "quit" => {
