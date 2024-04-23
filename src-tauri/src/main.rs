@@ -189,7 +189,7 @@ fn main() {
     .add_item(quit);
 
     tauri::Builder::default()
-    .system_tray(SystemTray::new().with_menu(tray_menu))
+    .system_tray(SystemTray::new().with_menu(tray_menu).with_tooltip("Statusify"))
     .plugin(tauri_plugin_log::Builder::default()
         .level(
             log::LevelFilter::Debug,
