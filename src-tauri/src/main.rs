@@ -192,7 +192,13 @@ fn main() {
 
     let quit = CustomMenuItem::new("quit".to_string(), "Exit");
     let visibility = CustomMenuItem::new("visibility".to_string(), "Show / hide");
+
+    #[cfg(target_os = "macos")]
+    let stop = CustomMenuItem::new("stop".to_string(), "Stop RPC").disabled().native_image(tauri::NativeImage::StopProgress);
+
+    #[cfg(not(target_os = "macos"))]
     let stop = CustomMenuItem::new("stop".to_string(), "Stop RPC").disabled();
+
     let tray_menu = SystemTrayMenu::new()
         .add_item(stop)
         .add_native_item(SystemTrayMenuItem::Separator)
@@ -200,8 +206,13 @@ fn main() {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(quit);
 
+    let tray = SystemTray::new().with_menu(tray_menu);
+
+    #[cfg(target_os = "windows")]
+    tray.with_tooltip("Statusify");
+
     tauri::Builder::default()
-    .system_tray(SystemTray::new().with_menu(tray_menu).with_tooltip("Statusify"))
+    .system_tray(tray)
     .plugin(tauri_plugin_log::Builder::default()
         .level(
             log::LevelFilter::Debug,
@@ -262,6 +273,7 @@ fn main() {
             | tauri_plugin_window_state::StateFlags::SIZE
     ).with_denylist(&["main"]).build())
     .on_system_tray_event(|app, event| match event {
+        #[cfg(not(target_os = "macos"))]
         SystemTrayEvent::LeftClick { .. } => {
             let window = app.get_window("main").unwrap();
             if !window.is_visible().unwrap() {
@@ -294,7 +306,7 @@ fn main() {
                         window.hide().unwrap();
             
                         #[cfg(target_os = "macos")]
-                        tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
+                        tauri::AppHandle::hide(&window.app_handle()).unwrap();
                     } else {
                         show_main_window(window);
                     }
