@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - [No ETA]
 
+### Added
+
+- System tray with option to stop the rich presence
+- The app closes to the system tray on close instead of exiting the app on Windows
+
 ## [0.0.9] - 2024-04-20
 
 ### Added
