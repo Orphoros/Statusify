@@ -206,10 +206,11 @@ fn main() {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(quit);
 
+    #[cfg(not(target_os = "windows"))]
     let tray = SystemTray::new().with_menu(tray_menu);
 
     #[cfg(target_os = "windows")]
-    tray.with_tooltip("Statusify");
+    let tray = SystemTray::new().with_menu(tray_menu).with_tooltip("Statusify");
 
     tauri::Builder::default()
     .system_tray(tray)
