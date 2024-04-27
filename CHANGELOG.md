@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - System tray with option to stop the rich presence
-- The app closes to the system tray on close instead of exiting the app on Windows
+- The app closes to the system tray on close instead of exiting the app on Windows and Linux
+
+### Changed
+
+- The time picker is now more consistent to the design of the app
 
 ## [0.0.9] - 2024-04-20
 

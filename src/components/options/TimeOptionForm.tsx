@@ -1,7 +1,10 @@
 import React from 'react';
 
-import {Checkbox, Input, Switch} from '@nextui-org/react';
+import {
+	Checkbox, Switch, TimeInput,
+} from '@nextui-org/react';
 import {useTauriContext} from '@/context';
+import {Time} from '@internationalized/date';
 
 export default function TimeOptionForm() {
 	const {ipcProps, setIpcProps} = useTauriContext();
@@ -16,22 +19,20 @@ export default function TimeOptionForm() {
 			<p className='text-primary-500 text-sm mb-5'>Start from:</p>
 			<div className='flex gap-6 items-center'>
 				<div className='flex flex-grow gap-3 items-center'>
-					<Input
+					<TimeInput
 						variant='bordered'
-						radius='full'
-						type='time'
 						color='primary'
 						className='max-w-[7rem]'
 						labelPlacement='outside'
 						size='sm'
-						defaultValue={`${time.getHours() < 10 ? '0' : ''}${time.getHours()}:${time.getMinutes() < 10 ? '0' : ''}${time.getMinutes()}`}
+						hourCycle={12}
+						defaultValue={new Time(time.getHours(), time.getMinutes())}
 						isDisabled={ipcProps.idError! || ipcProps.timeIsCurrent}
-						onChange={e => {
-							const {value} = e.target;
-							const [hour, minute] = value.split(':');
+						onChange={time => {
+							const {hour, minute} = time;
 
-							today.setHours(parseInt(hour, 10));
-							today.setMinutes(parseInt(minute, 10));
+							today.setHours(hour);
+							today.setMinutes(minute);
 
 							if (today.getTime() > Date.now()) {
 								today.setDate(today.getDate() - 1);
