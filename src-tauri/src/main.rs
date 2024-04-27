@@ -298,6 +298,7 @@ fn main() {
                     app.emit_all("rpc-running-change", RpcStatePayload { running: false }).unwrap();
                 }
                 "quit" => {
+                    app.get_window("main").unwrap().app_handle().save_window_state(StateFlags::all()).unwrap();
                     app.exit(0);
                 }
                 "visibility" => {
