@@ -31,7 +31,7 @@ function App() {
 				void debug(`corrected cached ipc date to ${startTime.toUTCString()}`);
 			}
 
-			if (startTime.getTime() >= today.getTime()) {
+			if (startTime.getTime() > today.getTime()) {
 				startTime.setDate(startTime.getDate() - 1);
 				void debug(`corrected cached ipc time to ${startTime.toUTCString()} to prevent future date`);
 			}
