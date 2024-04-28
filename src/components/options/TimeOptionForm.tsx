@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import {
 	Checkbox, Switch, TimeInput,
@@ -9,9 +9,7 @@ import {Time} from '@internationalized/date';
 export default function TimeOptionForm() {
 	const {ipcProps, setIpcProps} = useTauriContext();
 
-	const today = new Date();
-
-	const time = new Date(ipcProps.timeAsStart!);
+	const [time, setTime] = React.useState(new Date(ipcProps.timeAsStart!));
 
 	return (
 		<div>
@@ -27,9 +25,20 @@ export default function TimeOptionForm() {
 						size='sm'
 						hourCycle={12}
 						defaultValue={new Time(time.getHours(), time.getMinutes())}
+						value={new Time(time.getHours(), time.getMinutes())}
 						isDisabled={ipcProps.idError! || ipcProps.timeIsCurrent}
-						onChange={time => {
-							const {hour, minute} = time;
+						onChange={t => {
+							const today = new Date();
+							today.setSeconds(0);
+							today.setMilliseconds(0);
+							today.setMilliseconds(0);
+
+							if (!t) {
+								setTime(today);
+								setIpcProps(prev => ({...prev, timeIsCurrent: true, timeAsStart: today.getTime()}));
+							}
+
+							const {hour, minute} = t;
 
 							today.setHours(hour);
 							today.setMinutes(minute);
@@ -38,7 +47,7 @@ export default function TimeOptionForm() {
 								today.setDate(today.getDate() - 1);
 							}
 
-							today.setSeconds(0);
+							setTime(today);
 
 							setIpcProps(prev => ({...prev, timeAsStart: today.getTime(), timeEnabled: true}));
 						}}

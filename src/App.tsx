@@ -22,22 +22,23 @@ function App() {
 
 	const correctIpcTime = () => {
 		if (ipcProps.timeAsStart !== undefined) {
-			const time = new Date(ipcProps.timeAsStart);
+			const startTime = new Date(ipcProps.timeAsStart);
 			const today = new Date();
+			const oneDayDurationMil = 86400000;
 
-			if (time.getTime() < Date.now() - 86400000) {
-				time.setFullYear(today.getFullYear());
-				time.setMonth(today.getMonth());
-				time.setDate(today.getDate());
-				void debug(`corrected cached ipc date to ${time.toISOString()}`);
+			if (startTime.getTime() < today.getTime() - oneDayDurationMil) {
+				startTime.setUTCFullYear(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+				void debug(`corrected cached ipc date to ${startTime.toUTCString()}`);
 			}
 
-			if (time.getTime() > Date.now()) {
-				time.setDate(time.getDate() - 1);
-				void debug(`corrected cached ipc time to ${time.toISOString()} to prevent future date`);
+			if (startTime.getTime() >= today.getTime()) {
+				startTime.setDate(startTime.getDate() - 1);
+				void debug(`corrected cached ipc time to ${startTime.toUTCString()} to prevent future date`);
 			}
 
-			setIpcProps(prev => ({...prev, timeAsStart: time.getTime()}));
+			void debug(`setting ipc time to ${startTime.toUTCString()}`);
+
+			setIpcProps(prev => ({...prev, timeAsStart: startTime.getTime()}));
 		}
 	};
 

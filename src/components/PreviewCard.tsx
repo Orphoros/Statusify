@@ -13,12 +13,12 @@ import {
 
 export default function PreviewCard() {
 	const {ipcProps, showVibrancy} = useTauriContext();
-
 	const [largeImage, setLargeImage] = useState<string>('');
 	const [smallImage, setSmallImage] = useState<string>('');
+	const [currentTime, changeTime] = useState(new Date());
 
 	useEffect(() => {
-		const init = async () => {
+		(async () => {
 			try {
 				const l = await resolveResource('images/largeimage.svg');
 				const largeSvg = await readTextFile(l);
@@ -27,22 +27,22 @@ export default function PreviewCard() {
 				const s = await resolveResource('images/smallimage.svg');
 				const smallSvg = await readTextFile(s);
 				setSmallImage(smallSvg);
+
+				// CorrectIpcTime();
 			} catch (err) {
 				void error(`error while setting images: ${err as string}`);
 			}
-		};
+		})().catch(console.error);
 
-		init().catch(console.error);
-	}, []);
-	useEffect(() => {
-		const id = setInterval(checkTime, 1000);
+		const id = setInterval(() => {
+			changeTime(new Date());
+		}, 1000);
+
 		return () => {
 			clearInterval(id);
 		};
 	}, []);
 
-	let time = new Date();
-	const [currentTime, changeTime] = useState(time);
 	const handler = async () => {
 		await message(`Clicking this button would open '${(ipcProps.buttonProtocol ?? '') + (ipcProps.buttonUrl ?? '')}' in the web-browser`, {title: 'Statusify', type: 'info'});
 	};
@@ -52,8 +52,8 @@ export default function PreviewCard() {
 	let hoursElapsed = 0;
 
 	if (ipcProps.timeAsStart && currentTime.getTime() > ipcProps.timeAsStart) {
-		const diff = currentTime.getTime() - ipcProps.timeAsStart;
-		secondsElapsed = Math.floor(diff / 1000);
+		const diff = Math.floor((currentTime.getTime() - ipcProps.timeAsStart) / 1000);
+		secondsElapsed = diff;
 		minutesElapsed = Math.floor(secondsElapsed / 60);
 		hoursElapsed = Math.floor(minutesElapsed / 60);
 	}
@@ -61,11 +61,6 @@ export default function PreviewCard() {
 	const secondsToDisplay: string = secondsElapsed % 60 < 10 ? `0${secondsElapsed % 60}` : `${secondsElapsed % 60}`;
 	const minutesToDisplay: string = minutesElapsed % 60 < 10 ? `0${minutesElapsed % 60}` : `${minutesElapsed % 60}`;
 	const hoursToDisplay: string = hoursElapsed % 60 < 10 ? `0${hoursElapsed % 60}` : `${hoursElapsed % 60}`;
-
-	function checkTime() {
-		time = new Date();
-		changeTime(time);
-	}
 
 	return (
 		<Card className={`w-[380px] h-[300px] ${showVibrancy ? 'bg-content1  bg-opacity-50' : 'bg-content2'} rounded-2xl`} shadow='none'>
