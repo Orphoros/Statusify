@@ -11,6 +11,16 @@ export default function ButtonOptionForm() {
 	const buttonUrlHelper = useMemo(() => validateUrlInput(ipcProps.buttonUrl), [ipcProps.buttonUrl]);
 	const buttonTextHelper = useMemo(() => validateTextInput(ipcProps.buttonText, 20), [ipcProps.buttonText]);
 
+	const handleUrlProtocol = (path: string): [string, string] => {
+		if (path.includes('http://') || path.includes('https://')) {
+			const protocol = path.split('://')[0] + '://';
+			const url = path.replace('http://', '').replace('https://', '');
+			return [protocol, url];
+		}
+
+		return ['https://', path];
+	};
+
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, buttonError: buttonUrlHelper.error || buttonTextHelper.error}));
 	}, [buttonUrlHelper.error, buttonTextHelper.error]);
@@ -88,8 +98,11 @@ export default function ButtonOptionForm() {
 							})
 							.addPaste(() => {
 								void navigator.clipboard.readText().then(text => {
+									const [protocol, url] = handleUrlProtocol(text);
 									const enabled = containsText(text) && containsText(ipcProps.buttonText);
-									setIpcProps(prev => ({...prev, buttonUrl: text, buttonEnabled: enabled}));
+									setIpcProps(prev => ({
+										...prev, buttonProtocol: protocol, buttonUrl: url, buttonEnabled: enabled,
+									}));
 								});
 							})
 							.addSeparator()
@@ -99,6 +112,7 @@ export default function ButtonOptionForm() {
 							.addClearOption(() => {
 								setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));
 							})
+							.addOpenInBrowser(ipcProps.buttonUrl ? `${ipcProps.buttonProtocol}${ipcProps.buttonUrl}` : undefined)
 							.addSeparator()
 							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
 							.addStopIpc(isSessionRunning, setIsSessionRunning)
@@ -115,13 +129,7 @@ export default function ButtonOptionForm() {
 					}
 					onChange={e => {
 						const {value} = e.target;
-						let protocol = ipcProps.buttonProtocol;
-
-						if (value.includes('http://') || value.includes('https://')) {
-							protocol = value.split('://')[0] + '://';
-						}
-
-						const url = value.replace('http://', '').replace('https://', '');
+						const [protocol, url] = handleUrlProtocol(value);
 
 						setIpcProps(prev => ({
 							...prev, buttonProtocol: protocol, buttonUrl: url, buttonEnabled: containsText(value) && containsText(ipcProps.buttonText),
