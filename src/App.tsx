@@ -8,7 +8,7 @@ import {listen} from '@tauri-apps/api/event';
 function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning} = useTauriContext();
 
-	const disableMenu = () => {
+	const disableDefaultContextMenu = () => {
 		window.addEventListener('contextmenu', e => {
 			e.preventDefault();
 		}, false);
@@ -63,7 +63,7 @@ function App() {
 
 	useEffect(() => {
 		(async () => {
-			disableMenu();
+			disableDefaultContextMenu();
 
 			correctIpcTime();
 

@@ -12,6 +12,7 @@ use tauri_plugin_window_state::{WindowExt, StateFlags, AppHandleExt};
 use log::{debug, info, error, trace};
 use sysinfo::{Pid, ProcessExt, System, SystemExt};
 use tauri::{State, Manager};
+use webbrowser::{open_browser, Browser};
 use std::sync::Mutex;
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use tauri_plugin_log::LogTarget;
@@ -144,8 +145,11 @@ fn is_discord_running(c: State<SysInfo>, d_pid: State<DiscordPid>) -> bool {
 }
 
 #[tauri::command]
-fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>, discord_pid_state: State<DiscordPid>) -> Result<(), u8> {
+fn stop_rpc(client_state: State<DiscordClient>, system_state: State<SysInfo>, discord_pid_state: State<DiscordPid>, app_handle: AppHandle) -> Result<(), u8> {
     info!("called rpc stop command");
+
+    let stop = app_handle.tray_handle().get_item("stop");
+    stop.set_enabled(false).unwrap();
 
     info!("checking if Discord is available");
     if !is_discord_running(system_state,discord_pid_state) {
@@ -186,6 +190,21 @@ fn show_main_window(window: tauri::Window) {
 
     main_window.set_focus().unwrap();
 }
+
+#[tauri::command]
+fn open_url(url: &str) {
+    let mut open_url = url.to_string();
+    if !url.starts_with("http://") && !url.starts_with("https://") {
+        debug!("url {} is not valid, using search instead", url);
+        open_url = format!("https://www.google.com/search?q={}", url);
+    }
+    if open_browser(Browser::Default, &open_url).is_ok() {
+        debug!("opened url '{}'", url);
+    } else {
+        error!("could not open url {}", url);
+    }
+}
+
 
 fn main() {
     let client = DiscordIpcClient::new("-1").unwrap();
@@ -254,6 +273,7 @@ fn main() {
     .manage(SysInfo(Mutex::new(System::new())))
     .manage(DiscordPid(Mutex::new(None)))
     .plugin(tauri_plugin_store::Builder::default().build())
+    .plugin(tauri_plugin_context_menu::init())
     .setup(|app| {
         info!("setting up app (v{})", VERSION);
 
@@ -266,7 +286,7 @@ fn main() {
 
         Ok(())
       })
-    .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running, show_main_window])
+    .invoke_handler(tauri::generate_handler![start_rpc, stop_rpc, is_discord_running, show_main_window, open_url])
     .plugin(tauri_plugin_window_state::Builder::default().with_state_flags(
         tauri_plugin_window_state::StateFlags::FULLSCREEN
             | tauri_plugin_window_state::StateFlags::MAXIMIZED
@@ -286,14 +306,11 @@ fn main() {
         SystemTrayEvent::MenuItemClick { id, .. } => {
             match id.as_str() {
                 "stop" => {
-                    let stop = app.tray_handle().get_item("stop");
-                    stop.set_enabled(false).unwrap();
-                    
                     let client_state = app.state::<DiscordClient>();
                     let system_state = app.state::<SysInfo>();
                     let discord_pid_state = app.state::<DiscordPid>();
 
-                    let _ = stop_rpc(client_state, system_state, discord_pid_state);
+                    let _ = stop_rpc(client_state, system_state, discord_pid_state, app.app_handle());
 
                     app.emit_all("rpc-running-change", RpcStatePayload { running: false }).unwrap();
                 }

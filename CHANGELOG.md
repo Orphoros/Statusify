@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - System tray with option to stop the rich presence
 - The app closes to the system tray on close instead of exiting the app on Windows and Linux
+- Context menu to input fields
 
 ### Changed
 

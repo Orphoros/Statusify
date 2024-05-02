@@ -2,10 +2,11 @@ import React, {useEffect, useMemo} from 'react';
 
 import {Input, Switch} from '@nextui-org/react';
 import {containsText, validateTextInput} from '@/lib';
-import {useTauriContext} from '@/context';
+import {MenuOptionBuilder, useTauriContext} from '@/context';
+import {showMenu} from 'tauri-plugin-context-menu';
 
 export default function ImageOptionForm() {
-	const {ipcProps, setIpcProps} = useTauriContext();
+	const {osType, setIsSessionRunning, isSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
 	const largeImageTooltipHelper = useMemo(() => validateTextInput(ipcProps.largeImageTooltip, 20), [ipcProps.largeImageTooltip]);
 	const smallImageTooltipHelper = useMemo(() => validateTextInput(ipcProps.smallImageTooltip, 20), [ipcProps.smallImageTooltip]);
@@ -30,6 +31,31 @@ export default function ImageOptionForm() {
 					width='100%'
 					value={ipcProps.largeImage}
 					isDisabled={ipcProps.idError}
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addCut(() => {
+								setIpcProps(prev => ({...prev, largeImage: '', largeImageEnabled: false}));
+							})
+							.addPaste(() => {
+								void navigator.clipboard.readText().then(text => {
+									setIpcProps(prev => ({...prev, largeImage: text, largeImageEnabled: containsText(text)}));
+								});
+							})
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, largeImageEnabled: !ipcProps.largeImageEnabled}));
+							})
+							.addClearOption(() => {
+								setIpcProps(prev => ({...prev, largeImage: '', largeImageEnabled: false}));
+							})
+							.addOpenInBrowser(ipcProps.largeImage)
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
 							<span className='text-default-400 text-small'>name</span>
@@ -61,6 +87,30 @@ export default function ImageOptionForm() {
 					width='100%'
 					value={ipcProps.largeImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addCut(() => {
+								setIpcProps(prev => ({...prev, largeImageTooltip: '', largeImageTooltipEnabled: false}));
+							})
+							.addPaste(() => {
+								void navigator.clipboard.readText().then(text => {
+									setIpcProps(prev => ({...prev, largeImageTooltip: text, largeImageTooltipEnabled: containsText(text)}));
+								});
+							})
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, largeImageTooltipEnabled: !ipcProps.largeImageTooltipEnabled}));
+							})
+							.addClearOption(() => {
+								setIpcProps(prev => ({...prev, largeImageTooltip: '', largeImageTooltipEnabled: false}));
+							})
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
 							<span className={`${largeImageTooltipHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>tooltip</span>
@@ -94,6 +144,31 @@ export default function ImageOptionForm() {
 					width='100%'
 					value={ipcProps.smallImage}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addCut(() => {
+								setIpcProps(prev => ({...prev, smallImage: '', smallImageEnabled: false}));
+							})
+							.addPaste(() => {
+								void navigator.clipboard.readText().then(text => {
+									setIpcProps(prev => ({...prev, smallImage: text, smallImageEnabled: containsText(text)}));
+								});
+							})
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, smallImageEnabled: !ipcProps.smallImageEnabled}));
+							})
+							.addClearOption(() => {
+								setIpcProps(prev => ({...prev, smallImage: '', smallImageEnabled: false}));
+							})
+							.addOpenInBrowser(ipcProps.smallImage)
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
 							<span className='text-default-400 text-small'>name</span>
@@ -125,6 +200,30 @@ export default function ImageOptionForm() {
 					color={smallImageTooltipHelper.color}
 					value={ipcProps.smallImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled || !ipcProps.smallImageEnabled}
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addCut(() => {
+								setIpcProps(prev => ({...prev, smallImageTooltip: '', smallImageTooltipEnabled: false}));
+							})
+							.addPaste(() => {
+								void navigator.clipboard.readText().then(text => {
+									setIpcProps(prev => ({...prev, smallImageTooltip: text, smallImageTooltipEnabled: containsText(text)}));
+								});
+							})
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, smallImageTooltipEnabled: !ipcProps.smallImageTooltipEnabled}));
+							})
+							.addClearOption(() => {
+								setIpcProps(prev => ({...prev, smallImageTooltip: '', smallImageTooltipEnabled: false}));
+							})
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
 							<span className={`${smallImageTooltipHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>tooltip</span>

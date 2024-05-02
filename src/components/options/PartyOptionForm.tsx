@@ -2,10 +2,11 @@ import React, {useEffect, useMemo} from 'react';
 
 import {Input, Switch} from '@nextui-org/react';
 import {isDigit, validateNumberInput} from '@/lib';
-import {useTauriContext} from '@/context';
+import {MenuOptionBuilder, useTauriContext} from '@/context';
+import {showMenu} from 'tauri-plugin-context-menu';
 
 export default function PartyOptionForm() {
-	const {ipcProps, setIpcProps} = useTauriContext();
+	const {osType, setIsSessionRunning, isSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
 	const minHelper = useMemo(() => validateNumberInput({text: ipcProps.partySize?.toString(), min: 1, max: 100}), [ipcProps.partySize]);
 	const maxHelper = useMemo(() => validateNumberInput({text: ipcProps.partyMax?.toString(), min: 1, max: 100}), [ipcProps.partyMax]);
@@ -30,6 +31,19 @@ export default function PartyOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					width='100%'
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, partyEnabled: !ipcProps.partyEnabled}));
+							})
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					onChange={e => {
 						setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
 					}}
@@ -46,6 +60,19 @@ export default function PartyOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					width='100%'
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, partyEnabled: !ipcProps.partyEnabled}));
+							})
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					onChange={e => {
 						setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
 					}}

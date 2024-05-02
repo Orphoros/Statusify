@@ -34,7 +34,7 @@ export default function TauriProvider({children, osType}: TauriProviderProps) {
 			ipcProps,
 			setIpcProps,
 		}}>
-			{ipcStoreLoading || sysConfStoreLoading
+			{ipcStoreLoading || sysConfStoreLoading || !osType
 				? <LoadingView/>
 				: children
 			}

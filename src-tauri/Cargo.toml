@@ -19,11 +19,13 @@ discord-rich-presence = "0.2.3"
 tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "dev" }
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+tauri-plugin-context-menu = { git = "https://github.com/c2r0b/tauri-plugin-context-menu", branch = "main" }
 mimalloc = "^0.1"
 log = "0.4.18"
 sysinfo = "0.27.7"
 time = "0.3.17"
 window-vibrancy = "^0.4"
+webbrowser = "1"
 
 [profile.release]
 panic = "abort"

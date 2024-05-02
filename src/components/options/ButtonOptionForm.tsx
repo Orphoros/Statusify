@@ -2,10 +2,11 @@ import React, {useEffect, useMemo} from 'react';
 
 import {Input, Switch} from '@nextui-org/react';
 import {containsText, validateTextInput, validateUrlInput} from '@/lib';
-import {useTauriContext} from '@/context';
+import {MenuOptionBuilder, useTauriContext} from '@/context';
+import {showMenu} from 'tauri-plugin-context-menu';
 
 export default function ButtonOptionForm() {
-	const {ipcProps, setIpcProps} = useTauriContext();
+	const {isSessionRunning, setIsSessionRunning, ipcProps, setIpcProps, osType} = useTauriContext();
 
 	const buttonUrlHelper = useMemo(() => validateUrlInput(ipcProps.buttonUrl), [ipcProps.buttonUrl]);
 	const buttonTextHelper = useMemo(() => validateTextInput(ipcProps.buttonText, 20), [ipcProps.buttonText]);
@@ -31,6 +32,31 @@ export default function ButtonOptionForm() {
 					color={buttonTextHelper.color}
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonText}
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addCut(() => {
+								setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
+							})
+							.addPaste(() => {
+								void navigator.clipboard.readText().then(text => {
+									const enabled = containsText(text) && containsText(ipcProps.buttonUrl);
+									setIpcProps(prev => ({...prev, buttonText: text, buttonEnabled: enabled}));
+								});
+							})
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, buttonEnabled: !ipcProps.buttonEnabled}));
+							})
+							.addClearOption(() => {
+								setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
+							})
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					onClear={() => {
 						setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
 					}}
@@ -54,6 +80,31 @@ export default function ButtonOptionForm() {
 					errorMessage={buttonUrlHelper.text}
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonUrl}
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addCut(() => {
+								setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));
+							})
+							.addPaste(() => {
+								void navigator.clipboard.readText().then(text => {
+									const enabled = containsText(text) && containsText(ipcProps.buttonText);
+									setIpcProps(prev => ({...prev, buttonUrl: text, buttonEnabled: enabled}));
+								});
+							})
+							.addSeparator()
+							.addToggleDisableOption(() => {
+								setIpcProps(prev => ({...prev, buttonEnabled: !ipcProps.buttonEnabled}));
+							})
+							.addClearOption(() => {
+								setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));
+							})
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build(),
+						);
+					}}
 					onClear={() => {
 						setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));
 					}}
@@ -72,7 +123,9 @@ export default function ButtonOptionForm() {
 
 						const url = value.replace('http://', '').replace('https://', '');
 
-						setIpcProps(prev => ({...prev, buttonProtocol: protocol, buttonUrl: url, buttonEnabled: containsText(value) && containsText(ipcProps.buttonText)}));
+						setIpcProps(prev => ({
+							...prev, buttonProtocol: protocol, buttonUrl: url, buttonEnabled: containsText(value) && containsText(ipcProps.buttonText),
+						}));
 					}}
 				/>
 				<Switch className='self-start mt-0' isSelected={ipcProps.buttonEnabled} isDisabled={ipcProps.idError} onValueChange={

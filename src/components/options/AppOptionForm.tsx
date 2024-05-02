@@ -1,10 +1,11 @@
 import React, {useEffect, useMemo} from 'react';
 import {Input} from '@nextui-org/react';
 import {validateNumberInput} from '@/lib';
-import {useTauriContext} from '@/context';
+import {MenuOptionBuilder, useTauriContext} from '@/context';
+import {showMenu} from 'tauri-plugin-context-menu';
 
 export default function AppOptionForm() {
-	const {ipcProps, setIpcProps} = useTauriContext();
+	const {ipcProps, setIpcProps, osType, setIsSessionRunning, isSessionRunning} = useTauriContext();
 
 	const helper = useMemo(() => validateNumberInput({text: ipcProps.id, length: 18, required: true}), [ipcProps.id]);
 
@@ -25,6 +26,23 @@ export default function AppOptionForm() {
 					key='primary'
 					color={helper.color}
 					errorMessage={helper.text}
+					value={ipcProps.id}
+					onContextMenu={e => {
+						void showMenu(new MenuOptionBuilder(osType)
+							.addCopy()
+							.addCut(() => {
+								setIpcProps(prev => ({...prev, id: ''}));
+							})
+							.addPaste(() => {
+								void navigator.clipboard.readText().then(text => {
+									setIpcProps(prev => ({...prev, id: text}));
+								});
+							})
+							.addSeparator()
+							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.build());
+					}}
 					onChange={e => {
 						const {value} = e.target;
 						setIpcProps(prev => ({...prev, id: value}));
