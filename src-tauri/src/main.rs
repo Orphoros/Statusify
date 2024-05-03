@@ -205,11 +205,10 @@ fn open_url(url: &str) {
     }
 }
 
-
 fn main() {
     let client = DiscordIpcClient::new("-1").unwrap();
 
-    let quit = CustomMenuItem::new("quit".to_string(), "Exit");
+    let quit = CustomMenuItem::new("quit".to_string(), "Quit Statusify").accelerator("CmdOrControl+Q");
     let visibility = CustomMenuItem::new("visibility".to_string(), "Show / hide");
 
     #[cfg(target_os = "macos")]
