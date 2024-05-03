@@ -6,7 +6,9 @@ import {invoke} from '@tauri-apps/api';
 
 export class MenuOptionBuilder {
 	private readonly options: Item[];
-	constructor(private readonly osType: OsType | undefined) {
+	constructor(private readonly e: React.MouseEvent<HTMLDivElement>, private readonly osType: OsType | undefined) {
+		e.preventDefault();
+		e.stopPropagation();
 		this.options = [];
 	}
 
@@ -87,7 +89,7 @@ export class MenuOptionBuilder {
 
 	addToggleDisableOption(callback: () => any): this {
 		this.options.push({
-			label: 'Toggle option',
+			label: 'Toggle Option',
 			disabled: false,
 			event() {
 				if (callback) {
@@ -100,7 +102,7 @@ export class MenuOptionBuilder {
 
 	addClearOption(callback: () => any): this {
 		this.options.push({
-			label: 'Clear field',
+			label: 'Clear Field',
 			disabled: false,
 			event() {
 				if (callback) {

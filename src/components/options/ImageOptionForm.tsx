@@ -32,7 +32,7 @@ export default function ImageOptionForm() {
 					value={ipcProps.largeImage}
 					isDisabled={ipcProps.idError}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, largeImage: '', largeImageEnabled: false}));
@@ -88,7 +88,7 @@ export default function ImageOptionForm() {
 					value={ipcProps.largeImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, largeImageTooltip: '', largeImageTooltipEnabled: false}));
@@ -145,7 +145,7 @@ export default function ImageOptionForm() {
 					value={ipcProps.smallImage}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, smallImage: '', smallImageEnabled: false}));
@@ -201,7 +201,7 @@ export default function ImageOptionForm() {
 					value={ipcProps.smallImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled || !ipcProps.smallImageEnabled}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, smallImageTooltip: '', smallImageTooltipEnabled: false}));

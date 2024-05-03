@@ -28,7 +28,7 @@ export default function AppOptionForm() {
 					errorMessage={helper.text}
 					value={ipcProps.id}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, id: ''}));

@@ -43,7 +43,7 @@ export default function ButtonOptionForm() {
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonText}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
@@ -91,7 +91,7 @@ export default function ButtonOptionForm() {
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonUrl}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));

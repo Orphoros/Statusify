@@ -32,7 +32,7 @@ export default function DetailsOptionForm() {
 					color={detailsHelper.color}
 					isDisabled={ipcProps.idError}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, details: '', detailsEnabled: false}));
@@ -89,7 +89,7 @@ export default function DetailsOptionForm() {
 					width='100%'
 					labelPlacement='outside'
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, state: '', stateEnabled: false}));

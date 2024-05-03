@@ -32,7 +32,7 @@ export default function PartyOptionForm() {
 					size='sm'
 					width='100%'
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addSeparator()
 							.addToggleDisableOption(() => {
@@ -61,7 +61,7 @@ export default function PartyOptionForm() {
 					size='sm'
 					width='100%'
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(osType)
+						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
 							.addSeparator()
 							.addToggleDisableOption(() => {
