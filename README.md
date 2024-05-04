@@ -21,6 +21,29 @@ Statusify is an open source simple and easy-to-use cross platform GUI applicatio
 > [!NOTE]
 > Statusify is currently in development and is only available for testing purposes as an alpha release.
 
+## Installation
+
+Please note that the due to the alpha release, the binaries are currently not signed!
+
+| Platform |  Architecture | Download |
+| -------- | -------------- | -------- |
+| Windows  | x64            | [Statusify.windows-x86_64.exe](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.windows-x86_64.exe) |
+| macOS    | x64 (Intel)    | [Statusify.darwin-x86_64.dmg](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.darwin-x86_64.dmg) |
+| Debian   | x64            | [Statusify.linux-x86_64.deb](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.linux-x86_64.deb) |
+| Linux (AppImage) | x64    | [Statusify.linux-x86_64.AppImage](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.linux-x86_64.AppImage) |
+
+### Homebrew installation for macOS
+
+You can install Statusify on macOS using [Homebrew](https://brew.sh/).
+
+```bash
+brew tap orphoros/core
+```
+
+```bash
+brew install --cask statusify
+```
+
 ## Key Features
 
 - Set up your own custom rich presence.
@@ -31,6 +54,7 @@ Statusify is an open source simple and easy-to-use cross platform GUI applicatio
 - Add a button with a label and a URL.
 - Toggle any of the rich presence elements on and off.
 - Save your editor settings, so you don't have to reconfigure it every time you open the app.
+- Close to the system tray so the app can run in the background.
 
 ## Supported Platforms
 
@@ -56,17 +80,21 @@ Statusify is officially supported and tested on:
     <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
 </p>
 
+## Motivation
+
+Statusify was created as a proof of concept to test the capabilities of the Tauri framework. Electron is a popular choice for creating cross-platform desktop applications, however the produced binaries have a large base size due to the inclusion of the Chromium browser. Also, Electron applications are known to consume a lot of memory. This project aims to validate the Tauri framework as a lightweight alternative to Electron for building cross platform desktop applications.
+
 ### Developer's guide
 
 <details><summary>1. Setup the project</summary>
 
-1. Clone the repository and install the dependencies.
+Clone the repository and install the dependencies.
 
 ```bash
 git clone git@github.com:Orphoros/Statusify.git
 ```
 
-2. Install the dependencies.
+Install the dependencies.
 
 ```bash
 npm i
@@ -88,13 +116,13 @@ npm run tauri dev
 
 <details><summary>3. Update dependencies</summary>
 
-1. Fetch new updates from the repository.
+Fetch new updates from the repository.
 
 ```bash
 npm run upgrade
 ```
 
-2. Create the lock file for the new dependencies.
+Create the lock file for the new dependencies.
 
 ```bash
 npm run lock
