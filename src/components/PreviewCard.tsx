@@ -19,17 +19,25 @@ export default function PreviewCard() {
 	const [placeholderSmallImage, setPlaceholderSmallImage] = useState<string>('');
 	const [currentTime, changeTime] = useState(new Date());
 
+	(async () => {
+		if (largeImage.length > 0 && smallImage.length > 0) {
+			return;
+		}
+
+		const l = await resolveResource('images/largeimage.svg');
+		const largeSvg = await readTextFile(l);
+		setPlaceholderLargeImage(`data:image/svg+xml;utf8,${encodeURIComponent(largeSvg)}`);
+		setLargeImage(placeholderLargeImage);
+
+		const s = await resolveResource('images/smallimage.svg');
+		const smallSvg = await readTextFile(s);
+		setPlaceholderSmallImage(`data:image/svg+xml;utf8,${encodeURIComponent(smallSvg)}`);
+		setSmallImage(placeholderSmallImage);
+
+		void debug(`loading static image... (largeImage: ${largeImage.length > 0}, smallImage: ${smallImage.length > 0})`);
+	})().catch(error);
+
 	useEffect(() => {
-		(async () => {
-			const l = await resolveResource('images/largeimage.svg');
-			const largeSvg = await readTextFile(l);
-			setPlaceholderLargeImage(`data:image/svg+xml;utf8,${encodeURIComponent(largeSvg)}`);
-
-			const s = await resolveResource('images/smallimage.svg');
-			const smallSvg = await readTextFile(s);
-			setPlaceholderSmallImage(`data:image/svg+xml;utf8,${encodeURIComponent(smallSvg)}`);
-		})().catch(console.error);
-
 		const interval = setInterval(() => {
 			changeTime(new Date());
 		}, 1000);
@@ -41,22 +49,18 @@ export default function PreviewCard() {
 
 	useEffect(() => {
 		(async () => {
-			try {
-				if (ipcProps.largeImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
-					setLargeImage(ipcProps.largeImage);
-				} else {
-					setLargeImage(placeholderLargeImage);
-				}
-
-				if (ipcProps.smallImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
-					setSmallImage(ipcProps.smallImage);
-				} else {
-					setSmallImage(placeholderSmallImage);
-				}
-			} catch (err) {
-				void error(`error while setting images: ${err as string}`);
+			if (ipcProps.largeImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
+				setLargeImage(ipcProps.largeImage);
+			} else {
+				setLargeImage(placeholderLargeImage);
 			}
-		})().catch(console.error);
+
+			if (ipcProps.smallImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
+				setSmallImage(ipcProps.smallImage);
+			} else {
+				setSmallImage(placeholderSmallImage);
+			}
+		})().catch(error);
 	}, [ipcProps.largeImage, ipcProps.smallImage]);
 
 	const handler = async () => {
