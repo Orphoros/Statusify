@@ -23,7 +23,7 @@ export default function ImageOptionForm() {
 				<Input
 					variant='bordered'
 					isClearable
-					placeholder='large image resource name'
+					placeholder='large image resource name or url'
 					className='h-11'
 					labelPlacement='outside'
 					size='sm'
@@ -58,7 +58,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className='text-default-400 text-small'>name</span>
+							<span className='text-default-400 text-small'>image</span>
 						</div>
 					}
 					onClear={() => {
@@ -139,7 +139,7 @@ export default function ImageOptionForm() {
 					className='h-11'
 					labelPlacement='outside'
 					size='sm'
-					placeholder='small image resource name'
+					placeholder='small image resource name or url'
 					color='primary'
 					width='100%'
 					value={ipcProps.smallImage}
@@ -171,7 +171,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className='text-default-400 text-small'>name</span>
+							<span className='text-default-400 text-small'>image</span>
 						</div>
 					}
 					onClear={() => {

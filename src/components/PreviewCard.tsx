@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {
-	Image, Button, Card, Tooltip, Badge, Avatar, CardHeader, Divider, CardBody,
+	Image, Button, Card, Tooltip, Badge, CardHeader, Divider, CardBody,
 } from '@nextui-org/react';
 import {message} from '@tauri-apps/api/dialog';
 import {resolveResource} from '@tauri-apps/api/path';
 import {useTauriContext} from '@/context';
-import {error} from 'tauri-plugin-log-api';
+import {debug, error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
 import {
 	showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
@@ -15,33 +15,49 @@ export default function PreviewCard() {
 	const {ipcProps, showVibrancy} = useTauriContext();
 	const [largeImage, setLargeImage] = useState<string>('');
 	const [smallImage, setSmallImage] = useState<string>('');
+	const [placeholderLargeImage, setPlaceholderLargeImage] = useState<string>('');
+	const [placeholderSmallImage, setPlaceholderSmallImage] = useState<string>('');
 	const [currentTime, changeTime] = useState(new Date());
 
 	useEffect(() => {
 		(async () => {
-			try {
-				const l = await resolveResource('images/largeimage.svg');
-				const largeSvg = await readTextFile(l);
-				setLargeImage(largeSvg);
+			const l = await resolveResource('images/largeimage.svg');
+			const largeSvg = await readTextFile(l);
+			setPlaceholderLargeImage(`data:image/svg+xml;utf8,${encodeURIComponent(largeSvg)}`);
 
-				const s = await resolveResource('images/smallimage.svg');
-				const smallSvg = await readTextFile(s);
-				setSmallImage(smallSvg);
-
-				// CorrectIpcTime();
-			} catch (err) {
-				void error(`error while setting images: ${err as string}`);
-			}
+			const s = await resolveResource('images/smallimage.svg');
+			const smallSvg = await readTextFile(s);
+			setPlaceholderSmallImage(`data:image/svg+xml;utf8,${encodeURIComponent(smallSvg)}`);
 		})().catch(console.error);
 
-		const id = setInterval(() => {
+		const interval = setInterval(() => {
 			changeTime(new Date());
 		}, 1000);
 
 		return () => {
-			clearInterval(id);
+			clearInterval(interval);
 		};
 	}, []);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				if (ipcProps.largeImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
+					setLargeImage(ipcProps.largeImage);
+				} else {
+					setLargeImage(placeholderLargeImage);
+				}
+
+				if (ipcProps.smallImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
+					setSmallImage(ipcProps.smallImage);
+				} else {
+					setSmallImage(placeholderSmallImage);
+				}
+			} catch (err) {
+				void error(`error while setting images: ${err as string}`);
+			}
+		})().catch(console.error);
+	}, [ipcProps.largeImage, ipcProps.smallImage]);
 
 	const handler = async () => {
 		await message(`Clicking this button would open '${(ipcProps.buttonProtocol ?? '') + (ipcProps.buttonUrl ?? '')}' in the web-browser`, {title: 'Statusify', type: 'info'});
@@ -75,19 +91,30 @@ export default function PreviewCard() {
 						{showLargeImage(ipcProps)
 						&& <Badge draggable={false} disableAnimation className='w-8 h-8 min-w-8 min-h-8 bottom-[12%] right-[12%]' isInvisible={!showSmallImage(ipcProps)} isOneChar content={
 							<Tooltip isDisabled={!showSmallImageText(ipcProps)} content={ipcProps.smallImageTooltip}>
-								<Image draggable={false} radius='full' src={`data:image/svg+xml;utf8,${encodeURIComponent(smallImage)}`} alt='Small image'/>
+								<Image
+									draggable={false}
+									radius='full'
+									src={smallImage}
+									alt='Small image'
+									loading='lazy'
+									className='object-cover w-7 h-7 min-w-7 min-h-7'
+									onError={() => {
+										setSmallImage(placeholderSmallImage);
+									}}
+								/>
 							</Tooltip>
 						} placement='bottom-right'>
 							<Tooltip isDisabled={!showLargeImageText(ipcProps)} content={ipcProps.largeImageTooltip}>
-								<Avatar
+								<Image
 									draggable={false}
 									radius='sm'
-									onDragStart={event => {
-										event.preventDefault();
-									}}
-									className='w-20 h-20 text-large'
-									src={`data:image/svg+xml;utf8,${encodeURIComponent(largeImage)}`}
+									loading='lazy'
+									src={largeImage}
 									alt='Large image'
+									className='object-cover w-20 h-20'
+									onError={() => {
+										setLargeImage(placeholderLargeImage);
+									}}
 								/>
 							</Tooltip>
 						</Badge>}
