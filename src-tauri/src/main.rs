@@ -26,6 +26,11 @@ struct RpcStatePayload {
   running: bool,
 }
 
+#[derive(Clone, serde::Serialize)]
+struct SingleInstancePayload {
+  args: Vec<String>,
+  cwd: String,
+}
 struct DiscordClient(Mutex<DiscordIpcClient>);
 struct SysInfo(Mutex<System>);
 struct DiscordPid(Mutex<Option<Pid>>);
@@ -278,6 +283,16 @@ fn main() {
     .manage(DiscordPid(Mutex::new(None)))
     .plugin(tauri_plugin_store::Builder::default().build())
     .plugin(tauri_plugin_context_menu::init())
+    .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
+        debug!("instance: {}, {argv:?}, {cwd}", app.package_info().name);
+        app.emit_all("single-instance", SingleInstancePayload { args: argv, cwd }).unwrap();
+        let window = app.get_window("main").unwrap();
+            if !window.is_visible().unwrap() {
+                show_main_window(window);
+            }else {
+                window.set_focus().unwrap();
+            }
+    }))
     .setup(|app| {
         info!("setting up app (v{})", VERSION);
 
