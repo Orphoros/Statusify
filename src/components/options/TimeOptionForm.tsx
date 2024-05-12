@@ -20,7 +20,7 @@ export default function TimeOptionForm() {
 					<TimeInput
 						variant='bordered'
 						color='primary'
-						className='max-w-[7rem]'
+						className='max-w-[5.5rem]'
 						labelPlacement='outside'
 						size='sm'
 						hourCycle={12}
