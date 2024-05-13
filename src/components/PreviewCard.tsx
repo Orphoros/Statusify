@@ -33,8 +33,6 @@ export default function PreviewCard() {
 		const smallSvg = await readTextFile(s);
 		setPlaceholderSmallImage(`data:image/svg+xml;utf8,${encodeURIComponent(smallSvg)}`);
 		setSmallImage(placeholderSmallImage);
-
-		void debug(`loading static image... (largeImage: ${largeImage.length > 0}, smallImage: ${smallImage.length > 0})`);
 	})().catch(error);
 
 	useEffect(() => {
