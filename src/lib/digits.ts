@@ -1,19 +1,5 @@
 import {type FormValidation} from '@/types';
-import {containsText, isAtLength} from './strings';
 import {isDefined} from './control';
-
-/**
- * Check if a text is a number
- * @param text string to check
- * @returns true if text is a digit
- */
-export function isDigit(text: string): boolean {
-	if (!containsText(text)) {
-		return false;
-	}
-
-	return /^\d+$/.test(text);
-}
 
 /**
  * Check if a number text is a number between min and max
@@ -23,7 +9,7 @@ export function isDigit(text: string): boolean {
  * @returns true if text is a digit between min and max
  */
 export function isDigitBetween(text: string, min: number, max: number): boolean {
-	return isDigit(text) && Number(text) >= min && Number(text) <= max;
+	return text.isInteger() && Number(text) >= min && Number(text) <= max;
 }
 
 /**
@@ -69,7 +55,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 		} satisfies FormValidation;
 	}
 
-	if (!isDigit(text!)) {
+	if (!text!.isInteger()) {
 		return {
 			text: 'Only positive whole numbers',
 			color: 'danger',
@@ -78,7 +64,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 		} satisfies FormValidation;
 	}
 
-	if (isDefined(length) && !isAtLength(text!, length!)) {
+	if (isDefined(length) && !text!.isAtLength(length!)) {
 		return {
 			text: `Number must be ${length!} digits long`,
 			color: 'danger',

@@ -20,21 +20,21 @@ export default function PreviewCard() {
 	const [currentTime, changeTime] = useState(new Date());
 
 	(async () => {
-		if (largeImage.length > 0 && smallImage.length > 0) {
+		if (largeImage.isDefined() && smallImage.isDefined()) {
 			return;
 		}
 
 		const l = await resolveResource('images/largeimage.svg');
 		const largeSvg = await readTextFile(l);
 		setPlaceholderLargeImage(`data:image/svg+xml;utf8,${encodeURIComponent(largeSvg)}`);
-		if (largeImage.length === 0) {
+		if (largeImage.isEmpty()) {
 			setLargeImage(placeholderLargeImage);
 		}
 
 		const s = await resolveResource('images/smallimage.svg');
 		const smallSvg = await readTextFile(s);
 		setPlaceholderSmallImage(`data:image/svg+xml;utf8,${encodeURIComponent(smallSvg)}`);
-		if (smallImage.length === 0) {
+		if (smallImage.isEmpty()) {
 			setSmallImage(placeholderSmallImage);
 		}
 	})().catch(error);
@@ -51,13 +51,13 @@ export default function PreviewCard() {
 
 	useEffect(() => {
 		(async () => {
-			if (ipcProps.largeImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
+			if (ipcProps.largeImage?.isOnlineImage()) {
 				setLargeImage(ipcProps.largeImage);
 			} else {
 				setLargeImage(placeholderLargeImage);
 			}
 
-			if (ipcProps.smallImage?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g)) {
+			if (ipcProps.smallImage?.isOnlineImage()) {
 				setSmallImage(ipcProps.smallImage);
 			} else {
 				setSmallImage(placeholderSmallImage);

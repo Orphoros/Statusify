@@ -28,6 +28,7 @@
     "rules": {
         "@typescript-eslint/no-unsafe-call": "off",
         "no-control-regex": "off",
-        "complexity": ["error", 40]
+        "complexity": ["error", 40],
+        "no-extend-native": "off"
     }
 }

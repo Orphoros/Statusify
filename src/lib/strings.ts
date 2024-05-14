@@ -12,7 +12,7 @@ export function containsText(text: string | undefined): boolean {
 		return false;
 	}
 
-	return text!.length > 0 && text!.replaceAll(' ', '').length > 0;
+	return text!.isDefined();
 }
 
 /**
@@ -32,16 +32,6 @@ export function containsUnicode(text: string): boolean {
  */
 export function isTooLong(text: string, maxLength: number): boolean {
 	return text.trim().length > maxLength;
-}
-
-/**
- * Check if a text is exactly a specified length
- * @param text string to check
- * @param length length of the string (inclusive)
- * @returns true if text is exactly length
- */
-export function isAtLength(text: string, length: number): boolean {
-	return text.trim().length === length;
 }
 
 /**

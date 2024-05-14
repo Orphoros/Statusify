@@ -12,13 +12,13 @@ export default function ButtonOptionForm() {
 	const buttonTextHelper = useMemo(() => validateTextInput(ipcProps.buttonText, 20), [ipcProps.buttonText]);
 
 	const handleUrlProtocol = (path: string): [string, string] => {
-		if (path.includes('http://') || path.includes('https://')) {
+		if (path.isWebsite()) {
 			const protocol = path.split('://')[0] + '://';
 			const url = path.replace('http://', '').replace('https://', '');
 			return [protocol, url];
 		}
 
-		return ['https://', path];
+		return [ipcProps.buttonProtocol ?? 'https', path];
 	};
 
 	useEffect(() => {

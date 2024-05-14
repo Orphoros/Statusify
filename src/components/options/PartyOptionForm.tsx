@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 
 import {Input, Switch} from '@nextui-org/react';
-import {isDigit, validateNumberInput} from '@/lib';
+import {validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
 
@@ -45,7 +45,7 @@ export default function PartyOptionForm() {
 						);
 					}}
 					onChange={e => {
-						setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
+						setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: e.target.value.isInteger()}));
 					}}
 				/>
 				<Input
@@ -74,7 +74,7 @@ export default function PartyOptionForm() {
 						);
 					}}
 					onChange={e => {
-						setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: isDigit(e.target.value)}));
+						setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: e.target.value.isInteger()}));
 					}}
 				/>
 
