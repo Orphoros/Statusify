@@ -5,7 +5,7 @@ import {
 import {message} from '@tauri-apps/api/dialog';
 import {resolveResource} from '@tauri-apps/api/path';
 import {useTauriContext} from '@/context';
-import {debug, error} from 'tauri-plugin-log-api';
+import {error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
 import {
 	showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
@@ -13,8 +13,8 @@ import {
 
 export default function PreviewCard() {
 	const {ipcProps, showVibrancy} = useTauriContext();
-	const [largeImage, setLargeImage] = useState<string>('');
-	const [smallImage, setSmallImage] = useState<string>('');
+	const [largeImage, setLargeImage] = useState<string>(ipcProps.largeImage ?? '');
+	const [smallImage, setSmallImage] = useState<string>(ipcProps.smallImage ?? '');
 	const [placeholderLargeImage, setPlaceholderLargeImage] = useState<string>('');
 	const [placeholderSmallImage, setPlaceholderSmallImage] = useState<string>('');
 	const [currentTime, changeTime] = useState(new Date());
@@ -27,12 +27,16 @@ export default function PreviewCard() {
 		const l = await resolveResource('images/largeimage.svg');
 		const largeSvg = await readTextFile(l);
 		setPlaceholderLargeImage(`data:image/svg+xml;utf8,${encodeURIComponent(largeSvg)}`);
-		setLargeImage(placeholderLargeImage);
+		if (largeImage.length === 0) {
+			setLargeImage(placeholderLargeImage);
+		}
 
 		const s = await resolveResource('images/smallimage.svg');
 		const smallSvg = await readTextFile(s);
 		setPlaceholderSmallImage(`data:image/svg+xml;utf8,${encodeURIComponent(smallSvg)}`);
-		setSmallImage(placeholderSmallImage);
+		if (smallImage.length === 0) {
+			setSmallImage(placeholderSmallImage);
+		}
 	})().catch(error);
 
 	useEffect(() => {
@@ -91,21 +95,27 @@ export default function PreviewCard() {
 					<p className='text-sm font-bold mb-2'>PLAYING A GAME</p>
 					<div className='flex gap-3 mb-4'>
 						{showLargeImage(ipcProps)
-						&& <Badge draggable={false} disableAnimation className='w-8 h-8 min-w-8 min-h-8 bottom-[12%] right-[12%]' isInvisible={!showSmallImage(ipcProps)} isOneChar content={
-							<Tooltip isDisabled={!showSmallImageText(ipcProps)} content={ipcProps.smallImageTooltip}>
-								<Image
-									draggable={false}
-									radius='full'
-									src={smallImage}
-									alt='Small image'
-									loading='lazy'
-									className='object-cover w-7 h-7 min-w-7 min-h-7'
-									onError={() => {
-										setSmallImage(placeholderSmallImage);
-									}}
-								/>
-							</Tooltip>
-						} placement='bottom-right'>
+						&& <Badge
+							draggable={false}
+							disableAnimation
+							className={`w-8 h-8 min-w-8 min-h-8 bottom-[12%] right-[12%] ${showVibrancy ? 'border-content1  border-opacity-50' : 'border-content2'}`}
+							isInvisible={!showSmallImage(ipcProps)}
+							isOneChar
+							content={
+								<Tooltip isDisabled={!showSmallImageText(ipcProps)} content={ipcProps.smallImageTooltip}>
+									<Image
+										draggable={false}
+										radius='full'
+										src={smallImage}
+										alt='Small image'
+										loading='lazy'
+										className='object-cover w-7 h-7 min-w-7 min-h-7'
+										onError={() => {
+											setSmallImage(placeholderSmallImage);
+										}}
+									/>
+								</Tooltip>
+							} placement='bottom-right'>
 							<Tooltip isDisabled={!showLargeImageText(ipcProps)} content={ipcProps.largeImageTooltip}>
 								<Image
 									draggable={false}
