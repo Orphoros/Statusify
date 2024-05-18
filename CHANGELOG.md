@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.11] - TBA
+
+### Added
+
+- Secondary button
+- URL images are now previewed in the app
+
+### Changed
+
+- Images URLs or names are now limited to 255 characters
+
+### Fixed
+
+- Allow only a single instance of the app to run to avoid multiple system tray icons
+- Image previews correctly load in on app start and no more black boxes are shown
+
 ## [0.0.10] - 2024-05-03
 
 ### Added
