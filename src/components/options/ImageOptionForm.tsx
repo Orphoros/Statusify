@@ -10,10 +10,18 @@ export default function ImageOptionForm() {
 
 	const largeImageTooltipHelper = useMemo(() => validateTextInput(ipcProps.largeImageTooltip, 20), [ipcProps.largeImageTooltip]);
 	const smallImageTooltipHelper = useMemo(() => validateTextInput(ipcProps.smallImageTooltip, 20), [ipcProps.smallImageTooltip]);
+	const largeImageUrlHelper = useMemo(() => validateTextInput(ipcProps.largeImage, 255), [ipcProps.largeImage]);
+	const smallImageUrlHelper = useMemo(() => validateTextInput(ipcProps.smallImage, 255), [ipcProps.smallImage]);
 
 	useEffect(() => {
-		setIpcProps(prev => ({...prev, largeImageTooltipError: largeImageTooltipHelper.error, smallImageTooltipError: smallImageTooltipHelper.error}));
-	}, [largeImageTooltipHelper.error, smallImageTooltipHelper.error]);
+		setIpcProps(prev => ({
+			...prev,
+			largeImageTooltipError: largeImageTooltipHelper.error,
+			smallImageTooltipError: smallImageTooltipHelper.error,
+			largeImageUrlError: largeImageUrlHelper.error,
+			smallImageUrlError: smallImageUrlHelper.error,
+		}));
+	}, [largeImageTooltipHelper.error, smallImageTooltipHelper.error, largeImageUrlHelper.error, smallImageUrlHelper.error]);
 
 	return (
 		<div>
@@ -27,10 +35,12 @@ export default function ImageOptionForm() {
 					className='h-11'
 					labelPlacement='outside'
 					size='sm'
-					color='primary'
 					width='100%'
 					value={ipcProps.largeImage}
 					isDisabled={ipcProps.idError}
+					errorMessage={largeImageUrlHelper.text}
+					isInvalid={largeImageUrlHelper.error}
+					color={largeImageUrlHelper.color}
 					onContextMenu={e => {
 						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
@@ -58,7 +68,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className='text-default-400 text-small'>image</span>
+							<span className={`${largeImageUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>image</span>
 						</div>
 					}
 					onClear={() => {
@@ -141,10 +151,12 @@ export default function ImageOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					placeholder='small image resource name or url'
-					color='primary'
 					width='100%'
 					value={ipcProps.smallImage}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
+					errorMessage={smallImageUrlHelper.text}
+					isInvalid={smallImageUrlHelper.error}
+					color={smallImageUrlHelper.color}
 					onContextMenu={e => {
 						void showMenu(new MenuOptionBuilder(e, osType)
 							.addCopy()
@@ -172,7 +184,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className='text-default-400 text-small'>image</span>
+							<span className={`${smallImageUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>tooltip</span>
 						</div>
 					}
 					onClear={() => {
