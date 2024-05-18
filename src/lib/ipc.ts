@@ -19,7 +19,10 @@ export async function startIpc(ipcProps: IpcProps, disableConfirmMsg = false): P
 	void debug('attempting to start RPC');
 
 	const party = showParty(ipcProps) ? [ipcProps.partySize, ipcProps.partyMax] : undefined;
-	const buttons = showButton(ipcProps) ? [[ipcProps.buttonText, ipcProps.buttonProtocol! + ipcProps.buttonUrl!]] : undefined;
+	const buttons = showButton(ipcProps) ? [
+		[ipcProps.buttonText, ipcProps.buttonProtocol! + ipcProps.buttonUrl!],
+		[ipcProps.button2Text, ipcProps.button2Protocol! + ipcProps.button2Url!],
+	] : undefined;
 	const state = showState(ipcProps) ? ipcProps.state : undefined;
 	const details = showDetails(ipcProps) ? ipcProps.details : undefined;
 	const largeImage = showLargeImage(ipcProps) ? ipcProps.largeImage : undefined;

@@ -36,4 +36,10 @@ export type IpcProps = {
 	buttonProtocol?: string;
 	buttonEnabled?: boolean;
 	buttonError?: boolean;
+
+	button2Text?: string;
+	button2Url?: string;
+	button2Protocol?: string;
+	button2Enabled?: boolean;
+	button2Error?: boolean;
 };

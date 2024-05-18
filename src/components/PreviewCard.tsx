@@ -8,7 +8,7 @@ import {useTauriContext} from '@/context';
 import {error} from 'tauri-plugin-log-api';
 import {readTextFile} from '@tauri-apps/api/fs';
 import {
-	showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
+	showButton, showButton2, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
 } from '@/lib';
 
 export default function PreviewCard() {
@@ -65,8 +65,12 @@ export default function PreviewCard() {
 		})().catch(error);
 	}, [ipcProps.largeImage, ipcProps.smallImage]);
 
-	const handler = async () => {
+	const btn1Handler = async () => {
 		await message(`Clicking this button would open '${(ipcProps.buttonProtocol ?? '') + (ipcProps.buttonUrl ?? '')}' in the web-browser`, {title: 'Statusify', type: 'info'});
+	};
+
+	const btn2Handler = async () => {
+		await message(`Clicking this button would open '${(ipcProps.button2Protocol ?? '') + (ipcProps.button2Url ?? '')}' in the web-browser`, {title: 'Statusify', type: 'info'});
 	};
 
 	let secondsElapsed = 0;
@@ -91,7 +95,7 @@ export default function PreviewCard() {
 			</CardHeader>
 			<Divider/>
 			<CardBody>
-				<div className='flex flex-col justify-center h-full'>
+				<div className='flex flex-col gap-1 justify-center h-full'>
 					<p className='text-sm font-bold mb-2'>PLAYING A GAME</p>
 					<div className='flex gap-3 mb-4'>
 						{showLargeImage(ipcProps)
@@ -138,7 +142,8 @@ export default function PreviewCard() {
 							{showCurrentTime(ipcProps) && <p className='text-sm'>Current time here once started</p>}
 						</div>
 					</div>
-					{showButton(ipcProps) && <Button className='rounded' color='primary' onClick={handler}>{ipcProps.buttonText}</Button>}
+					{showButton(ipcProps) && <Button className='rounded' color='primary' onClick={btn1Handler}>{ipcProps.buttonText}</Button>}
+					{showButton2(ipcProps) && <Button className='rounded' color='primary' onClick={btn2Handler}>{ipcProps.button2Text}</Button>}
 				</div>
 			</CardBody>
 		</Card>

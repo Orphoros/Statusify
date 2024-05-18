@@ -17,6 +17,7 @@ export default function TauriProvider({children, osType}: TauriProviderProps) {
 		timeAsStart: Date.now(),
 		timeIsCurrent: true,
 		buttonProtocol: 'https://',
+		button2Protocol: 'https://',
 	}, 'ipc.dat');
 
 	const [launchConfProps, setLaunchConfProps, sysConfStoreLoading] = useTauriStore<LaunchConfProps>('launchOption', {

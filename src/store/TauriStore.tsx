@@ -17,7 +17,7 @@ function getTauriStore(filename: string) {
 	return stores[filename];
 }
 
-export function useTauriStore<T>(key: string, defaultValue: T, storeName = 'data.dat'): [T, React.Dispatch<React.SetStateAction<T>>, boolean] {
+export function useTauriStore<T extends Record<string, unknown>>(key: string, defaultValue: T, storeName = 'data.dat'): [T, React.Dispatch<React.SetStateAction<T>>, boolean] {
 	// StoreName is a path that is relative to AppData if not absolute
 	const [state, setState] = useState<T>(defaultValue);
 	const [loading, setLoading] = useState(true);
@@ -29,13 +29,19 @@ export function useTauriStore<T>(key: string, defaultValue: T, storeName = 'data
 		void store.get<T>(key)
 			.then(value => {
 				if (value === null) {
-					void warn(`key ${key} not found in store ${storeName}`);
+					void warn(`property '${key}' is not stored in '${storeName}'`);
 				} else {
-					void debug(`loaded ${key} from ${storeName}: ${JSON.stringify(value)}`);
+					void debug(`loaded property '${key}' from ${storeName}: ${JSON.stringify(value)}`);
 				}
 
 				if (allow && value !== null) {
 					setState(value);
+					Object.keys(defaultValue).forEach(defaultKey => {
+						if (!(defaultKey in value)) {
+							void warn(`key '${defaultKey}' not found in property '${key}' store '${storeName}'`);
+							setState(prevState => ({...prevState, [defaultKey]: defaultValue[defaultKey]}));
+						}
+					});
 				}
 			}).catch(() => {
 				void store.set(key, defaultValue).then(() => {
