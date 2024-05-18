@@ -1,23 +1,23 @@
 {
-  "version": "0.0.10",
-  "notes": "Added system tray and context menus",
-  "pub_date": "2024-05-03T18:05:00.000Z",
+  "version": "0.0.11",
+  "notes": "Added option to show a secondary button",
+  "pub_date": "2024-05-18T16:20:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.10/Statusify-update.darwin-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.11/Statusify-update.darwin-x86_64.tar.gz"
     },
     "darwin-aarch64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.10/Statusify-update.darwin-aarch64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.11/Statusify-update.darwin-aarch64.tar.gz"
     },
     "linux-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.10/Statusify-update.linux-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.11/Statusify-update.linux-x86_64.tar.gz"
     },
     "windows-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.10/Statusify-update.windows-x86_64.zip"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.11/Statusify-update.windows-x86_64.zip"
     }
   }
 }
