@@ -11,4 +11,14 @@ export const showButton = (ipcProps: IpcProps) => !ipcProps.idError && ipcProps.
 export const showButton2 = (ipcProps: IpcProps) => !ipcProps.idError && ipcProps.button2Enabled && !ipcProps.button2Error && ipcProps.button2Url && ipcProps.button2Text;
 export const showSmallImageText = (ipcProps: IpcProps) => showSmallImage(ipcProps) && ipcProps.smallImageTooltipEnabled && ipcProps.smallImageTooltip && !ipcProps.smallImageTooltipError;
 export const showLargeImageText = (ipcProps: IpcProps) => showLargeImage(ipcProps) && ipcProps.largeImageTooltipEnabled && ipcProps.largeImageTooltip && !ipcProps.largeImageTooltipError;
-export const isFormCorrect = (ipcProps: IpcProps) => !ipcProps.idError && !ipcProps.partyError && !ipcProps.stateError && !ipcProps.buttonError && !ipcProps.detailsError && !ipcProps.largeImageTooltipError && !ipcProps.smallImageTooltipError;
+
+export const isFormCorrect = (ipcProps: IpcProps) =>
+	!ipcProps.idError
+    && !ipcProps.partyError
+    && !ipcProps.stateError
+    && !ipcProps.buttonError
+    && !ipcProps.detailsError
+    && !ipcProps.largeImageUrlError
+    && !ipcProps.smallImageUrlError
+    && !ipcProps.largeImageTooltipError
+    && !ipcProps.smallImageTooltipError;
