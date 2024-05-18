@@ -25,6 +25,7 @@ export default function PartyOptionForm() {
 					placeholder='0'
 					defaultValue={ipcProps.partySize?.toString()}
 					errorMessage={minHelper.text}
+					isInvalid={minHelper.error}
 					color={minHelper.color}
 					isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
 					className='h-11'
@@ -55,6 +56,7 @@ export default function PartyOptionForm() {
 					defaultValue={ipcProps.partyMax?.toString()}
 					errorMessage={maxHelper.text}
 					color={maxHelper.color}
+					isInvalid={maxHelper.error}
 					isDisabled={ipcProps.idError! || !ipcProps.stateEnabled || !ipcProps.detailsEnabled}
 					className='h-11'
 					labelPlacement='outside'

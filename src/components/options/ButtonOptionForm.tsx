@@ -46,6 +46,7 @@ export default function ButtonOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					errorMessage={buttonTextHelper.text}
+					isInvalid={buttonTextHelper.error}
 					color={buttonTextHelper.color}
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonText}
@@ -94,6 +95,7 @@ export default function ButtonOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					color={buttonUrlHelper.color}
+					isInvalid={buttonUrlHelper.error}
 					errorMessage={buttonUrlHelper.text}
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonUrl}
@@ -161,6 +163,7 @@ export default function ButtonOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					errorMessage={button2TextHelper.text}
+					isInvalid={button2TextHelper.error}
 					color={button2TextHelper.color}
 					isDisabled={ipcProps.idError}
 					value={ipcProps.button2Text}
@@ -209,6 +212,7 @@ export default function ButtonOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					color={button2UrlHelper.color}
+					isInvalid={button2UrlHelper.error}
 					errorMessage={button2UrlHelper.text}
 					isDisabled={ipcProps.idError}
 					value={ipcProps.button2Url}

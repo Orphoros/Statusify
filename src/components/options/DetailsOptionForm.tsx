@@ -29,6 +29,7 @@ export default function DetailsOptionForm() {
 					width='100%'
 					labelPlacement='outside'
 					errorMessage={detailsHelper.text}
+					isInvalid={detailsHelper.error}
 					color={detailsHelper.color}
 					isDisabled={ipcProps.idError}
 					onContextMenu={e => {
@@ -84,6 +85,7 @@ export default function DetailsOptionForm() {
 					isClearable
 					value={ipcProps.state}
 					placeholder='the current state'
+					isInvalid={stateHelper.error}
 					errorMessage={stateHelper.text}
 					color={stateHelper.color}
 					width='100%'

@@ -25,6 +25,7 @@ export default function AppOptionForm() {
 					label='App ID'
 					key='primary'
 					color={helper.color}
+					isInvalid={helper.error}
 					errorMessage={helper.text}
 					value={ipcProps.id}
 					onContextMenu={e => {

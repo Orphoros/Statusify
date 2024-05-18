@@ -83,6 +83,7 @@ export default function ImageOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					errorMessage={largeImageTooltipHelper.text}
+					isInvalid={largeImageTooltipHelper.error}
 					color={largeImageTooltipHelper.color}
 					width='100%'
 					value={ipcProps.largeImageTooltip}
@@ -198,6 +199,7 @@ export default function ImageOptionForm() {
 					width='100%'
 					errorMessage={smallImageTooltipHelper.text}
 					color={smallImageTooltipHelper.color}
+					isInvalid={smallImageTooltipHelper.error}
 					value={ipcProps.smallImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled || !ipcProps.smallImageEnabled}
 					onContextMenu={e => {
