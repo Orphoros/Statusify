@@ -23,14 +23,15 @@ Statusify is an open source simple and easy-to-use cross platform GUI applicatio
 
 ## Installation
 
-You can download the binaries for your platform from the table below. The binaries automatically update themselves to the latest version when a new release is available. You can also install Statusify using a package manager.
+You can download the precompiled binaries for your platform from the table below. The binaries automatically update themselves to the latest version when a new release is available. You can also install Statusify using a package manager.
 
-*Please note that the due to the alpha release, the binaries are currently not signed!*
+*The binaries are signed*
 
 | Platform |  Architecture | Download |
 | -------- | -------------- | -------- |
 | Windows  | x64            | [Statusify.windows-x86_64.exe](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.windows-x86_64.exe) |
 | macOS    | x64 (Intel)    | [Statusify.darwin-x86_64.dmg](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.darwin-x86_64.dmg) |
+| macOS    | Apple Silicon  | [Statusify.darwin-aarch64.dmg](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.darwin-aarch64.dmg) |
 | Debian   | x64            | [Statusify.linux-x86_64.deb](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.linux-x86_64.deb) |
 | Linux (AppImage) | x64    | [Statusify.linux-x86_64.AppImage](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.linux-x86_64.AppImage) |
 
