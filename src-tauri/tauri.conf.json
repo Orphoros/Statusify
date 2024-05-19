@@ -95,7 +95,7 @@
       }
     },
     "security": {
-      "csp": "default-src 'self'; img-src 'self' data: filesystem:"
+      "csp": "default-src 'self'; img-src 'self' data: filesystem: http: https:"
     },
     "updater": {
       "active": true,

@@ -22,5 +22,5 @@ String.prototype.isWebsite = function (): boolean {
 
 String.prototype.isOnlineImage = function (): boolean {
 	const text: string = this.trim();
-	return text.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpg|jpeg)/g) !== null;
+	return /^(http|https):\/\/[^ "]+(\.png|\.jpg|\.jpeg)$/.test(text);
 };
