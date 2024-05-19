@@ -3,7 +3,7 @@ import {invoke} from '@tauri-apps/api';
 import {ask, message} from '@tauri-apps/api/dialog';
 import {debug, error} from 'tauri-plugin-log-api';
 import {
-	showButton, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
+	showButton, showButton2, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
 } from './props';
 
 enum IpcError {
@@ -18,11 +18,17 @@ enum IpcError {
 export async function startIpc(ipcProps: IpcProps, disableConfirmMsg = false): Promise<boolean> {
 	void debug('attempting to start RPC');
 
+	const buttons = [];
+
+	if (showButton(ipcProps)) {
+		buttons.push([ipcProps.buttonText, ipcProps.buttonProtocol! + ipcProps.buttonUrl]);
+	}
+
+	if (showButton2(ipcProps)) {
+		buttons.push([ipcProps.button2Text, ipcProps.button2Protocol! + ipcProps.button2Url]);
+	}
+
 	const party = showParty(ipcProps) ? [ipcProps.partySize, ipcProps.partyMax] : undefined;
-	const buttons = showButton(ipcProps) ? [
-		[ipcProps.buttonText, ipcProps.buttonProtocol! + ipcProps.buttonUrl!],
-		[ipcProps.button2Text, ipcProps.button2Protocol! + ipcProps.button2Url!],
-	] : undefined;
 	const state = showState(ipcProps) ? ipcProps.state : undefined;
 	const details = showDetails(ipcProps) ? ipcProps.details : undefined;
 	const largeImage = showLargeImage(ipcProps) ? ipcProps.largeImage : undefined;
@@ -92,7 +98,7 @@ export async function stopIpc(askConfirmation = true): Promise<boolean> {
 }
 
 function handleIpcError(err: IpcError): void {
-	void debug('showing system notification for RPC cancelation failure');
+	void debug(`showing system notification for RPC failure: ${err}`);
 
 	switch (err) {
 		case IpcError.ClientCreationErr:
