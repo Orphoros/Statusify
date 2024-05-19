@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.12] - 2024-05-19
+
+### Fixed
+
+- CSP allows the loading of images from URLs
+- RPC not being able to start when when button 2 is not set
+
 ## [0.0.11] - 2024-05-18
 
 ### Added
