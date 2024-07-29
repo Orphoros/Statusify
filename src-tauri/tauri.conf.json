@@ -30,7 +30,7 @@
         "open": true
       },
       "fs": {
-        "scope": ["$RESOURCE/images/*"],
+        "scope": ["$RESOURCE/images/*", "$RESOURCE/locales/*"],
         "readFile": true,
         "readDir": true,
         "writeFile": true
@@ -81,7 +81,8 @@
         "license": "../LICENSE"
       },
       "resources": [
-        "images/*"
+        "images/*",
+        "locales/*"
       ],
       "longDescription": "Graphical user interface for to set custom rich presence on Discord",
       "shortDescription": "Custom rich presence for Discord",
@@ -96,9 +97,6 @@
           "license": "../LICENSE"
         }
       }
-    },
-    "security": {
-      "csp": "default-src 'self'; img-src 'self' data: filesystem: http: https:"
     },
     "updater": {
       "active": true,
