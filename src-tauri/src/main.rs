@@ -8,6 +8,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 use tauri::{AppHandle, CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
 use discord_rich_presence::activity::Party;
+use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_window_state::{WindowExt, StateFlags, AppHandleExt};
 use log::{debug, info, error, trace};
 use sysinfo::{Pid, ProcessExt, System, SystemExt};
@@ -283,6 +284,7 @@ fn main() {
     .manage(DiscordPid(Mutex::new(None)))
     .plugin(tauri_plugin_store::Builder::default().build())
     .plugin(tauri_plugin_context_menu::init())
+    .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent,None))
     .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
         debug!("instance: {}, {argv:?}, {cwd}", app.package_info().name);
         app.emit_all("single-instance", SingleInstancePayload { args: argv, cwd }).unwrap();

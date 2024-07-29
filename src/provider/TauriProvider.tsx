@@ -22,6 +22,7 @@ export default function TauriProvider({children, osType}: TauriProviderProps) {
 
 	const [launchConfProps, setLaunchConfProps, sysConfStoreLoading] = useTauriStore<LaunchConfProps>('launchOption', {
 		startIpcOnLaunch: false,
+		startAppOnLaunch: false,
 	}, 'launch.conf');
 
 	return (
