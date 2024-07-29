@@ -37,7 +37,9 @@ export default function PreviewCard() {
 		if (smallImage.isEmpty()) {
 			setSmallImage(placeholderSmallImage);
 		}
-	})().catch(error);
+	})().catch((e: unknown) => {
+		void error(`error loading placeholder images: ${JSON.stringify(e)}`);
+	});
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -62,7 +64,9 @@ export default function PreviewCard() {
 			} else {
 				setSmallImage(placeholderSmallImage);
 			}
-		})().catch(error);
+		})().catch((e: unknown) => {
+			void error(`error loading images: ${JSON.stringify(e)}`);
+		});
 	}, [ipcProps.largeImage, ipcProps.smallImage]);
 
 	const btn1Handler = async () => {

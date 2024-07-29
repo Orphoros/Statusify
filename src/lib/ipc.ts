@@ -62,7 +62,7 @@ export async function startIpc(ipcProps: IpcProps, disableConfirmMsg = false): P
 
 		void debug('showing system notification for RPC creation success');
 		if (!disableConfirmMsg) {
-			message('RPC Started!', {title: 'Statusify', type: 'info'}).catch(error);
+			void message('RPC Started!', {title: 'Statusify', type: 'info'});
 		}
 
 		return true;
@@ -102,22 +102,22 @@ function handleIpcError(err: IpcError): void {
 
 	switch (err) {
 		case IpcError.ClientCreationErr:
-			message('Could not create client for Discord. Check your settings', {title: 'Statusify', type: 'error'}).catch(error);
+			void message('Could not create client for Discord. Check your settings', {title: 'Statusify', type: 'error'});
 			break;
 		case IpcError.DiscordConnectionErr:
-			message('Could not connect to Discord. Discord might be closed', {title: 'Statusify', type: 'error'}).catch(error);
+			void message('Could not connect to Discord. Discord might be closed', {title: 'Statusify', type: 'error'});
 			break;
 		case IpcError.ActivitySetErr:
-			message('App ID is invalid', {title: 'Statusify', type: 'error'}).catch(error);
+			void message('App ID is invalid', {title: 'Statusify', type: 'error'});
 			break;
 		case IpcError.IpcRecvErr:
-			message('App ID or your settings are invalid', {title: 'Statusify', type: 'error'}).catch(error);
+			void message('App ID or your settings are invalid', {title: 'Statusify', type: 'error'});
 			break;
 		case IpcError.DiscordNotRunning:
-			message('Discord is not running', {title: 'Statusify', type: 'error'}).catch(error);
+			void message('Discord is not running', {title: 'Statusify', type: 'error'});
 			break;
 		case IpcError.DiscordError:
-			message('Could not perform action due to an error on Discord\'s side. Discord might be closed', {title: 'Statusify', type: 'error'}).catch(error);
+			void message('Could not perform action due to an error on Discord\'s side. Discord might be closed', {title: 'Statusify', type: 'error'});
 			break;
 	}
 }

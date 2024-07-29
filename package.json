@@ -23,7 +23,8 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "upgrade": "npx npm-check-updates -u",
-    "lock": "npm i --package-lock-only"
+    "lock": "npm i --package-lock-only",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx ."
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.6",
