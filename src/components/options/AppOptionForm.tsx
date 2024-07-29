@@ -6,6 +6,10 @@ import {showMenu} from 'tauri-plugin-context-menu';
 import {save, open, message} from '@tauri-apps/api/dialog';
 import {debug} from 'tauri-plugin-log-api';
 import {BaseDirectory, readTextFile, writeTextFile} from '@tauri-apps/api/fs';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+	faFolderOpen, faSave,
+} from '@fortawesome/free-regular-svg-icons';
 
 export default function AppOptionForm() {
 	const {ipcProps, setIpcProps, osType, setIsSessionRunning, isSessionRunning} = useTauriContext();
@@ -22,7 +26,7 @@ export default function AppOptionForm() {
 			<div className='flex items-center justify-center mt-2 gap-2 h-[4.5rem]'>
 				<Input
 					isRequired
-					className='max-w-[11.5rem] h-[4.5rem]'
+					className='max-w-[12.8rem] h-[4.5rem]'
 					size='sm'
 					defaultValue={ipcProps.id}
 					label='App ID'
@@ -81,7 +85,7 @@ export default function AppOptionForm() {
 							}
 						}}
 					>
-						Import
+						<FontAwesomeIcon icon={faFolderOpen} />Import
 					</Button>
 					<Button
 						disableRipple
@@ -107,7 +111,7 @@ export default function AppOptionForm() {
 							}
 						}}
 					>
-						Save
+						<FontAwesomeIcon icon={faSave} />Export
 					</Button>
 				</ButtonGroup>
 			</div>

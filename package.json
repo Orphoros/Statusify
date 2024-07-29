@@ -27,6 +27,11 @@
     "lint": "eslint --ext .ts,.tsx,.js,.jsx ."
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@nextui-org/react": "^2.4.6",
     "@tauri-apps/api": "^1.6.0",
     "framer-motion": "^11.3.19",

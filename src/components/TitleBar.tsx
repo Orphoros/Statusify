@@ -4,8 +4,7 @@ import {enable, isEnabled, disable} from 'tauri-plugin-autostart-api';
 import {useTauriContext} from '@/context';
 import {isFormCorrect, startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';
-import {debug} from 'console';
-import {error} from 'tauri-plugin-log-api';
+import {error, debug} from 'tauri-plugin-log-api';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, showVibrancy, launchConfProps, setLaunchConfProps} = useTauriContext();
@@ -40,10 +39,10 @@ export default function TitleBar() {
 									try {
 										if (enabled && !sysStartEnabled) {
 											await enable();
-											debug('enabled autostart with the system');
+											void debug('enabled autostart with the system');
 										} else if (!enabled && sysStartEnabled) {
 											await disable();
-											debug('disabled autostart with the system');
+											void debug('disabled autostart with the system');
 										}
 									} catch (e) {
 										void error('could set autostart with the system');
