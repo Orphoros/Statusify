@@ -25,12 +25,15 @@
         "show": true
       },
       "dialog": {
-        "message": true
+        "message": true,
+        "save": true,
+        "open": true
       },
       "fs": {
         "scope": ["$RESOURCE/images/*"],
         "readFile": true,
-        "readDir": true
+        "readDir": true,
+        "writeFile": true
       },
       "path": {
         "all": true

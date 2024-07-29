@@ -1,8 +1,11 @@
 import React, {useEffect, useMemo} from 'react';
-import {Input} from '@nextui-org/react';
-import {validateNumberInput} from '@/lib';
+import {Button, ButtonGroup, Input} from '@nextui-org/react';
+import {isFormCorrect, validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
+import {save, open, message} from '@tauri-apps/api/dialog';
+import {debug} from 'tauri-plugin-log-api';
+import {BaseDirectory, readTextFile, writeTextFile} from '@tauri-apps/api/fs';
 
 export default function AppOptionForm() {
 	const {ipcProps, setIpcProps, osType, setIsSessionRunning, isSessionRunning} = useTauriContext();
@@ -16,7 +19,7 @@ export default function AppOptionForm() {
 	return (
 		<div>
 			<p>App Connection</p>
-			<div className='flex justify-center mt-2'>
+			<div className='flex items-center justify-center mt-2 gap-2 h-[4.5rem]'>
 				<Input
 					isRequired
 					className='max-w-[11.5rem] h-[4.5rem]'
@@ -49,6 +52,64 @@ export default function AppOptionForm() {
 						setIpcProps(prev => ({...prev, id: value}));
 					}}
 				/>
+				<ButtonGroup size='sm' className='mb-6'>
+					<Button
+						disableRipple
+						onClick={async () => {
+							try {
+								const filePath = await open({
+									title: 'Open your file',
+									multiple: false,
+									filters: [{
+										name: 'presence',
+										extensions: ['rpc'],
+									}],
+								});
+								if (!filePath) {
+									return;
+								}
+
+								const contents = await readTextFile(filePath as string, {dir: BaseDirectory.AppConfig});
+								if (!contents) {
+									return;
+								}
+
+								setIpcProps({...ipcProps, ...JSON.parse(contents) as typeof ipcProps});
+							} catch (e) {
+								void message('Could not open the configuration file', {title: 'Statusify', type: 'error'});
+								void debug(`error reading .rpc file: ${JSON.stringify(e)}`);
+							}
+						}}
+					>
+						Import
+					</Button>
+					<Button
+						disableRipple
+						isDisabled={!isFormCorrect(ipcProps)}
+						onClick={async () => {
+							try {
+								const filePath = await save({
+									title: 'Save your file',
+									filters: [{
+										name: 'presence',
+										extensions: ['rpc'],
+									}],
+								});
+
+								if (!filePath) {
+									return;
+								}
+
+								await writeTextFile({path: filePath, contents: JSON.stringify(ipcProps)}, {dir: BaseDirectory.AppConfig});
+							} catch (e) {
+								void message('Could not save the configuration file', {title: 'Statusify', type: 'error'});
+								void debug(`error writing .rpc file: ${JSON.stringify(e)}`);
+							}
+						}}
+					>
+						Save
+					</Button>
+				</ButtonGroup>
 			</div>
 		</div>
 	);
