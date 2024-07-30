@@ -1,0 +1,2 @@
+hu-HU.json
+nl-NL.json

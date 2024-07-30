@@ -1,0 +1,10 @@
+{
+  "main-menubar": {
+    "chk-system-start": "Start app met systeem",
+    "chk-rpc-autostart": "Autostart status met app",
+    "lbl-status-idle": "Inactief",
+    "lbl-status-playing": "Activiteit weergeven",
+    "btn-start": "Start",
+    "btn-stop": "Stop"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "main-menubar": {
+    "chk-system-start": "Futtatás rendszerindításkor",
+    "chk-rpc-autostart": "Aktivitás automatikus indítása",
+    "lbl-status-idle": "Inaktív",
+    "lbl-status-playing": "Aktív",
+    "btn-start": "Indítás",
+    "btn-stop": "Leállítás"
+  }
+}
