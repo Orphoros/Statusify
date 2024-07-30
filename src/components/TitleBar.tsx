@@ -5,14 +5,18 @@ import {useTauriContext} from '@/context';
 import {isFormCorrect, startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';
 import {error, debug} from 'tauri-plugin-log-api';
+import {useTranslation} from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
+import i18next from 'i18next';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, showVibrancy, launchConfProps, setLaunchConfProps} = useTauriContext();
+	const {t} = useTranslation('main-menubar');
 
 	const buttonDisabled = isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps);
 
 	const indicatorColor = isSessionRunning ? 'success' : 'warning' as ColorBrand;
-	const indicatorText = isSessionRunning ? 'Displaying activity' : 'Idle';
+	const indicatorText = isSessionRunning ? t('lbl-status-playing') : t('lbl-status-idle');
 	const [showLoading, setShowLoading] = React.useState<boolean>(false);
 
 	return (
@@ -27,7 +31,7 @@ export default function TitleBar() {
 						}
 					}
 				>
-				Autostart status on app launch
+					{t('chk-rpc-autostart')}
 				</Checkbox>
 				<Checkbox
 					isSelected={launchConfProps.startAppOnLaunch}
@@ -54,8 +58,9 @@ export default function TitleBar() {
 						}
 					}
 				>
-				Start app with system
+					{t('chk-system-start')}
 				</Checkbox>
+				<LanguageSwitcher/>
 				{!isSessionRunning && <Button className='w-20' variant='solid' color='primary' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
 					async () => {
 						setShowLoading(true);
@@ -67,7 +72,7 @@ export default function TitleBar() {
 						setShowLoading(false);
 					}
 				} >
-					Start
+					{t('btn-start')}
 				</Button>}
 				{isSessionRunning && <Button className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
 					async () => {
@@ -80,7 +85,7 @@ export default function TitleBar() {
 						setShowLoading(false);
 					}
 				} >
-					Stop
+					{t('btn-stop')}
 				</Button>}
 			</div>
 		</div>

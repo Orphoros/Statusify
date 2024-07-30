@@ -1,12 +1,24 @@
 import React, {useEffect} from 'react';
-import {debug, error, info} from 'tauri-plugin-log-api';
-import {MainView} from '@/views';
+import {
+	debug, error, info,
+	warn,
+} from 'tauri-plugin-log-api';
 import {useTauriContext} from '@/context';
-import {startIpc} from './lib';
+import {startIpc} from '@/lib';
 import {listen} from '@tauri-apps/api/event';
+import {resolveResource} from '@tauri-apps/api/path';
+import i18n, {type Resource} from 'i18next';
+import {initReactI18next} from 'react-i18next';
+import {ErrorView, LoadingView, MainView} from '@/views';
+import {readTextFile} from '@tauri-apps/api/fs';
+import localeCode from 'locale-code';
+import {systemLocale} from '@/systemLocale';
+import {locale as sysLocale} from '@tauri-apps/api/os';
 
 function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning} = useTauriContext();
+	const [appReady, setAppReady] = React.useState<boolean>(false);
+	const [appError, setAppError] = React.useState<string | undefined>(undefined);
 
 	const disableDefaultContextMenu = () => {
 		window.addEventListener('contextmenu', e => {
@@ -61,8 +73,87 @@ function App() {
 		}
 	};
 
+	const initializeLocales = async () => {
+		try {
+			const localeFileList = await resolveResource('locales/Manifest.txt');
+			const localeFileListContent = await readTextFile(localeFileList);
+			const resolvedLocaleFiles = await Promise.all(localeFileListContent.split('\n').filter(file => file !== '')
+				.map(file => file.replace('.json', ''))
+				.map(async locale => resolveResource(`locales/${locale}.json`)));
+
+			const localeFileContents = await Promise.all(resolvedLocaleFiles.map(async file => readTextFile(file).catch(e => {
+				void error(`failed to read locale file: ${e}`);
+				return '';
+			})));
+
+			const resources: Resource = localeFileContents.map((content: string, index: number) => {
+				const locale = resolvedLocaleFiles[index].split('/').pop()?.replace('.json', '');
+				if (locale === undefined) {
+					void warn(`could not parse locale from file path: ${resolvedLocaleFiles[index]}`);
+					return {} satisfies Resource;
+				}
+
+				if (!localeCode.validate(locale)) {
+					void warn(`invalid locale id found: ${locale}`);
+					return {} satisfies Resource;
+				}
+
+				if (localeCode.getLanguageCode(locale) === 'en') {
+					void warn('system default locale, english, cannot be overridden');
+					return {} satisfies Resource;
+				}
+
+				try {
+					return {
+						[localeCode.getLanguageCode(locale)]: JSON.parse(content) as Resource,
+					};
+				} catch (e) {
+					void error(`could not parse locale file '${resolvedLocaleFiles[index]}': ${e}`);
+					return {} satisfies Resource;
+				}
+			}).reduce<Resource>((acc: Resource, val: Resource) => ({...acc, ...val}), {});
+
+			resources.en = systemLocale;
+
+			void debug(`loaded {${Object.keys(resources).join(', ')}} locales`);
+
+			const osLocale = await sysLocale();
+			if (osLocale) {
+				void debug(`system locale: ${osLocale} - ${localeCode.getLanguageCode(osLocale)}`);
+			} else {
+				void warn('could not determine system locale');
+			}
+
+			const preferredLocale = launchConfProps.locale ?? 'en-US';
+
+			i18n
+				.use(initReactI18next)
+				.init({
+					resources,
+					lng: localeCode.getLanguageCode(preferredLocale),
+					fallbackLng: 'en',
+					interpolation: {
+						escapeValue: false,
+					},
+				})
+				.then(() => {
+					void info('i18n initialized');
+					setAppReady(true);
+					setAppError(undefined);
+				})
+				.catch(e => {
+					void error(`failed to initialize i18n: ${e}`);
+				});
+		} catch (e) {
+			void error(`could not initialize locales: ${e}`);
+			setAppError('locale_init_failed');
+		}
+	};
+
 	useEffect(() => {
 		(async () => {
+			void initializeLocales();
+
 			disableDefaultContextMenu();
 
 			correctIpcTime();
@@ -82,9 +173,12 @@ function App() {
 		})();
 	}, []);
 
-	return (
-		<MainView/>
-	);
+	return (<>
+		{appReady
+			? <MainView/>
+			: appError === undefined ? <LoadingView/> : <ErrorView error={appError}/>
+		}
+	</>);
 }
 
 export default App;

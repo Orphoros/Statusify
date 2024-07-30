@@ -26,7 +26,7 @@ export default function AppOptionForm() {
 			<div className='flex items-center justify-center mt-2 gap-2 h-[4.5rem]'>
 				<Input
 					isRequired
-					className='max-w-[12.8rem] h-[4.5rem]'
+					className='max-w-[11.5rem] h-[4.5rem]'
 					size='sm'
 					defaultValue={ipcProps.id}
 					label='App ID'
@@ -81,7 +81,7 @@ export default function AppOptionForm() {
 								setIpcProps({...ipcProps, ...JSON.parse(contents) as typeof ipcProps});
 							} catch (e) {
 								void message('Could not open the configuration file', {title: 'Statusify', type: 'error'});
-								void debug(`error reading .rpc file: ${JSON.stringify(e)}`);
+								void debug(`error reading .rpc file: ${e}`);
 							}
 						}}
 					>
@@ -107,7 +107,7 @@ export default function AppOptionForm() {
 								await writeTextFile({path: filePath, contents: JSON.stringify(ipcProps)}, {dir: BaseDirectory.AppConfig});
 							} catch (e) {
 								void message('Could not save the configuration file', {title: 'Statusify', type: 'error'});
-								void debug(`error writing .rpc file: ${JSON.stringify(e)}`);
+								void debug(`error writing .rpc file: ${e}`);
 							}
 						}}
 					>

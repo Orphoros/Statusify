@@ -37,8 +37,8 @@ export default function PreviewCard() {
 		if (smallImage.isEmpty()) {
 			setSmallImage(placeholderSmallImage);
 		}
-	})().catch((e: unknown) => {
-		void error(`error loading placeholder images: ${JSON.stringify(e)}`);
+	})().catch(e => {
+		void error(`error loading placeholder images: ${e}`);
 	});
 
 	useEffect(() => {
@@ -64,8 +64,8 @@ export default function PreviewCard() {
 			} else {
 				setSmallImage(placeholderSmallImage);
 			}
-		})().catch((e: unknown) => {
-			void error(`error loading images: ${JSON.stringify(e)}`);
+		})().catch(e => {
+			void error(`error loading images: ${e}`);
 		});
 	}, [ipcProps.largeImage, ipcProps.smallImage]);
 

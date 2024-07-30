@@ -9,6 +9,7 @@ export type TauriContextType = {
 	launchConfProps: LaunchConfProps;
 	showVibrancy: boolean;
 	osType: OsType | undefined;
+	locales: string[];
 	setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>;
 	setIpcProps: React.Dispatch<React.SetStateAction<IpcProps>>;
 	setLaunchConfProps: React.Dispatch<React.SetStateAction<LaunchConfProps>>;
@@ -18,6 +19,7 @@ export const TauriContext = React.createContext<TauriContextType>({
 	osType: undefined,
 	showVibrancy: false,
 	isSessionRunning: false,
+	locales: ['en-US'],
 	ipcProps: {},
 	launchConfProps: {},
 	setIsSessionRunning() {

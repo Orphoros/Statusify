@@ -1,7 +1,7 @@
 import React from 'react';
 import {Spinner} from '@nextui-org/react';
 
-function MainView() {
+function LoadingView() {
 	return (
 		<div className='flex h-screen'>
 			<div className='m-auto'>
@@ -14,4 +14,4 @@ function MainView() {
 	);
 }
 
-export default MainView;
+export default LoadingView;
