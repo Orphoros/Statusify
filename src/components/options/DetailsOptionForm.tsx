@@ -11,6 +11,7 @@ export default function DetailsOptionForm() {
 
 	const {t: errorTranslator} = useTranslation('lib-str-validator');
 	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
+	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-otp-details');
 
 	const detailsHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 35}), [ipcProps.details]);
@@ -57,8 +58,8 @@ export default function DetailsOptionForm() {
 								setIpcProps(prev => ({...prev, details: '', detailsEnabled: false}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -114,8 +115,8 @@ export default function DetailsOptionForm() {
 								setIpcProps(prev => ({...prev, state: '', stateEnabled: false}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}

@@ -11,6 +11,7 @@ export default function ButtonOptionForm() {
 
 	const {t: errorTranslator} = useTranslation('lib-str-validator');
 	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
+	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-opt-btn');
 
 	const buttonUrlHelper = useMemo(() => validateUrlInput(errorTranslator, ipcProps.buttonUrl), [ipcProps.buttonUrl]);
@@ -75,8 +76,8 @@ export default function ButtonOptionForm() {
 								setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -128,8 +129,8 @@ export default function ButtonOptionForm() {
 							})
 							.addOpenInBrowser(ipcProps.buttonUrl ? `${ipcProps.buttonProtocol}${ipcProps.buttonUrl}` : undefined)
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -192,8 +193,8 @@ export default function ButtonOptionForm() {
 								setIpcProps(prev => ({...prev, button2Text: '', button2Enabled: false}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -245,8 +246,8 @@ export default function ButtonOptionForm() {
 							})
 							.addOpenInBrowser(ipcProps.button2Url ? `${ipcProps.button2Protocol}${ipcProps.button2Url}` : undefined)
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}

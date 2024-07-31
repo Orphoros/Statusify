@@ -20,7 +20,11 @@
 		"lbl-title": "App Verbinding",
 		"inp-app-id": "App ID",
 		"btn-import": "Importeren",
-		"btn-export": "Exporteren"
+		"btn-export": "Exporteren",
+    "popup-save-fail": "Configuratiebestand kon niet worden opgeslagen",
+		"popup-open-fail": "configuratiebestand kon niet worden geopend",
+		"dlg-import-title": "Open configuratiebestand",
+		"dlg-export-title": "Configuratiebestand opslaan"
 	},
   "cpt-otp-details": {
 		"lbl-title": "Hoofdinstellingen",
@@ -81,5 +85,15 @@
 		"lbl-clear": "Invoer Wissen",
 		"lbl-start": "Start Rich Presence",
 		"lbl-stop": "Stop Rich Presence"
+	},
+  "lib-rpc-handle": {
+		"popup-rpc-start": "Rich Presence is gestart",
+    "popup-rpc-stop-confirm": "Weet je zeker dat je de huidige activiteit wilt stoppen?",
+		"popup-err-101": "Kan geen client maken voor Discord. Controleer je instellingen",
+		"popup-err-102": "Kan geen verbinding maken met Discord. Discord is mogelijk gesloten",
+		"popup-err-103": "App ID is ongeldig",
+		"popup-err-104": "App ID of instellingen zijn ongeldig",
+		"popup-err-105": "Discord wordt niet uitgevoerd",
+		"popup-err-106": "Kon de actie niet uitvoeren vanwege een fout aan de kant van Discord. Discord is mogelijk gesloten"
 	}
 }

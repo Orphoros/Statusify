@@ -70,7 +70,13 @@ function App() {
 		try {
 			void debug('checking if ipc should start on launch');
 			if (launchConfProps.startIpcOnLaunch) {
-				const isSuccess = await startIpc(ipcProps, true);
+				if (!i18n.isInitialized) {
+					void error('i18n not initialized when trying to start ipc on launch');
+					setAppError('locale_not_initialized');
+				}
+
+				const rpcHandlerTranslator = i18n.getFixedT('lib-rpc-handle');
+				const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps, true);
 				if (isSuccess) {
 					setIsSessionRunning(true);
 					void info('ipc started on launch');
@@ -164,9 +170,9 @@ function App() {
 
 	useEffect(() => {
 		(async () => {
-			registerHandlers();
-
 			void initializeLocales();
+
+			registerHandlers();
 
 			disableDefaultContextMenu();
 

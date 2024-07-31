@@ -11,6 +11,7 @@ export default function PartyOptionForm() {
 
 	const {t: errorTranslator} = useTranslation('lib-digit-validator');
 	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
+	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-otp-party');
 
 	const minHelper = useMemo(() => validateNumberInput({
@@ -49,8 +50,8 @@ export default function PartyOptionForm() {
 								setIpcProps(prev => ({...prev, partyEnabled: !ipcProps.partyEnabled}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -79,8 +80,8 @@ export default function PartyOptionForm() {
 								setIpcProps(prev => ({...prev, partyEnabled: !ipcProps.partyEnabled}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}

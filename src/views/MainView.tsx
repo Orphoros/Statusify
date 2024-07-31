@@ -6,14 +6,15 @@ import {useTranslation} from 'react-i18next';
 
 function MainView() {
 	const {ipcProps, isSessionRunning, setIsSessionRunning, osType} = useTauriContext();
+	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
 
 	return (
 		<div onContextMenu={
 			e => {
 				void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
-					.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-					.addStopIpc(isSessionRunning, setIsSessionRunning)
+					.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+					.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 					.build());
 			}
 

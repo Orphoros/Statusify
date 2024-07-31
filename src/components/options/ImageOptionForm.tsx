@@ -11,6 +11,7 @@ export default function ImageOptionForm() {
 
 	const {t: errorTranslator} = useTranslation('lib-str-validator');
 	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
+	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-opt-image');
 
 	const largeImageTooltipHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.largeImageTooltip, maxStrLength: 20}), [ipcProps.largeImageTooltip]);
@@ -66,8 +67,8 @@ export default function ImageOptionForm() {
 							})
 							.addOpenInBrowser(ipcProps.largeImage)
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -122,8 +123,8 @@ export default function ImageOptionForm() {
 								setIpcProps(prev => ({...prev, largeImageTooltip: '', largeImageTooltipEnabled: false}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -182,8 +183,8 @@ export default function ImageOptionForm() {
 							})
 							.addOpenInBrowser(ipcProps.smallImage)
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}
@@ -238,8 +239,8 @@ export default function ImageOptionForm() {
 								setIpcProps(prev => ({...prev, smallImageTooltip: '', smallImageTooltipEnabled: false}));
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build(),
 						);
 					}}

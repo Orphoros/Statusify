@@ -21,6 +21,10 @@ export const systemLocale = {
 		'inp-app-id': 'App ID',
 		'btn-import': 'Import',
 		'btn-export': 'Export',
+		'popup-save-fail': 'Could not save the configuration file',
+		'popup-open-fail': 'Could not open the configuration file',
+		'dlg-import-title': 'Open your file',
+		'dlg-export-title': 'Save your file',
 	},
 	'cpt-otp-details': {
 		'lbl-title': 'Main Settings',
@@ -81,5 +85,15 @@ export const systemLocale = {
 		'lbl-clear': 'Clear Field',
 		'lbl-start': 'Start Rich Presence',
 		'lbl-stop': 'Stop Rich Presence',
+	},
+	'lib-rpc-handle': {
+		'popup-rpc-start': 'Rich Presence started',
+		'popup-rpc-stop-confirm': 'Are you sure you want to stop the current activity?',
+		'popup-err-101': 'Could not create client for Discord. Check your settings',
+		'popup-err-102': 'Could not connect to Discord. Discord might be closed',
+		'popup-err-103': 'App ID is invalid',
+		'popup-err-104': 'App ID or your settings are invalid',
+		'popup-err-105': 'Discord is not running',
+		'popup-err-106': 'Could not perform action due to an error on Discord\'s side. Discord might be closed',
 	},
 };

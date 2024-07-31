@@ -10,6 +10,8 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, showVibrancy, launchConfProps, setLaunchConfProps} = useTauriContext();
+
+	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-menubar');
 
 	const buttonDisabled = isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps);
@@ -63,7 +65,7 @@ export default function TitleBar() {
 				{!isSessionRunning && <Button className='w-20' variant='solid' color='primary' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
 					async () => {
 						setShowLoading(true);
-						const isSuccess = await startIpc(ipcProps);
+						const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
 						if (isSuccess) {
 							setIsSessionRunning(true);
 						}
@@ -76,7 +78,7 @@ export default function TitleBar() {
 				{isSessionRunning && <Button className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
 					async () => {
 						setShowLoading(true);
-						const stopApproved = await stopIpc();
+						const stopApproved = await stopIpc(rpcHandlerTranslator);
 						if (stopApproved) {
 							setIsSessionRunning(false);
 						}

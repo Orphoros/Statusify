@@ -18,9 +18,13 @@
   },
   "cpt-otp-app": {
 		"lbl-title": "Alkalmazás Csatlakoztatása",
-		"inp-app-id": "Alkalmazás ID",
+		"inp-app-id": "Alkalmazásazonosító",
 		"btn-import": "Megnyitás",
-		"btn-export": "Mentés"
+		"btn-export": "Mentés",
+    "popup-save-fail": "Nem sikerült menteni a konfigurációs fájlt",
+		"popup-open-fail": "Nem sikerült megnyitni a konfigurációs fájlt",
+		"dlg-import-title": "konfigurációs fájl megnyitása",
+		"dlg-export-title": "konfigurációs fájl mentése"
 	},
   "cpt-otp-details": {
 		"lbl-title": "Fő beállítások",
@@ -63,9 +67,9 @@
 		"lbl-subtitle-btn1": "Gomb 1",
 		"inp-btn1": "felirat",
 		"inp-btn2": "felirat",
-		"input-btn1-plh": "gomb szöveg",
+		"input-btn1-plh": "gomb szövege",
 		"lbl-subtitle-btn2": "Gomb 2",
-		"input-btn2-plh": "gomb szöveg"
+		"input-btn2-plh": "gomb szövege"
 	},
   "lib-str-validator": {
 		"lbl-error-alphanumeric": "Csak alfanumerikus karakterek",
@@ -81,5 +85,15 @@
 		"lbl-clear": "Mező Törlése",
 		"lbl-start": "Indítás",
 		"lbl-stop": "Leállítás"
+	},
+  "lib-rpc-handle": {
+		"popup-rpc-start": "Rich Presence elindult",
+    "popup-rpc-stop-confirm": "Biztosan leállítja az aktuális tevékenységet?",
+		"popup-err-101": "Nem sikerült klienst létrehozni a Discord számára. Ellenőrizze a beállításokat",
+		"popup-err-102": "Nem sikerült csatlakozni a Discordhoz. Lehet, hogy a Discord nics elindítva",
+		"popup-err-103": "Az alkalmazásazonosító érvénytelen",
+		"popup-err-104": "Az alkalmazásazonosító vagy a konfiguráció érvénytelen",
+		"popup-err-105": "A Discord nincs futtatva",
+		"popup-err-106": "A Discord oldalán fellépő hiba miatt nem sikerült végrehajtani a műveletet. Lehet, hogy a Discord nincs elindítva"
 	}
 }

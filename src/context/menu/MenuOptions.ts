@@ -114,12 +114,12 @@ export class MenuOptionBuilder {
 		return this;
 	}
 
-	addStartIpc(isSessionRunning: boolean, setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>, ipcProps: IpcProps, callback?: () => any): this {
+	addStartIpc(t: TFunction<'lib-rpc-handle'>, isSessionRunning: boolean, setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>, ipcProps: IpcProps, callback?: () => any): this {
 		this.options.push({
 			label: this.t('lbl-start'),
 			disabled: isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps),
 			event() {
-				void startIpc(ipcProps, true).then(isSuccess => {
+				void startIpc(t, ipcProps, true).then(isSuccess => {
 					if (isSuccess) {
 						setIsSessionRunning(true);
 					}
@@ -132,12 +132,12 @@ export class MenuOptionBuilder {
 		return this;
 	}
 
-	addStopIpc(isSessionRunning: boolean, setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>, callback?: () => any): this {
+	addStopIpc(t: TFunction<'lib-rpc-handle'>, isSessionRunning: boolean, setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>, callback?: () => any): this {
 		this.options.push({
 			label: this.t('lbl-stop'),
 			disabled: !isSessionRunning,
 			event() {
-				void stopIpc(false);
+				void stopIpc(t, false);
 				setIsSessionRunning(false);
 				if (callback) {
 					callback();

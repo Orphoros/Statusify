@@ -38,6 +38,7 @@
         "@typescript-eslint/no-unsafe-call": "off",
         "no-control-regex": "off",
         "complexity": ["error", 40],
-        "no-extend-native": "off"
+        "no-extend-native": "off",
+        "max-params": ["error", 5]
     }
 }

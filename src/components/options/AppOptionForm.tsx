@@ -16,6 +16,7 @@ export default function AppOptionForm() {
 	const {ipcProps, setIpcProps, osType, setIsSessionRunning, isSessionRunning} = useTauriContext();
 	const {t: errorTranslator} = useTranslation('lib-digit-validator');
 	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
+	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-otp-app');
 
 	const helper = useMemo(() => validateNumberInput({
@@ -53,8 +54,8 @@ export default function AppOptionForm() {
 								});
 							})
 							.addSeparator()
-							.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(isSessionRunning, setIsSessionRunning)
+							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
 							.build());
 					}}
 					onChange={e => {
@@ -68,7 +69,7 @@ export default function AppOptionForm() {
 						onClick={async () => {
 							try {
 								const filePath = await open({
-									title: 'Open your file',
+									title: t('dlg-import-title'),
 									multiple: false,
 									filters: [{
 										name: 'presence',
@@ -86,7 +87,7 @@ export default function AppOptionForm() {
 
 								setIpcProps({...ipcProps, ...JSON.parse(contents) as typeof ipcProps});
 							} catch (e) {
-								void message('Could not open the configuration file', {title: 'Statusify', type: 'error'});
+								void message(t('popup-open-fail'), {title: 'Statusify', type: 'error'});
 								void debug(`error reading .rpc file: ${e}`);
 							}
 						}}
@@ -99,7 +100,7 @@ export default function AppOptionForm() {
 						onClick={async () => {
 							try {
 								const filePath = await save({
-									title: 'Save your file',
+									title: t('dlg-export-title'),
 									filters: [{
 										name: 'presence',
 										extensions: ['rpc'],
@@ -112,7 +113,7 @@ export default function AppOptionForm() {
 
 								await writeTextFile({path: filePath, contents: JSON.stringify(ipcProps)}, {dir: BaseDirectory.AppConfig});
 							} catch (e) {
-								void message('Could not save the configuration file', {title: 'Statusify', type: 'error'});
+								void message(t('popup-save-fail'), {title: 'Statusify', type: 'error'});
 								void debug(`error writing .rpc file: ${e}`);
 							}
 						}}
