@@ -20,6 +20,18 @@ function App() {
 	const [appReady, setAppReady] = React.useState<boolean>(false);
 	const [appError, setAppError] = React.useState<string | undefined>(undefined);
 
+	const registerHandlers = () => {
+		window.addEventListener('error', event => {
+			void error(`fatal unhandled error: ${event.message}`);
+			setAppError('unhandled_error');
+		});
+
+		window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
+			void error(`fatal unhandled promise rejection: ${event.reason}`);
+			setAppError('unhandled_promise_rejection');
+		});
+	};
+
 	const disableDefaultContextMenu = () => {
 		window.addEventListener('contextmenu', e => {
 			e.preventDefault();
@@ -152,6 +164,8 @@ function App() {
 
 	useEffect(() => {
 		(async () => {
+			registerHandlers();
+
 			void initializeLocales();
 
 			disableDefaultContextMenu();
@@ -174,7 +188,7 @@ function App() {
 	}, []);
 
 	return (<>
-		{appReady
+		{appReady && appError === undefined
 			? <MainView/>
 			: appError === undefined ? <LoadingView/> : <ErrorView error={appError}/>
 		}
