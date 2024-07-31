@@ -4,14 +4,18 @@ import {Input, Switch} from '@nextui-org/react';
 import {containsText, validateTextInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
+import {useTranslation} from 'react-i18next';
 
 export default function ImageOptionForm() {
 	const {osType, setIsSessionRunning, isSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
-	const largeImageTooltipHelper = useMemo(() => validateTextInput(ipcProps.largeImageTooltip, 20), [ipcProps.largeImageTooltip]);
-	const smallImageTooltipHelper = useMemo(() => validateTextInput(ipcProps.smallImageTooltip, 20), [ipcProps.smallImageTooltip]);
-	const largeImageUrlHelper = useMemo(() => validateTextInput(ipcProps.largeImage, 255), [ipcProps.largeImage]);
-	const smallImageUrlHelper = useMemo(() => validateTextInput(ipcProps.smallImage, 255), [ipcProps.smallImage]);
+	const {t: errorTranslator} = useTranslation('lib-str-validator');
+	const {t} = useTranslation('cpt-opt-image');
+
+	const largeImageTooltipHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.largeImageTooltip, maxStrLength: 20}), [ipcProps.largeImageTooltip]);
+	const smallImageTooltipHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.smallImageTooltip, maxStrLength: 20}), [ipcProps.smallImageTooltip]);
+	const largeImageUrlHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.largeImage, maxStrLength: 255}), [ipcProps.largeImage]);
+	const smallImageUrlHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.smallImage, maxStrLength: 255}), [ipcProps.smallImage]);
 
 	useEffect(() => {
 		setIpcProps(prev => ({
@@ -25,13 +29,13 @@ export default function ImageOptionForm() {
 
 	return (
 		<div>
-			<p>Image Settings</p>
-			<p className='text-primary-500 text-sm mb-5'>Large Image Settings</p>
+			<p className='capitalize'>{t('lbl-title')}</p>
+			<p className='text-primary-500 text-sm mb-5 capitalize'>{t('lbl-subtitle-li')}</p>
 			<div className='flex gap-6 mb-2'>
 				<Input
 					variant='bordered'
 					isClearable
-					placeholder='large image resource name or url'
+					placeholder={t('input-li-plh')}
 					className='h-11'
 					labelPlacement='outside'
 					size='sm'
@@ -68,7 +72,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${largeImageUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>image</span>
+							<span className={`${largeImageUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-li')}</span>
 						</div>
 					}
 					onClear={() => {
@@ -88,7 +92,7 @@ export default function ImageOptionForm() {
 				<Input
 					variant='bordered'
 					isClearable
-					placeholder='large image tooltip'
+					placeholder={t('inp-li-tooltip-plh')}
 					className='h-11'
 					labelPlacement='outside'
 					size='sm'
@@ -124,7 +128,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${largeImageTooltipHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>tooltip</span>
+							<span className={`lowercase ${largeImageTooltipHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-li-tooltip')}</span>
 						</div>
 					}
 					onClear={() => {
@@ -142,7 +146,7 @@ export default function ImageOptionForm() {
 					}/>
 				</div>
 			</div>
-			<p className='text-primary-500 text-sm mb-5 mt-2'>Small Image Settings</p>
+			<p className='text-primary-500 text-sm mb-5 mt-2 capitalize'>{t('lbl-subtitle-si')}</p>
 			<div className='flex gap-6 mb-2'>
 				<Input
 					variant='bordered'
@@ -150,7 +154,7 @@ export default function ImageOptionForm() {
 					className='h-11'
 					labelPlacement='outside'
 					size='sm'
-					placeholder='small image resource name or url'
+					placeholder={t('input-si-plh')}
 					width='100%'
 					value={ipcProps.smallImage}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
@@ -184,7 +188,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${smallImageUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>tooltip</span>
+							<span className={`lowercase ${smallImageUrlHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-si')}</span>
 						</div>
 					}
 					onClear={() => {
@@ -204,7 +208,7 @@ export default function ImageOptionForm() {
 				<Input
 					variant='bordered'
 					isClearable
-					placeholder='small image tooltip'
+					placeholder={t('inp-si-tooltip-plh')}
 					className='h-11'
 					labelPlacement='outside'
 					size='sm'
@@ -240,7 +244,7 @@ export default function ImageOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${smallImageTooltipHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>tooltip</span>
+							<span className={`lowercase ${smallImageTooltipHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-si-tooltip')}</span>
 						</div>
 					}
 					onClear={() => {

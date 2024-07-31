@@ -4,12 +4,20 @@ import {Input, Switch} from '@nextui-org/react';
 import {validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
+import {useTranslation} from 'react-i18next';
 
 export default function PartyOptionForm() {
 	const {osType, setIsSessionRunning, isSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
-	const minHelper = useMemo(() => validateNumberInput({text: ipcProps.partySize?.toString(), min: 1, max: 100}), [ipcProps.partySize]);
-	const maxHelper = useMemo(() => validateNumberInput({text: ipcProps.partyMax?.toString(), min: 1, max: 100}), [ipcProps.partyMax]);
+	const {t: errorTranslator} = useTranslation('lib-digit-validator');
+	const {t} = useTranslation('cpt-otp-party');
+
+	const minHelper = useMemo(() => validateNumberInput({
+		t: errorTranslator, text: ipcProps.partySize?.toString(), min: 1, max: 100,
+	}), [ipcProps.partySize]);
+	const maxHelper = useMemo(() => validateNumberInput({
+		t: errorTranslator, text: ipcProps.partyMax?.toString(), min: 1, max: 100,
+	}), [ipcProps.partyMax]);
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, partyError: minHelper.error || maxHelper.error}));
@@ -17,11 +25,11 @@ export default function PartyOptionForm() {
 
 	return (
 		<div>
-			<p className='mb-5'>Party Settings</p>
+			<p className='mb-5 capitalize'>{t('lbl-title')}</p>
 			<div className='flex gap-6'>
 				<Input
 					variant='bordered'
-					label='Current'
+					label={t('inp-party-size')}
 					placeholder='0'
 					defaultValue={ipcProps.partySize?.toString()}
 					errorMessage={minHelper.text}
@@ -51,7 +59,7 @@ export default function PartyOptionForm() {
 				/>
 				<Input
 					variant='bordered'
-					label='Max'
+					label={t('inp-party-max')}
 					placeholder='0'
 					defaultValue={ipcProps.partyMax?.toString()}
 					errorMessage={maxHelper.text}

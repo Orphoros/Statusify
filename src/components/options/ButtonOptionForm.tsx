@@ -4,15 +4,19 @@ import {Input, Switch} from '@nextui-org/react';
 import {containsText, validateTextInput, validateUrlInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
+import {useTranslation} from 'react-i18next';
 
 export default function ButtonOptionForm() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, setIpcProps, osType} = useTauriContext();
 
-	const buttonUrlHelper = useMemo(() => validateUrlInput(ipcProps.buttonUrl), [ipcProps.buttonUrl]);
-	const buttonTextHelper = useMemo(() => validateTextInput(ipcProps.buttonText, 20), [ipcProps.buttonText]);
+	const {t: errorTranslator} = useTranslation('lib-str-validator');
+	const {t} = useTranslation('cpt-opt-btn');
 
-	const button2UrlHelper = useMemo(() => validateUrlInput(ipcProps.button2Url), [ipcProps.button2Url]);
-	const button2TextHelper = useMemo(() => validateTextInput(ipcProps.button2Text, 20), [ipcProps.button2Text]);
+	const buttonUrlHelper = useMemo(() => validateUrlInput(errorTranslator, ipcProps.buttonUrl), [ipcProps.buttonUrl]);
+	const buttonTextHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.buttonText, maxStrLength: 20}), [ipcProps.buttonText]);
+
+	const button2UrlHelper = useMemo(() => validateUrlInput(errorTranslator, ipcProps.button2Url), [ipcProps.button2Url]);
+	const button2TextHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.button2Text, maxStrLength: 20}), [ipcProps.button2Text]);
 
 	const handleUrlProtocol = (path: string, defaultProtocol?: string): [string, string] => {
 		if (path.isWebsite()) {
@@ -34,12 +38,12 @@ export default function ButtonOptionForm() {
 
 	return (
 		<div>
-			<p>Button Settings</p>
-			<p className='text-primary-500 text-sm mb-5'>Button</p>
+			<p className='capitalize'>{t('lbl-title')}</p>
+			<p className='text-primary-500 text-sm mb-5 capitalize'>{t('lbl-subtitle-btn1')}</p>
 			<div className='flex gap-6'>
 				<Input
 					variant='bordered'
-					placeholder='button text'
+					placeholder={t('input-btn1-plh')}
 					isClearable
 					width='100%'
 					className='h-11'
@@ -80,7 +84,7 @@ export default function ButtonOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${buttonTextHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>label</span>
+							<span className={`normal-case ${buttonTextHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-btn1')}</span>
 						</div>
 					}
 					onChange={e => {
@@ -152,11 +156,11 @@ export default function ButtonOptionForm() {
 				}/>
 			</div>
 
-			<p className='text-primary-500 text-sm mb-5'>Button 2</p>
+			<p className='text-primary-500 text-sm mb-5 capitalize'>{t('lbl-subtitle-btn2')}</p>
 			<div className='flex gap-6'>
 				<Input
 					variant='bordered'
-					placeholder='button text'
+					placeholder={t('input-btn2-plh')}
 					isClearable
 					width='100%'
 					className='h-11'
@@ -197,7 +201,7 @@ export default function ButtonOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${button2TextHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>label</span>
+							<span className={`normal-case ${button2TextHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-btn2')}:</span>
 						</div>
 					}
 					onChange={e => {

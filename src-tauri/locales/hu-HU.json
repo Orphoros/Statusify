@@ -1,10 +1,75 @@
 {
-  "main-menubar": {
+  "cpt-menubar": {
     "chk-system-start": "Futtatás rendszerindításkor",
     "chk-rpc-autostart": "Aktivitás automatikus indítása",
     "lbl-status-idle": "Inaktív",
     "lbl-status-playing": "Aktív",
     "btn-start": "Indítás",
     "btn-stop": "Leállítás"
-  }
+  },
+  "cpt-preview": {
+		"lbl-title": "Előnézet",
+		"lbl-rpc-msg": "Játékban",
+		"lbl-app-name": "Az alkalmazás neve",
+		"lbl-time-elapsed": "telt el",
+    "lbl-time-tba": "A kezdés óta eltelt idő",
+		"lbl-party-of": "/",
+    "popup-prev-btn-msg": "Erre a gombra kattintva a '{{url}}' cím a böngészőben fog megnyílni."
+  },
+  "cpt-otp-app": {
+		"lbl-title": "Alkalmazás Csatlakoztatása",
+		"inp-app-id": "Alkalmazás ID",
+		"btn-import": "Megnyitás",
+		"btn-export": "Mentés"
+	},
+  "cpt-otp-details": {
+		"lbl-title": "Fő beállítások",
+		"inp-details": "cím",
+		"inp-plh-details": "fő cselekvés",
+		"inp-state": "Állapot",
+		"inp-plh-state": "a jelenlegi állapot"
+	},
+  "cpt-otp-party": {
+		"lbl-title": "Buli beállítások",
+		"inp-party-size": "Jelenleg",
+		"inp-party-max": "Maximum"
+	},
+  "cpt-opt-image": {
+		"lbl-title": "Kép Beállítások",
+		"lbl-subtitle-li": "Nagy Kép Beállítások",
+		"inp-li": "kép",
+		"input-li-plh": "nagy kép neve vagy url",
+		"inp-li-tooltip": "tipp",
+		"inp-li-tooltip-plh": "eszköztipp a nagy képhez",
+		"lbl-subtitle-si": "Kis Kép Beállítások",
+		"inp-si": "kép",
+		"input-si-plh": "kis kép neve vagy url",
+		"inp-si-tooltip": "tipp",
+		"inp-si-tooltip-plh": "eszköztipp a kis képhez"
+	},
+  "cpt-opt-time": {
+		"lbl-title": "Idő Beállítások",
+		"lbl-start": "Kezdési idő",
+		"chk-current-time": "Jelenlegi idő használata kezdéskor"
+	},
+	"lib-digit-validator": {
+		"lbl-error-required": "Kötelező mező",
+		"lbl-error-positive": "Csak pozitív egész számok",
+		"lbl-error-length": "{{length}} számjegy szükséges",
+		"lbl-error-range": "A számnak {{min}} és {{max}} között kell lennie"
+	},
+  "cpt-opt-btn": {
+		"lbl-title": "Gomb Beállítások",
+		"lbl-subtitle-btn1": "Gomb 1",
+		"inp-btn1": "felirat",
+		"inp-btn2": "felirat",
+		"input-btn1-plh": "gomb szöveg",
+		"lbl-subtitle-btn2": "Gomb 2",
+		"input-btn2-plh": "gomb szöveg"
+	},
+  "lib-str-validator": {
+		"lbl-error-alphanumeric": "Csak alfanumerikus karakterek",
+		"lbl-error-max": "Maximum {{max}} karakter",
+    "lbl-error-url-format": "Érvénytelen URL-formátum"
+	}
 }

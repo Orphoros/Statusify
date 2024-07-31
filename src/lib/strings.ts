@@ -1,5 +1,6 @@
 import React from 'react';
 import {type FormValidation} from '@/types';
+import {type TFunction} from 'i18next';
 import {isDefined} from './control';
 
 /**
@@ -35,13 +36,23 @@ export function isTooLong(text: string, maxLength: number): boolean {
 }
 
 /**
+ * Type for the parameters of validateTextInput
+ */
+type StringValidation = {
+	t: TFunction<'lib-str-validator'>;
+	prop: string | undefined;
+	maxStrLength: number;
+};
+
+/**
  * Validate text from a from input field
+ * @param t translation function
  * @param prop text to validate
  * @param maxStrLength maximum length of the string (inclusive)
  * @returns FormValidation object
  * @see FormValidation
  */
-export const validateTextInput = ((prop: string | undefined, maxStrLength: number) => {
+export const validateTextInput = (({t, prop, maxStrLength}: StringValidation) => {
 	const def: FormValidation = {
 		text: '',
 		color: 'primary',
@@ -54,7 +65,7 @@ export const validateTextInput = ((prop: string | undefined, maxStrLength: numbe
 
 	if (containsUnicode(prop)) {
 		return {
-			text: 'Use only alphanumeric characters',
+			text: t('lbl-error-alphanumeric'),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',
@@ -63,7 +74,7 @@ export const validateTextInput = ((prop: string | undefined, maxStrLength: numbe
 
 	if (isTooLong(prop, maxStrLength)) {
 		return {
-			text: `Max ${maxStrLength} characters`,
+			text: t('lbl-error-max', {max: maxStrLength}),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',
@@ -79,7 +90,7 @@ export const validateTextInput = ((prop: string | undefined, maxStrLength: numbe
  * @returns FormValidation object
  * @see FormValidation
  */
-export const validateUrlInput = ((prop: string | undefined) => {
+export const validateUrlInput = ((t: TFunction<'lib-str-validator'>, prop: string | undefined) => {
 	const def: FormValidation = {
 		text: '',
 		color: 'primary',
@@ -95,7 +106,7 @@ export const validateUrlInput = ((prop: string | undefined) => {
 
 	if (!urlRegex.test(prop)) {
 		return {
-			text: 'Invalid URL',
+			text: t('lbl-error-url-format'),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',

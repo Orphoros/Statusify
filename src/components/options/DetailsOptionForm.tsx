@@ -4,12 +4,16 @@ import {Input, Switch} from '@nextui-org/react';
 import {containsText, validateTextInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
+import {useTranslation} from 'react-i18next';
 
 export default function DetailsOptionForm() {
 	const {osType, isSessionRunning, setIsSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
-	const detailsHelper = useMemo(() => validateTextInput(ipcProps.details, 35), [ipcProps.details]);
-	const stateHelper = useMemo(() => validateTextInput(ipcProps.state, 20), [ipcProps.state]);
+	const {t: errorTranslator} = useTranslation('lib-str-validator');
+	const {t} = useTranslation('cpt-otp-details');
+
+	const detailsHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 35}), [ipcProps.details]);
+	const stateHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 20}), [ipcProps.state]);
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, detailsError: detailsHelper.error, stateError: stateHelper.error}));
@@ -17,14 +21,14 @@ export default function DetailsOptionForm() {
 
 	return (
 		<div>
-			<p className='mb-5'>Main Settings</p>
+			<p className='mb-5 capitalize'>{t('lbl-title')}</p>
 			<div className='flex gap-6 mb-2'>
 				<Input
 					variant='bordered'
 					className='h-11'
 					size='sm'
 					isClearable
-					placeholder='main cation'
+					placeholder={t('inp-plh-details')}
 					value={ipcProps.details}
 					width='100%'
 					labelPlacement='outside'
@@ -59,7 +63,7 @@ export default function DetailsOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${detailsHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>details</span>
+							<span className={`lowercase ${detailsHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-details')}</span>
 						</div>
 					}
 					onClear={() => {
@@ -84,7 +88,7 @@ export default function DetailsOptionForm() {
 					size='sm'
 					isClearable
 					value={ipcProps.state}
-					placeholder='the current state'
+					placeholder={t('inp-plh-state')}
 					isInvalid={stateHelper.error}
 					errorMessage={stateHelper.text}
 					color={stateHelper.color}
@@ -116,7 +120,7 @@ export default function DetailsOptionForm() {
 					}}
 					startContent={
 						<div className='pointer-events-none flex shrink-0 items-center w-11'>
-							<span className={`${stateHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>state</span>
+							<span className={`lowercase ${stateHelper.error ? 'text-danger-500' : 'text-default-400'} text-small`}>{t('inp-state')}</span>
 						</div>
 					}
 					isDisabled={ipcProps.idError! || !ipcProps.detailsEnabled || !containsText(ipcProps.details)}

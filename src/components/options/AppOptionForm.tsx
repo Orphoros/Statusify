@@ -10,11 +10,16 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
 	faFolderOpen, faSave,
 } from '@fortawesome/free-regular-svg-icons';
+import {useTranslation} from 'react-i18next';
 
 export default function AppOptionForm() {
 	const {ipcProps, setIpcProps, osType, setIsSessionRunning, isSessionRunning} = useTauriContext();
+	const {t: errorTranslator} = useTranslation('lib-digit-validator');
+	const {t} = useTranslation('cpt-otp-app');
 
-	const helper = useMemo(() => validateNumberInput({text: ipcProps.id, length: 18, required: true}), [ipcProps.id]);
+	const helper = useMemo(() => validateNumberInput({
+		t: errorTranslator, text: ipcProps.id, length: 18, required: true,
+	}), [ipcProps.id]);
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, idError: helper.error}));
@@ -22,14 +27,14 @@ export default function AppOptionForm() {
 
 	return (
 		<div>
-			<p>App Connection</p>
+			<p className='capitalize'>{t('lbl-title')}</p>
 			<div className='flex items-center justify-center mt-2 gap-2 h-[4.5rem]'>
 				<Input
 					isRequired
 					className='max-w-[11.5rem] h-[4.5rem]'
 					size='sm'
 					defaultValue={ipcProps.id}
-					label='App ID'
+					label={t('inp-app-id')}
 					key='primary'
 					color={helper.color}
 					isInvalid={helper.error}
@@ -85,7 +90,7 @@ export default function AppOptionForm() {
 							}
 						}}
 					>
-						<FontAwesomeIcon icon={faFolderOpen} />Import
+						<FontAwesomeIcon icon={faFolderOpen} />{t('btn-import')}
 					</Button>
 					<Button
 						disableRipple
@@ -111,7 +116,7 @@ export default function AppOptionForm() {
 							}
 						}}
 					>
-						<FontAwesomeIcon icon={faSave} />Export
+						<FontAwesomeIcon icon={faSave} />{t('btn-export')}
 					</Button>
 				</ButtonGroup>
 			</div>

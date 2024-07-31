@@ -10,6 +10,7 @@ import {readTextFile} from '@tauri-apps/api/fs';
 import {
 	showButton, showButton2, showCurrentTime, showDetails, showGivenTime, showLargeImage, showLargeImageText, showParty, showSmallImage, showSmallImageText, showState,
 } from '@/lib';
+import {useTranslation} from 'react-i18next';
 
 export default function PreviewCard() {
 	const {ipcProps, showVibrancy} = useTauriContext();
@@ -18,6 +19,7 @@ export default function PreviewCard() {
 	const [placeholderLargeImage, setPlaceholderLargeImage] = useState<string>('');
 	const [placeholderSmallImage, setPlaceholderSmallImage] = useState<string>('');
 	const [currentTime, changeTime] = useState(new Date());
+	const {t} = useTranslation('cpt-preview');
 
 	(async () => {
 		if (largeImage.isDefined() && smallImage.isDefined()) {
@@ -70,11 +72,11 @@ export default function PreviewCard() {
 	}, [ipcProps.largeImage, ipcProps.smallImage]);
 
 	const btn1Handler = async () => {
-		await message(`Clicking this button would open '${(ipcProps.buttonProtocol ?? '') + (ipcProps.buttonUrl ?? '')}' in the web-browser`, {title: 'Statusify', type: 'info'});
+		await message(t('popup-prev-btn-msg', {url: (ipcProps.buttonProtocol ?? '') + (ipcProps.buttonUrl ?? '')}), {title: 'Statusify', type: 'info'});
 	};
 
 	const btn2Handler = async () => {
-		await message(`Clicking this button would open '${(ipcProps.button2Protocol ?? '') + (ipcProps.button2Url ?? '')}' in the web-browser`, {title: 'Statusify', type: 'info'});
+		await message(t('popup-prev-btn-msg', {url: (ipcProps.button2Protocol ?? '') + (ipcProps.button2Url ?? '')}), {title: 'Statusify', type: 'info'});
 	};
 
 	let secondsElapsed = 0;
@@ -95,12 +97,12 @@ export default function PreviewCard() {
 	return (
 		<Card className={`w-[380px] h-[300px] ${showVibrancy ? 'bg-content1  bg-opacity-50' : 'bg-content2'} rounded-2xl`} shadow='none'>
 			<CardHeader>
-				<p>Preview</p>
+				<p className='capitalize'>{t('lbl-title')}</p>
 			</CardHeader>
 			<Divider/>
 			<CardBody>
 				<div className='flex flex-col gap-1 justify-center h-full'>
-					<p className='text-sm font-bold mb-2'>PLAYING A GAME</p>
+					<p className='text-sm font-bold mb-2 normal-case'>{t('lbl-rpc-msg')}</p>
 					<div className='flex gap-3 mb-4'>
 						{showLargeImage(ipcProps)
 						&& <Badge
@@ -139,11 +141,11 @@ export default function PreviewCard() {
 							</Tooltip>
 						</Badge>}
 						<div className='flex flex-col align justify-center truncate'>
-							<p className='text-sm font-bold'>Your app name</p>
+							<p className='text-sm font-bold'>{t('lbl-app-name')}</p>
 							{showDetails(ipcProps) && <p className='text-sm text-ellipsis overflow-hidden'>{ipcProps.details ?? ''}</p>}
-							{showState(ipcProps) && <p className='text-sm'>{(ipcProps.state ?? '') + (showParty(ipcProps) ? (` (${ipcProps.partySize ?? 0} of ${ipcProps.partyMax ?? 0})`) : '')}</p>}
-							{showGivenTime(ipcProps) && <p className='text-sm'>{`${hoursElapsed > 0 ? `${hoursToDisplay}:` : ''}${minutesToDisplay}:${secondsToDisplay} elapsed`}</p>}
-							{showCurrentTime(ipcProps) && <p className='text-sm'>Current time here once started</p>}
+							{showState(ipcProps) && <p className='text-sm'>{(ipcProps.state ?? '') + (showParty(ipcProps) ? (` (${ipcProps.partySize ?? 0} ${t('lbl-party-of')} ${ipcProps.partyMax ?? 0})`) : '')}</p>}
+							{showGivenTime(ipcProps) && <p className='text-sm'>{`${hoursElapsed > 0 ? `${hoursToDisplay}:` : ''}${minutesToDisplay}:${secondsToDisplay} ${t('lbl-time-elapsed')}`}</p>}
+							{showCurrentTime(ipcProps) && <p className='text-sm'>{t('lbl-time-tba')}</p>}
 						</div>
 					</div>
 					{showButton(ipcProps) && <Button className='rounded' color='primary' onClick={btn1Handler}>{ipcProps.buttonText}</Button>}

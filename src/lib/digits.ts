@@ -1,5 +1,6 @@
 import {type FormValidation} from '@/types';
 import {isDefined} from './control';
+import {type TFunction} from 'i18next';
 
 /**
  * Check if a number text is a number between min and max
@@ -16,6 +17,7 @@ export function isDigitBetween(text: string, min: number, max: number): boolean 
  * Type for the parameters of validateNumberInput
  */
 type NumberValidation = {
+	t: TFunction<'lib-digit-validator'>;
 	text: string | undefined;
 	min?: number;
 	max?: number;
@@ -27,6 +29,7 @@ type NumberValidation = {
  * Validate number from a from input field
  *
  * Only min/max or length will be validated at a time
+ * @param t translation function
  * @param text number text to validate
  * @param max maximum value (inclusive)
  * @param min minimum value (inclusive)
@@ -35,7 +38,7 @@ type NumberValidation = {
  * @returns FormValidation object
  * @see FormValidation
  */
-export const validateNumberInput = (({text, min, max, length, required}: NumberValidation) => {
+export const validateNumberInput = (({t, text, min, max, length, required}: NumberValidation) => {
 	const def: FormValidation = {
 		text: '',
 		color: 'primary',
@@ -48,7 +51,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 
 	if (!text && required) {
 		return {
-			text: 'Required',
+			text: t('lbl-error-required'),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',
@@ -57,7 +60,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 
 	if (!text!.isInteger()) {
 		return {
-			text: 'Only positive whole numbers',
+			text: t('lbl-error-positive'),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',
@@ -66,7 +69,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 
 	if (isDefined(length) && !text!.isAtLength(length!)) {
 		return {
-			text: `Number must be ${length!} digits long`,
+			text: t('lbl-error-length', {length}),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',
@@ -75,7 +78,7 @@ export const validateNumberInput = (({text, min, max, length, required}: NumberV
 
 	if (isDefined(min) && isDefined(max) && !isDigitBetween(text!, min!, max!)) {
 		return {
-			text: `Must be between ${min!} and ${max!}`,
+			text: t('lbl-error-range', {min, max}),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',

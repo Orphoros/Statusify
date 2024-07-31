@@ -5,16 +5,18 @@ import {
 } from '@nextui-org/react';
 import {useTauriContext} from '@/context';
 import {Time} from '@internationalized/date';
+import {useTranslation} from 'react-i18next';
 
 export default function TimeOptionForm() {
 	const {ipcProps, setIpcProps} = useTauriContext();
 
 	const [time, setTime] = React.useState(new Date(ipcProps.timeAsStart!));
+	const {t} = useTranslation('cpt-opt-time');
 
 	return (
 		<div>
-			<p>Timer Settings</p>
-			<p className='text-primary-500 text-sm mb-5'>Start from:</p>
+			<p className='capitalize'>{t('lbl-title')}</p>
+			<p className='text-primary-500 text-sm mb-5 capitalize'>{t('lbl-start')}</p>
 			<div className='flex gap-6 items-center'>
 				<div className='flex flex-grow gap-3 items-center'>
 					<TimeInput
@@ -62,7 +64,7 @@ export default function TimeOptionForm() {
 						}
 						size='sm'
 					>
-					Use current time on start
+						{t('chk-current-time')}
 					</Checkbox>
 				</div>
 				<Switch isSelected={ipcProps.timeEnabled} isDisabled={ipcProps.idError} onValueChange={

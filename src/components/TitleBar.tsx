@@ -7,11 +7,10 @@ import {type ColorBrand} from '@/types';
 import {error, debug} from 'tauri-plugin-log-api';
 import {useTranslation} from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
-import i18next from 'i18next';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, showVibrancy, launchConfProps, setLaunchConfProps} = useTauriContext();
-	const {t} = useTranslation('main-menubar');
+	const {t} = useTranslation('cpt-menubar');
 
 	const buttonDisabled = isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps);
 

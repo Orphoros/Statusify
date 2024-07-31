@@ -1,10 +1,75 @@
 {
-  "main-menubar": {
+  "cpt-menubar": {
     "chk-system-start": "Start app met systeem",
     "chk-rpc-autostart": "Autostart status met app",
     "lbl-status-idle": "Inactief",
     "lbl-status-playing": "Activiteit weergeven",
     "btn-start": "Start",
     "btn-stop": "Stop"
-  }
+  },
+  "cpt-preview": {
+		"lbl-title": "Voorvertoning",
+		"lbl-rpc-msg": "Speelt een game",
+		"lbl-app-name": "Applicatie naam",
+		"lbl-time-elapsed": "verlopen",
+    "lbl-time-tba": "Huidige tijd hier",
+		"lbl-party-of": "van",
+    "popup-prev-btn-msg": "Als op deze knop wordt geklikt, wordt '{{url}}' geopend in je standaardbrowser."
+	},
+  "cpt-otp-app": {
+		"lbl-title": "App Verbinding",
+		"inp-app-id": "App ID",
+		"btn-import": "Importeren",
+		"btn-export": "Exporteren"
+	},
+  "cpt-otp-details": {
+		"lbl-title": "Hoofdinstellingen",
+		"inp-details": "Details",
+		"inp-plh-details": "hoofdactie",
+		"inp-state": "Status",
+		"inp-plh-state": "de huidige status"
+	},
+  "cpt-otp-party": {
+		"lbl-title": "Feestinstellingen",
+		"inp-party-size": "Huidige",
+		"inp-party-max": "Maximaal"
+	},
+  "cpt-opt-image": {
+		"lbl-title": "Afbeeldingsinstellingen",
+		"lbl-subtitle-li": "Hoofdbeeldinstellingen",
+		"inp-li": "foto",
+		"input-li-plh": "hoofdafbeeldingsnaam of url",
+		"inp-li-tooltip": "tooltip",
+		"inp-li-tooltip-plh": "tooltip voor de hoofdafbeelding",
+		"lbl-subtitle-si": "Kleine Afbeeldingsinstellingen",
+		"inp-si": "foto",
+		"input-si-plh": "kleine afbeeldingsnaam of url",
+		"inp-si-tooltip": "tooltip",
+		"inp-si-tooltip-plh": "tooltip voor de kleine afbeelding"
+	},
+  "cpt-opt-time": {
+		"lbl-title": "Tijdinstellingen",
+		"lbl-start": "Starttijd",
+		"chk-current-time": "Gebruik huidige tijd bij start"
+	},
+  "cpt-opt-btn": {
+		"lbl-title": "Knopinstellingen",
+		"lbl-subtitle-btn1": "Knop 1",
+		"inp-btn1": "label",
+		"inp-btn2": "label",
+		"input-btn1-plh": "knop tekst",
+		"lbl-subtitle-btn2": "Knop 2",
+		"input-btn2-plh": "knop tekst"
+	},
+	"lib-digit-validator": {
+		"lbl-error-required": "Vereist",
+		"lbl-error-positive": "Positieve gehele getallen",
+		"lbl-error-length": "Moet {{length}} cijfers lang zijn",
+		"lbl-error-range": "Moet tussen {{min}} en {{max}} liggen"
+	},
+  "lib-str-validator": {
+		"lbl-error-alphanumeric": "Gebruik alleen alfanumerieke tekens",
+		"lbl-error-max": "Maximaal {{max}} tekens",
+    "lbl-error-url-format": "Ongeldig URL-formaat"
+	}
 }
