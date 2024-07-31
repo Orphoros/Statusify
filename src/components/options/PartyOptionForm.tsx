@@ -10,6 +10,7 @@ export default function PartyOptionForm() {
 	const {osType, setIsSessionRunning, isSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
 	const {t: errorTranslator} = useTranslation('lib-digit-validator');
+	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
 	const {t} = useTranslation('cpt-otp-party');
 
 	const minHelper = useMemo(() => validateNumberInput({
@@ -41,7 +42,7 @@ export default function PartyOptionForm() {
 					size='sm'
 					width='100%'
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addSeparator()
 							.addToggleDisableOption(() => {
@@ -71,7 +72,7 @@ export default function PartyOptionForm() {
 					size='sm'
 					width='100%'
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addSeparator()
 							.addToggleDisableOption(() => {

@@ -3,10 +3,11 @@ import {type Options, type Item} from 'tauri-plugin-context-menu/dist/types';
 import {isFormCorrect, startIpc, stopIpc} from '@/lib';
 import {type IpcProps} from '@/types';
 import {invoke} from '@tauri-apps/api';
+import {type TFunction} from 'i18next';
 
 export class MenuOptionBuilder {
 	private readonly options: Item[];
-	constructor(private readonly e: React.MouseEvent<HTMLDivElement>, private readonly osType: OsType | undefined) {
+	constructor(private readonly t: TFunction<'lib-ctx-menu'>, private readonly e: React.MouseEvent<HTMLDivElement>, private readonly osType: OsType | undefined) {
 		e.preventDefault();
 		e.stopPropagation();
 		this.options = [];
@@ -20,7 +21,7 @@ export class MenuOptionBuilder {
 
 	addCut(callback?: () => any): this {
 		this.options.push({
-			label: 'Cut',
+			label: this.t('lbl-cut'),
 			disabled: false,
 			shortcut: this.osType! === 'Darwin' ? 'cmd+x' : 'ctrl+x',
 			event() {
@@ -42,7 +43,7 @@ export class MenuOptionBuilder {
 
 	addCopy(callback?: () => any): this {
 		this.options.push({
-			label: 'Copy',
+			label: this.t('lbl-copy'),
 			disabled: false,
 			shortcut: this.osType! === 'Darwin' ? 'cmd+c' : 'ctrl+c',
 			event() {
@@ -64,7 +65,7 @@ export class MenuOptionBuilder {
 
 	addPaste(callback: () => any): this {
 		this.options.push({
-			label: 'Paste',
+			label: this.t('lbl-paste'),
 			disabled: false,
 			shortcut: this.osType! === 'Darwin' ? 'cmd+v' : 'ctrl+v',
 			event() {
@@ -78,7 +79,7 @@ export class MenuOptionBuilder {
 
 	addOpenInBrowser(url?: string): this {
 		this.options.push({
-			label: 'Open in Browser',
+			label: this.t('lbl-open-browser'),
 			disabled: !url,
 			event() {
 				void invoke('open_url', {url: url!});
@@ -89,7 +90,7 @@ export class MenuOptionBuilder {
 
 	addToggleDisableOption(callback: () => any): this {
 		this.options.push({
-			label: 'Toggle Option',
+			label: this.t('lbl-toggle'),
 			disabled: false,
 			event() {
 				if (callback) {
@@ -102,7 +103,7 @@ export class MenuOptionBuilder {
 
 	addClearOption(callback: () => any): this {
 		this.options.push({
-			label: 'Clear Field',
+			label: this.t('lbl-clear'),
 			disabled: false,
 			event() {
 				if (callback) {
@@ -115,7 +116,7 @@ export class MenuOptionBuilder {
 
 	addStartIpc(isSessionRunning: boolean, setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>, ipcProps: IpcProps, callback?: () => any): this {
 		this.options.push({
-			label: 'Start Rich Presence',
+			label: this.t('lbl-start'),
 			disabled: isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps),
 			event() {
 				void startIpc(ipcProps, true).then(isSuccess => {
@@ -133,7 +134,7 @@ export class MenuOptionBuilder {
 
 	addStopIpc(isSessionRunning: boolean, setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>, callback?: () => any): this {
 		this.options.push({
-			label: 'Stop Rich Presence',
+			label: this.t('lbl-stop'),
 			disabled: !isSessionRunning,
 			event() {
 				void stopIpc(false);

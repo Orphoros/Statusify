@@ -72,4 +72,14 @@ export const systemLocale = {
 		'lbl-error-max': 'Max {{max}} characters',
 		'lbl-error-url-format': 'Invalid URL format',
 	},
+	'lib-ctx-menu': {
+		'lbl-copy': 'Copy',
+		'lbl-cut': 'Cut',
+		'lbl-paste': 'Paste',
+		'lbl-open-browser': 'Open in Browser',
+		'lbl-toggle': 'Toggle Option',
+		'lbl-clear': 'Clear Field',
+		'lbl-start': 'Start Rich Presence',
+		'lbl-stop': 'Stop Rich Presence',
+	},
 };

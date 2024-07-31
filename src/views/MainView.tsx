@@ -2,14 +2,16 @@ import React from 'react';
 import {TitleBar, EditCard, PreviewCard} from '@/components';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
+import {useTranslation} from 'react-i18next';
 
 function MainView() {
 	const {ipcProps, isSessionRunning, setIsSessionRunning, osType} = useTauriContext();
+	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
 
 	return (
 		<div onContextMenu={
 			e => {
-				void showMenu(new MenuOptionBuilder(e, osType)
+				void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 					.addStartIpc(isSessionRunning, setIsSessionRunning, ipcProps)
 					.addStopIpc(isSessionRunning, setIsSessionRunning)
 					.build());

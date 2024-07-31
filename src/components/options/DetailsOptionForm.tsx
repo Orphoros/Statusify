@@ -10,6 +10,7 @@ export default function DetailsOptionForm() {
 	const {osType, isSessionRunning, setIsSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
 	const {t: errorTranslator} = useTranslation('lib-str-validator');
+	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
 	const {t} = useTranslation('cpt-otp-details');
 
 	const detailsHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 35}), [ipcProps.details]);
@@ -37,7 +38,7 @@ export default function DetailsOptionForm() {
 					color={detailsHelper.color}
 					isDisabled={ipcProps.idError}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, details: '', detailsEnabled: false}));
@@ -95,7 +96,7 @@ export default function DetailsOptionForm() {
 					width='100%'
 					labelPlacement='outside'
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, state: '', stateEnabled: false}));

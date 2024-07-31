@@ -15,6 +15,7 @@ import {useTranslation} from 'react-i18next';
 export default function AppOptionForm() {
 	const {ipcProps, setIpcProps, osType, setIsSessionRunning, isSessionRunning} = useTauriContext();
 	const {t: errorTranslator} = useTranslation('lib-digit-validator');
+	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
 	const {t} = useTranslation('cpt-otp-app');
 
 	const helper = useMemo(() => validateNumberInput({
@@ -41,7 +42,7 @@ export default function AppOptionForm() {
 					errorMessage={helper.text}
 					value={ipcProps.id}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, id: ''}));

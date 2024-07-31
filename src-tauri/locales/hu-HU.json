@@ -71,5 +71,15 @@
 		"lbl-error-alphanumeric": "Csak alfanumerikus karakterek",
 		"lbl-error-max": "Maximum {{max}} karakter",
     "lbl-error-url-format": "Érvénytelen URL-formátum"
+	},
+  "lib-ctx-menu": {
+		"lbl-copy": "Másolás",
+		"lbl-cut": "Kivágás",
+		"lbl-paste": "Beillesztés",
+		"lbl-open-browser": "Megnyitás Böngészőben",
+		"lbl-toggle": "Beállítás Váltása",
+		"lbl-clear": "Mező Törlése",
+		"lbl-start": "Indítás",
+		"lbl-stop": "Leállítás"
 	}
 }

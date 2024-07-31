@@ -71,5 +71,15 @@
 		"lbl-error-alphanumeric": "Gebruik alleen alfanumerieke tekens",
 		"lbl-error-max": "Maximaal {{max}} tekens",
     "lbl-error-url-format": "Ongeldig URL-formaat"
+	},
+  "lib-ctx-menu": {
+		"lbl-copy": "Kopiëren",
+		"lbl-cut": "Knippen",
+		"lbl-paste": "Plakken",
+		"lbl-open-browser": "Openen in Browser",
+		"lbl-toggle": "Schakel Instelling",
+		"lbl-clear": "Invoer Wissen",
+		"lbl-start": "Start Rich Presence",
+		"lbl-stop": "Stop Rich Presence"
 	}
 }

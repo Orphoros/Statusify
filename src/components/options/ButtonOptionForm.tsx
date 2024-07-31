@@ -10,6 +10,7 @@ export default function ButtonOptionForm() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, setIpcProps, osType} = useTauriContext();
 
 	const {t: errorTranslator} = useTranslation('lib-str-validator');
+	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
 	const {t} = useTranslation('cpt-opt-btn');
 
 	const buttonUrlHelper = useMemo(() => validateUrlInput(errorTranslator, ipcProps.buttonUrl), [ipcProps.buttonUrl]);
@@ -55,7 +56,7 @@ export default function ButtonOptionForm() {
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonText}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, buttonText: '', buttonEnabled: false}));
@@ -104,7 +105,7 @@ export default function ButtonOptionForm() {
 					isDisabled={ipcProps.idError}
 					value={ipcProps.buttonUrl}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, buttonUrl: '', buttonEnabled: false}));
@@ -172,7 +173,7 @@ export default function ButtonOptionForm() {
 					isDisabled={ipcProps.idError}
 					value={ipcProps.button2Text}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, button2Text: '', button2Enabled: false}));
@@ -221,7 +222,7 @@ export default function ButtonOptionForm() {
 					isDisabled={ipcProps.idError}
 					value={ipcProps.button2Url}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, button2Url: '', button2Enabled: false}));

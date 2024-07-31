@@ -10,6 +10,7 @@ export default function ImageOptionForm() {
 	const {osType, setIsSessionRunning, isSessionRunning, ipcProps, setIpcProps} = useTauriContext();
 
 	const {t: errorTranslator} = useTranslation('lib-str-validator');
+	const {t: ctxMenuTranslator} = useTranslation('lib-ctx-menu');
 	const {t} = useTranslation('cpt-opt-image');
 
 	const largeImageTooltipHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.largeImageTooltip, maxStrLength: 20}), [ipcProps.largeImageTooltip]);
@@ -46,7 +47,7 @@ export default function ImageOptionForm() {
 					isInvalid={largeImageUrlHelper.error}
 					color={largeImageUrlHelper.color}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, largeImage: '', largeImageEnabled: false}));
@@ -103,7 +104,7 @@ export default function ImageOptionForm() {
 					value={ipcProps.largeImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, largeImageTooltip: '', largeImageTooltipEnabled: false}));
@@ -162,7 +163,7 @@ export default function ImageOptionForm() {
 					isInvalid={smallImageUrlHelper.error}
 					color={smallImageUrlHelper.color}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, smallImage: '', smallImageEnabled: false}));
@@ -219,7 +220,7 @@ export default function ImageOptionForm() {
 					value={ipcProps.smallImageTooltip}
 					isDisabled={ipcProps.idError! || !ipcProps.largeImageEnabled || !ipcProps.smallImageEnabled}
 					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(e, osType)
+						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
 							.addCut(() => {
 								setIpcProps(prev => ({...prev, smallImageTooltip: '', smallImageTooltipEnabled: false}));
