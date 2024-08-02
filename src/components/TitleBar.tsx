@@ -25,6 +25,7 @@ export default function TitleBar() {
 			<Chip className='border-0' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
 			<div className='flex gap-4'>
 				<Checkbox
+					size='sm'
 					isSelected={launchConfProps.startIpcOnLaunch}
 					onValueChange={
 						enabled => {
@@ -35,6 +36,7 @@ export default function TitleBar() {
 					{t('chk-rpc-autostart')}
 				</Checkbox>
 				<Checkbox
+					size='sm'
 					isSelected={launchConfProps.startAppOnLaunch}
 					onValueChange={
 						async enabled => {
