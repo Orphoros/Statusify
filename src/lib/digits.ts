@@ -21,7 +21,8 @@ type NumberValidation = {
 	text: string | undefined;
 	min?: number;
 	max?: number;
-	length?: number;
+	minLength?: number;
+	maxLength?: number;
 	required?: boolean;
 };
 
@@ -33,12 +34,13 @@ type NumberValidation = {
  * @param text number text to validate
  * @param max maximum value (inclusive)
  * @param min minimum value (inclusive)
- * @param length length of the digits (inclusive)
+ * @param lengthMin minimum length of the number (inclusive)
+ * @param lengthMax maximum length of the number (inclusive)
  * @param required if true, text must not be empty
  * @returns FormValidation object
  * @see FormValidation
  */
-export const validateNumberInput = (({t, text, min, max, length, required}: NumberValidation) => {
+export const validateNumberInput = (({t, text, min, max, minLength, maxLength, required}: NumberValidation): FormValidation => {
 	const def: FormValidation = {
 		text: '',
 		color: 'primary',
@@ -67,9 +69,9 @@ export const validateNumberInput = (({t, text, min, max, length, required}: Numb
 		} satisfies FormValidation;
 	}
 
-	if (isDefined(length) && !text!.isAtLength(length!)) {
+	if (isDefined(minLength) && isDefined(maxLength) && !text!.isAtLength(minLength!, maxLength)) {
 		return {
-			text: t('lbl-error-length', {length}),
+			text: t('lbl-error-length', {minLength, maxLength}),
 			color: 'danger',
 			error: true,
 			validation: 'invalid',

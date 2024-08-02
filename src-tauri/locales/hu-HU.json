@@ -59,7 +59,7 @@
 	"lib-digit-validator": {
 		"lbl-error-required": "Kötelező mező",
 		"lbl-error-positive": "Csak pozitív egész számok",
-		"lbl-error-length": "{{length}} számjegy szükséges",
+		"lbl-error-length": "{{minLength}} vagy {{maxLength}} számjegy",
 		"lbl-error-range": "A számnak {{min}} és {{max}} között kell lennie"
 	},
   "cpt-opt-btn": {

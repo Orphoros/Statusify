@@ -11,8 +11,13 @@ String.prototype.isInteger = function (): boolean {
 	return /^\d+$/.test(text);
 };
 
-String.prototype.isAtLength = function (length: number): boolean {
-	return this.trim().length === length;
+String.prototype.isAtLength = function (length: number, maxLength?: number): boolean {
+	const text: string = this.trim();
+	if (maxLength) {
+		return text.length >= length && text.length <= maxLength;
+	}
+
+	return text.length === length;
 };
 
 String.prototype.isWebsite = function (): boolean {
