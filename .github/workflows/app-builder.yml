@@ -16,14 +16,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # for projects that use labels and PRs: https://github.com/mikepenz/release-changelog-builder-action
-      - name: Build Changelog
-        id: build_changelog
-        run: echo "changelog=- ADD CHANGELOG" >> $GITHUB_OUTPUT
+      - name: Get version from tag
+        id: lasttag
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/v}
+        shell: bash
+
+      - name: Build changelog
+        id: changelog
+        uses: coditory/changelog-parser@v1
+        with:
+          path: CHANGELOG.md
+          version: ${{ steps.lasttag.outputs.version }}
 
       - name: Node.js setup
         uses: actions/setup-node@v4
-        # NOTE: enterprise developers may hard code a version
         with:
           node-version: 22.1
           cache: 'npm'
@@ -64,7 +70,6 @@ jobs:
           # tauri-action replaces \_\_VERSION\_\_ with the app version
           tagName: ${{ github.ref_name }}
           releaseName: "[Alpha] Statusify v__VERSION__"
-          releaseBody: |
-            ${{steps.build_changelog.outputs.changelog}}
+          releaseBody: ${{ steps.changelog.outputs.description }}
           releaseDraft: true
           prerelease: false
