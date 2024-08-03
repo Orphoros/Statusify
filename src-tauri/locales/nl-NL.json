@@ -68,7 +68,7 @@
 	"lib-digit-validator": {
 		"lbl-error-required": "Vereist",
 		"lbl-error-positive": "Positieve gehele getallen",
-		"lbl-error-length": "Moet {{length}} cijfers lang zijn",
+		"lbl-error-length": "{{minLength}} of {{maxLength}} cijfers",
 		"lbl-error-range": "Moet tussen {{min}} en {{max}} liggen"
 	},
   "lib-str-validator": {

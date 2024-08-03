@@ -16,7 +16,7 @@ declare global {
 		/**
 		 * Check if the string is at a specified length
 		 */
-		isAtLength: (length: number) => boolean;
+		isAtLength: (length: number, maxLength?: number) => boolean;
 		/**
 		 * Check if the string is a website URL
 		 */

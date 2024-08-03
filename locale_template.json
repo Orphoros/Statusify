@@ -68,7 +68,7 @@
 	"lib-digit-validator": {
 		"lbl-error-required": "This field is required",
 		"lbl-error-positive": "Only positive whole numbers",
-		"lbl-error-length": "Number must be {{length}} digits long",
+		"lbl-error-length": "Only {{minLength}} or {{maxLength}} digits allowed",
 		"lbl-error-range": "Must be between {{min}} and {{max}}"
 	},
 	"lib-str-validator": {
