@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.13] - 2024-08-03
+
+### Added
+
+- The app is localized in English, Dutch, and Hungarian
+- Option to launch the app on system startup
+- Load and save rich presence settings
+
+### Fixed
+
+- App supports new, 19 character long Discord application IDs
+
 ## [0.0.12] - 2024-05-19
 
 ### Fixed

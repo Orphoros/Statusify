@@ -10,8 +10,8 @@
 </div>
 
 <p align="middle">
-    <img src="./img/statusify_v0.0.9_macos_darktheme.png" width="40%" />
-    <img src="./img/statusify_v0.0.9_macos_lighttheme.png" width="40%" />
+    <img src="./img/statusify_v0.0.13_macos_darktheme.png" width="40%" />
+    <img src="./img/statusify_v0.0.13_macos_lighttheme.png" width="40%" />
 </p>
 
 ## About
@@ -70,6 +70,8 @@ brew install --cask statusify
 - Toggle any of the rich presence elements on and off.
 - Save your editor settings, so you don't have to reconfigure it every time you open the app.
 - Close to the system tray so the app can run in the background.
+- Save your rich presence settings to a file and load them later.
+- Support old 18-digit and new 19-digit Discord client IDs.
 
 ## Supported Platforms
 
@@ -86,6 +88,22 @@ Statusify is officially supported and tested on:
 - Windows 10
 - macOS Sonoma (Apple Silicon)
 
+## Supported Languages
+
+Statusify is available in the following languages:
+
+| Language   | Support  | Translation |
+| ---------- | -------- | ----------- |
+| English    | Official | Full        |
+| Magyar     | Official | Partial     |
+| Nederlands | Official | Partial     |
+
+English is the default language. Any untranslated strings will be displayed in English.
+
+If you would like to contribute to the translation of Statusify, you can do so by creating a pull request with the translation of [locale_template.json](./locale_template.json) in your language. The file must be named as `{language_code}_{COUNTRY_CODE}.json`, example `en_US.json`.
+
+Make sure to follow the [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md) and the [CONTRIBUTING](./CONTRIBUTING.md) guidelines.
+
 ## Technologies
 
 <p align="left">
@@ -98,6 +116,14 @@ Statusify is officially supported and tested on:
 ## Motivation
 
 Statusify was created as a proof of concept to test the capabilities of the Tauri framework. Electron is a popular choice for creating cross-platform desktop applications, however the produced binaries have a large base size due to the inclusion of the Chromium browser. Also, Electron applications are known to consume a lot of memory. This project aims to validate the Tauri framework as a lightweight alternative to Electron for building cross platform desktop applications.
+
+## Troubleshoot
+
+If Statusify is not working as expected, you can locate the log files in the following directories:
+
+- Windows: `%APPDATA%\com.orphoros.statusify\logs`
+- macOS: `~/Library/Logs/com.orphoros.statusify/`
+- Linux: `~/.config/com.orphoros.statusify/logs`
 
 ### Developer's guide
 
