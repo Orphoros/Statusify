@@ -1,7 +1,7 @@
 {
   "version": "0.0.14",
   "notes": "Hotfix for a bug that caused the locales to not load properly on some systems.",
-  "pub_date": "2024-08-04T09:25:00.000Z",
+  "pub_date": "2024-08-04T10:10:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",

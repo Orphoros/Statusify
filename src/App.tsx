@@ -16,7 +16,7 @@ import {systemLocale} from '@/systemLocale';
 import {locale as sysLocale} from '@tauri-apps/api/os';
 
 function App() {
-	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning} = useTauriContext();
+	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning, osType} = useTauriContext();
 	const [appReady, setAppReady] = React.useState<boolean>(false);
 	const [appError, setAppError] = React.useState<string | undefined>(undefined);
 
@@ -93,12 +93,12 @@ function App() {
 
 	const initializeLocales = async () => {
 		try {
+			const newLine = osType === 'Windows_NT' ? '\r\n' : '\n';
 			const manifestPath = await join('locales', 'Manifest.txt');
 			const localeFileList = await resolveResource(manifestPath);
 			const localeFileListContent = await readTextFile(localeFileList);
-			const resolvedLocaleFiles = await Promise.all(localeFileListContent.split('\n').filter(file => file !== '')
-				.map(file => file.replace('.json', ''))
-				.map(async locale => resolveResource(await join('locales', `${locale}.json`))));
+			const resolvedLocaleFiles = await Promise.all(localeFileListContent.split(newLine).filter(file => file !== '')
+				.map(async locale => resolveResource(await join('locales', locale.trim()))));
 
 			const localeFileContents = await Promise.all(resolvedLocaleFiles.map(async file => readTextFile(file).catch(e => {
 				void error(`failed to read locale file: ${e}`);
