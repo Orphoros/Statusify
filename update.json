@@ -1,23 +1,23 @@
 {
-  "version": "0.0.13",
-  "notes": "Statusify is now in multiple languages and the presence settings can be saved.",
-  "pub_date": "2024-08-04T07:45:00.000Z",
+  "version": "0.0.14",
+  "notes": "Hotfix for a bug that caused the locales to not load properly on some systems.",
+  "pub_date": "2024-08-04T09:25:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.13/Statusify-update.darwin-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.darwin-x86_64.tar.gz"
     },
     "darwin-aarch64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.13/Statusify-update.darwin-aarch64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.darwin-aarch64.tar.gz"
     },
     "linux-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.13/Statusify-update.linux-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.linux-x86_64.tar.gz"
     },
     "windows-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.13/Statusify-update.windows-x86_64.zip"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.windows-x86_64.zip"
     }
   }
 }

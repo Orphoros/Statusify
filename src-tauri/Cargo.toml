@@ -1,6 +1,6 @@
 [package]
 name = "statusify"
-version = "0.0.13"
+version = "0.0.14"
 description = "Discord rich presence configurator"
 authors = ["Orphoros <contact@orphoros.com>"]
 license = "GPL-3.0"
