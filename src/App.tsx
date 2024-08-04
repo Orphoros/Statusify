@@ -6,7 +6,7 @@ import {
 import {useTauriContext} from '@/context';
 import {startIpc} from '@/lib';
 import {listen} from '@tauri-apps/api/event';
-import {resolveResource} from '@tauri-apps/api/path';
+import {basename, join, resolveResource} from '@tauri-apps/api/path';
 import i18n, {type Resource} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {ErrorView, LoadingView, MainView} from '@/views';
@@ -93,19 +93,21 @@ function App() {
 
 	const initializeLocales = async () => {
 		try {
-			const localeFileList = await resolveResource('locales/Manifest.txt');
+			const manifestPath = await join('locales', 'Manifest.txt');
+			const localeFileList = await resolveResource(manifestPath);
 			const localeFileListContent = await readTextFile(localeFileList);
 			const resolvedLocaleFiles = await Promise.all(localeFileListContent.split('\n').filter(file => file !== '')
 				.map(file => file.replace('.json', ''))
-				.map(async locale => resolveResource(`locales/${locale}.json`)));
+				.map(async locale => resolveResource(await join('locales', `${locale}.json`))));
 
 			const localeFileContents = await Promise.all(resolvedLocaleFiles.map(async file => readTextFile(file).catch(e => {
 				void error(`failed to read locale file: ${e}`);
 				return '';
 			})));
 
-			const resources: Resource = localeFileContents.map((content: string, index: number) => {
-				const locale = resolvedLocaleFiles[index].split('/').pop()?.replace('.json', '');
+			const resources: Resource = (await Promise.all(localeFileContents.map(async (content: string, index: number) => {
+				const localeFileName = await basename(resolvedLocaleFiles[index]);
+				const locale = localeFileName.replace('.json', '');
 				if (locale === undefined) {
 					void warn(`could not parse locale from file path: ${resolvedLocaleFiles[index]}`);
 					return {} satisfies Resource;
@@ -129,7 +131,7 @@ function App() {
 					void error(`could not parse locale file '${resolvedLocaleFiles[index]}': ${e}`);
 					return {} satisfies Resource;
 				}
-			}).reduce<Resource>((acc: Resource, val: Resource) => ({...acc, ...val}), {});
+			}))).reduce<Resource>((acc: Resource, val: Resource) => ({...acc, ...val}), {});
 
 			resources.en = systemLocale;
 
