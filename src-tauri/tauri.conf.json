@@ -80,6 +80,21 @@
         "minimumSystemVersion": "10.13",
         "license": "../LICENSE"
       },
+      "dmg": {
+        "background": "icons/dmg-background.png",
+        "applicationFolderPosition": {
+          "x": 480,
+          "y": 170
+        },
+        "appPosition": {
+          "x": 180,
+          "y": 170
+        },
+        "windowSize": {
+          "height": 400,
+          "width": 660
+        }
+      },
       "resources": [
         "images/*",
         "locales/*"
