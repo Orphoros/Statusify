@@ -64,7 +64,7 @@ export default function TitleBar() {
 					{t('chk-system-start')}
 				</Checkbox>
 				<LanguageSwitcher/>
-				{!isSessionRunning && <Button className='w-20' variant='solid' color='primary' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
+				{!isSessionRunning && <Button disableRipple className='w-20' variant='solid' color='primary' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
 					async () => {
 						setShowLoading(true);
 						const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
@@ -77,7 +77,7 @@ export default function TitleBar() {
 				} >
 					{t('btn-start')}
 				</Button>}
-				{isSessionRunning && <Button className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
+				{isSessionRunning && <Button disableRipple className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
 					async () => {
 						setShowLoading(true);
 						const stopApproved = await stopIpc(rpcHandlerTranslator);

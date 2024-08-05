@@ -148,8 +148,8 @@ export default function PreviewCard() {
 							{showCurrentTime(ipcProps) && <p className='text-sm'>{t('lbl-time-tba')}</p>}
 						</div>
 					</div>
-					{showButton(ipcProps) && <Button className='rounded' color='primary' onClick={btn1Handler}>{ipcProps.buttonText}</Button>}
-					{showButton2(ipcProps) && <Button className='rounded' color='primary' onClick={btn2Handler}>{ipcProps.button2Text}</Button>}
+					{showButton(ipcProps) && <Button disableRipple className='rounded' color='primary' onClick={btn1Handler}>{ipcProps.buttonText}</Button>}
+					{showButton2(ipcProps) && <Button disableRipple className='rounded' color='primary' onClick={btn2Handler}>{ipcProps.button2Text}</Button>}
 				</div>
 			</CardBody>
 		</Card>
