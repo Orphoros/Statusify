@@ -27,13 +27,15 @@ You can download the precompiled binaries for your platform from the table below
 
 *The binaries are signed*
 
-| Platform |  Architecture | Download |
-| -------- | -------------- | -------- |
-| Windows  | x64            | [Statusify.windows-x86_64.exe](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.windows-x86_64.exe) |
-| macOS    | x64 (Intel)    | [Statusify.darwin-x86_64.dmg](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.darwin-x86_64.dmg) |
-| macOS    | Apple Silicon  | [Statusify.darwin-aarch64.dmg](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.darwin-aarch64.dmg) |
-| Debian   | x64            | [Statusify.linux-x86_64.deb](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.linux-x86_64.deb) |
-| Linux (AppImage) | x64    | [Statusify.linux-x86_64.AppImage](https://github.com/Orphoros/Statusify/releases/latest/download/Statusify.linux-x86_64.AppImage) |
+| Platform |  Architecture  | Version | Download |
+| -------- | -------------- | ------- |-------- |
+| Windows  | x64            | v0.0.12 | [Statusify.windows-x86_64.exe](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.windows-x86_64.exe) |
+| macOS    | x64 (Intel)    | v0.0.12 | [Statusify.darwin-x86_64.dmg](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.darwin-x86_64.dmg) |
+| macOS    | Apple Silicon  | v0.0.12 | [Statusify.darwin-aarch64.dmg](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.darwin-aarch64.dmg) |
+| Debian   | x64            | v0.0.12 | [Statusify.linux-x86_64.deb](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.linux-x86_64.deb) |
+| Linux (AppImage) | x64    | v0.0.12 | [Statusify.linux-x86_64.AppImage](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.linux-x86_64.AppImage) |
+
+For the latest release, visit the [releases page](https://github.com/Orphoros/Statusify/releases). Please note that the latest images might not be notarized yet for Windows as the process takes time.
 
 ### Scoop installation for Windows
 
