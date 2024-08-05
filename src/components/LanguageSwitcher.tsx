@@ -3,8 +3,9 @@ import React, {useState} from 'react';
 import {Select, SelectItem} from '@nextui-org/select';
 import localeCode from 'locale-code';
 import i18next from 'i18next';
-import countryCodeToFlagEmoji from 'country-code-to-flag-emoji';
 import {useTauriContext} from '@/context';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faLanguage} from '@fortawesome/free-solid-svg-icons';
 
 export default function LanguageSwitcher() {
 	const {setLaunchConfProps, locales, launchConfProps} = useTauriContext();
@@ -25,7 +26,7 @@ export default function LanguageSwitcher() {
 			size='sm'
 			radius='full'
 			startContent={
-				countryCodeToFlagEmoji(loc)
+				<FontAwesomeIcon icon={faLanguage} />
 			}
 			onChange={e => {
 				if (e.target.value === '') {
@@ -40,18 +41,15 @@ export default function LanguageSwitcher() {
 		>
 			{locales
 				.sort()
-				.map(locale => {
-					const emoji = countryCodeToFlagEmoji(locale);
-					return <SelectItem
-						key={locale}
-						value={capitalize(localeCode.getLanguageNativeName(locale))}
-						startContent={
-							emoji
-						}
-					>
-						{capitalize(localeCode.getLanguageNativeName(locale))}
-					</SelectItem>;
-				})}
+				.map(locale => <SelectItem
+					key={locale}
+					value={capitalize(localeCode.getLanguageNativeName(locale))}
+					startContent={
+						<FontAwesomeIcon icon={faLanguage} />
+					}
+				>
+					{capitalize(localeCode.getLanguageNativeName(locale))}
+				</SelectItem>)}
 		</Select>
 	);
 }
