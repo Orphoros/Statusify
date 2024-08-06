@@ -5,6 +5,12 @@ labels: [
   "bug"
 ]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you for taking the time to fill out this bug report!**
+
+        Please search to see if an issue already exists for your bug. If you find a similar issue, please add a comment to the existing issue instead of creating a new one.
   - type: textarea
     id: description
     attributes:
