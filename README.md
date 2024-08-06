@@ -5,6 +5,7 @@
 <h1>Statusify</h1>
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Orphoros/Statusify?label=latest%20release)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOrphoros%2FStatusify.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FOrphoros%2FStatusify?ref=badge_shield)
 
 <h4>Discord Rich Presence GUI Application for Window, macOS, and Linux</h4>
 </div>
@@ -179,3 +180,7 @@ npm run lock
 
 > [!WARNING]
 > Discord is a trademark of Discord Inc. Statusify is not affiliated with Discord Inc. in any way and is not an official application. Statusify is an open-source project made for educational purposes and is not responsible for any misuse of the application. Use the application at your own risk.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOrphoros%2FStatusify.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FOrphoros%2FStatusify?ref=badge_large)
