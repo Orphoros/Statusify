@@ -24,6 +24,7 @@ export default function TauriProvider({children, osType, locales}: TauriProvider
 	const [launchConfProps, setLaunchConfProps, sysConfStoreLoading] = useTauriStore<LaunchConfProps>('launchOption', {
 		startIpcOnLaunch: false,
 		startAppOnLaunch: false,
+		logLevel: 'debug',
 		locale: 'en-US',
 	}, 'launch.conf');
 

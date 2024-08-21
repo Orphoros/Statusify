@@ -28,6 +28,7 @@ sysinfo = "0.27.7"
 time = "0.3.36"
 window-vibrancy = "^0.4"
 webbrowser = "1"
+dirs = "5.0"
 
 [profile.release]
 panic = "abort"
