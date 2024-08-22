@@ -30,6 +30,7 @@ export default function Settings() {
 					variant='light'
 					isIconOnly
 					disableRipple
+					className='text-white'
 				>
 					<FontAwesomeIcon icon={faGear} />
 				</Button>

@@ -123,7 +123,7 @@ export default function TitleBar() {
 					void appWindow.hide();
 				}}
 			>
-				<Chip className='border-0' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
+				<Chip className='border-0 text-white' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
 				<div className='flex gap-4 items-center'>
 					<SettingsButton />
 					{!isSessionRunning && <Button disableRipple radius='sm' className='w-20 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
