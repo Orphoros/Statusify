@@ -21,8 +21,13 @@
         "open": true
       },
       "window": {
-        "startDragging": true,
-        "show": true
+        "show": true,
+        "close": true,
+        "hide": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "startDragging": true
       },
       "dialog": {
         "message": true,
@@ -136,7 +141,10 @@
         "minHeight": 500,
         "minWidth": 1000,
         "visible": false,
-        "transparent": true
+        "transparent": true,
+        "decorations": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
       }
     ]
   }

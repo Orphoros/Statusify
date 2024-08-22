@@ -1,44 +1,47 @@
 {
-  "cpt-menubar": {
-    "chk-system-start": "Start app met systeem",
-    "chk-rpc-autostart": "Autostart status met app",
-    "lbl-status-idle": "Inactief",
-    "lbl-status-playing": "Activiteit weergeven",
-    "btn-start": "Start",
-    "btn-stop": "Stop"
-  },
-  "cpt-preview": {
+	"cpt-menubar": {
+		"lbl-status-idle": "Inactief",
+		"lbl-status-playing": "Activiteit weergeven",
+		"btn-start": "Start",
+		"btn-stop": "Stop"
+	},
+	"cpt-settings": {
+		"lbl-title": "Instellingen",
+		"chk-system-start": "Start app met systeem",
+		"chk-rpc-autostart": "Autostart status met app"
+	},
+	"cpt-preview": {
 		"lbl-title": "Voorvertoning",
 		"lbl-rpc-msg": "Speelt een game",
 		"lbl-app-name": "Applicatie naam",
 		"lbl-time-elapsed": "verlopen",
-    "lbl-time-tba": "Huidige tijd hier",
+		"lbl-time-tba": "Huidige tijd hier",
 		"lbl-party-of": "van",
-    "popup-prev-btn-msg": "Als op deze knop wordt geklikt, wordt '{{url}}' geopend in je standaardbrowser."
+		"popup-prev-btn-msg": "Als op deze knop wordt geklikt, wordt '{{url}}' geopend in je standaardbrowser."
 	},
-  "cpt-otp-app": {
+	"cpt-otp-app": {
 		"lbl-title": "App Verbinding",
 		"inp-app-id": "App ID",
 		"btn-import": "Importeren",
 		"btn-export": "Exporteren",
-    "popup-save-fail": "Configuratiebestand kon niet worden opgeslagen",
+		"popup-save-fail": "Configuratiebestand kon niet worden opgeslagen",
 		"popup-open-fail": "configuratiebestand kon niet worden geopend",
 		"dlg-import-title": "Open configuratiebestand",
 		"dlg-export-title": "Configuratiebestand opslaan"
 	},
-  "cpt-otp-details": {
+	"cpt-otp-details": {
 		"lbl-title": "Hoofdinstellingen",
 		"inp-details": "Details",
 		"inp-plh-details": "hoofdactie",
 		"inp-state": "Status",
 		"inp-plh-state": "de huidige status"
 	},
-  "cpt-otp-party": {
+	"cpt-otp-party": {
 		"lbl-title": "Feestinstellingen",
 		"inp-party-size": "Huidige",
 		"inp-party-max": "Maximaal"
 	},
-  "cpt-opt-image": {
+	"cpt-opt-image": {
 		"lbl-title": "Afbeeldingsinstellingen",
 		"lbl-subtitle-li": "Hoofdbeeldinstellingen",
 		"inp-li": "foto",
@@ -51,12 +54,12 @@
 		"inp-si-tooltip": "tooltip",
 		"inp-si-tooltip-plh": "tooltip voor de kleine afbeelding"
 	},
-  "cpt-opt-time": {
+	"cpt-opt-time": {
 		"lbl-title": "Tijdinstellingen",
 		"lbl-start": "Starttijd",
 		"chk-current-time": "Gebruik huidige tijd bij start"
 	},
-  "cpt-opt-btn": {
+	"cpt-opt-btn": {
 		"lbl-title": "Knopinstellingen",
 		"lbl-subtitle-btn1": "Knop 1",
 		"inp-btn1": "label",
@@ -71,12 +74,12 @@
 		"lbl-error-length": "{{minLength}} of {{maxLength}} cijfers",
 		"lbl-error-range": "Moet tussen {{min}} en {{max}} liggen"
 	},
-  "lib-str-validator": {
+	"lib-str-validator": {
 		"lbl-error-alphanumeric": "Gebruik alleen alfanumerieke tekens",
 		"lbl-error-max": "Maximaal {{max}} tekens",
-    "lbl-error-url-format": "Ongeldig URL-formaat"
+		"lbl-error-url-format": "Ongeldig URL-formaat"
 	},
-  "lib-ctx-menu": {
+	"lib-ctx-menu": {
 		"lbl-copy": "Kopiëren",
 		"lbl-cut": "Knippen",
 		"lbl-paste": "Plakken",
@@ -86,9 +89,9 @@
 		"lbl-start": "Start Rich Presence",
 		"lbl-stop": "Stop Rich Presence"
 	},
-  "lib-rpc-handle": {
+	"lib-rpc-handle": {
 		"popup-rpc-start": "Rich Presence is gestart",
-    "popup-rpc-stop-confirm": "Weet je zeker dat je de huidige activiteit wilt stoppen?",
+		"popup-rpc-stop-confirm": "Weet je zeker dat je de huidige activiteit wilt stoppen?",
 		"popup-err-101": "Kan geen client maken voor Discord. Controleer je instellingen",
 		"popup-err-102": "Kan geen verbinding maken met Discord. Discord is mogelijk gesloten",
 		"popup-err-103": "App ID is ongeldig",

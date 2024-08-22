@@ -3686,6 +3686,7 @@ dependencies = [
  "tauri-plugin-log",
  "tauri-plugin-single-instance",
  "tauri-plugin-store",
+ "tauri-plugin-trafficlights-positioner",
  "tauri-plugin-window-state",
  "time",
  "webbrowser",
@@ -4094,6 +4095,18 @@ dependencies = [
  "serde_json",
  "tauri",
  "thiserror",
+]
+
+[[package]]
+name = "tauri-plugin-trafficlights-positioner"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "de6255c8a89b96057f9ad745e32401d49c914184a986ebf7941414772a803c17"
+dependencies = [
+ "cocoa 0.25.0",
+ "objc",
+ "rand 0.8.5",
+ "tauri",
 ]
 
 [[package]]

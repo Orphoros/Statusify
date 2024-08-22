@@ -11,18 +11,17 @@ export default function LanguageSwitcher() {
 	const {setLaunchConfProps, locales, launchConfProps} = useTauriContext();
 
 	const currentValue = launchConfProps.locale ?? 'en-US';
-	const [loc, setLoc] = useState(currentValue);
+	const [_, setLoc] = useState(currentValue);
 
 	const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 	return (
 		<Select
-			className='w-40'
 			defaultSelectedKeys={[currentValue]}
 			selectionMode='single'
 			disallowEmptySelection
 			aria-label='Language'
-			variant='bordered'
+			variant='flat'
 			size='sm'
 			radius='full'
 			startContent={

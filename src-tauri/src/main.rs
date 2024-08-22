@@ -10,11 +10,12 @@ use discord_rich_presence::activity::Party;
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use log::{debug, error, info, trace, warn};
 use serde_json::Value;
+use tauri_plugin_trafficlights_positioner::WindowExt as _;
 use std::env;
 use std::sync::Mutex;
 use sysinfo::{Pid, ProcessExt, System, SystemExt};
 use tauri::{
-    AppHandle, CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, Wry,
+    AppHandle, CustomMenuItem, LogicalPosition, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, Wry
 };
 use tauri::{Manager, State};
 use tauri_plugin_autostart::MacosLauncher;
@@ -395,6 +396,8 @@ fn main() {
                         error!("unsupported platform! 'apply_vibrancy' is only supported on macOS");
                         std::process::exit(1);
                     });
+                
+                let _ = main_window.setup_traffic_lights_inset(LogicalPosition::new(20.0, 24.0));
             }
 
             Ok(())

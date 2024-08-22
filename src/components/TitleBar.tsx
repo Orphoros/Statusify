@@ -1,18 +1,25 @@
-import React from 'react';
-import {Button, Checkbox, Chip} from '@nextui-org/react';
-import {enable, isEnabled, disable} from 'tauri-plugin-autostart-api';
+import React, {useEffect} from 'react';
+import {
+	Button, Chip,
+} from '@nextui-org/react';
 import {useTauriContext} from '@/context';
 import {isFormCorrect, startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';
-import {error, debug} from 'tauri-plugin-log-api';
 import {useTranslation} from 'react-i18next';
-import LanguageSwitcher from './LanguageSwitcher';
+import {appWindow} from '@tauri-apps/api/window';
+import {default as AppTitleBar} from 'frameless-titlebar-fork';
+import {SettingsButton} from '.';
 
 export default function TitleBar() {
-	const {isSessionRunning, setIsSessionRunning, ipcProps, showVibrancy, launchConfProps, setLaunchConfProps} = useTauriContext();
+	const {isSessionRunning, setIsSessionRunning, ipcProps, osType} = useTauriContext();
 
 	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-menubar');
+
+	type Platform = 'win32' | 'linux' | 'darwin';
+
+	const [maximized, setMaximized] = React.useState<boolean>(false);
+	const [platform, setPlatform] = React.useState<Platform | undefined>('darwin');
 
 	const buttonDisabled = isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps);
 
@@ -20,77 +27,131 @@ export default function TitleBar() {
 	const indicatorText = isSessionRunning ? t('lbl-status-playing') : t('lbl-status-idle');
 	const [showLoading, setShowLoading] = React.useState<boolean>(false);
 
+	useEffect(() => {
+		async function init() {
+			const isMaximized = await appWindow.isMaximized();
+			setMaximized(isMaximized);
+		}
+
+		void init();
+	}, []);
+
+	useEffect(() => {
+		setPlatform('darwin');
+		// Switch (osType) {
+		// 	case 'Darwin':
+		// 		setPlatform('darwin');
+		// 		break;
+		// 	case 'Windows_NT':
+		// 		setPlatform('win32');
+		// 		break;
+		// 	case 'Linux':
+		// 		setPlatform('linux');
+		// 		break;
+		// 	default:
+		// 		setPlatform('darwin');
+		// 		break;
+		// }
+	}, [osType]);
+
+	useEffect(() => {
+		const titlebar = document.querySelector('.statusify-titlebar');
+		if (titlebar) {
+			const elements = titlebar.querySelectorAll('*');
+			elements.forEach(element => {
+				if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'INPUT') {
+					return;
+				}
+
+				element.setAttribute('data-tauri-drag-region', 'true');
+			});
+		}
+	}, []);
+
 	return (
-		<div className={`p-2 m-0 ${showVibrancy ? 'bg-content1 bg-opacity-50' : 'bg-content2'} flex justify-between items-center`}>
-			<Chip className='border-0' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
-			<div className='flex gap-4'>
-				<Checkbox
-					size='sm'
-					isSelected={launchConfProps.startIpcOnLaunch}
-					onValueChange={
-						enabled => {
-							setLaunchConfProps(prev => ({...prev, startIpcOnLaunch: enabled}));
-						}
+		<div className={'statusify-titlebar *:cursor-default *:select-none'}>
+			<AppTitleBar
+				platform={platform}
+				title='Statusify'
+				theme={{
+					bar: {
+						background: '#006FEE',
+						height: '50px',
+						borderBottom: 'none',
+					},
+					controls: {
+						border: 'none',
+						layout: 'right',
+						normal: {
+							default: {
+								color: 'inherit',
+								background: 'transparent',
+							},
+							hover: {
+								color: '#fff',
+								background: 'rgba(255,255,255,0.3)',
+							},
+						},
+						close: {
+							default: {
+								color: 'inherit',
+								background: 'transparent',
+							},
+							hover: {
+								color: '#fff',
+								background: '#e81123',
+							},
+						},
+					},
+				}}
+				onMinimize={() => {
+					void appWindow.minimize();
+				}}
+				maximized={maximized}
+				onMaximize={() => {
+					if (maximized) {
+						void appWindow.unmaximize();
+						setMaximized(false);
+					} else {
+						void appWindow.maximize();
+						setMaximized(true);
 					}
-				>
-					{t('chk-rpc-autostart')}
-				</Checkbox>
-				<Checkbox
-					size='sm'
-					isSelected={launchConfProps.startAppOnLaunch}
-					onValueChange={
-						async enabled => {
-							setLaunchConfProps(prev => ({...prev, startAppOnLaunch: enabled}));
-							isEnabled()
-								.then(async sysStartEnabled => {
-									try {
-										if (enabled && !sysStartEnabled) {
-											await enable();
-											void debug('enabled autostart with the system');
-										} else if (!enabled && sysStartEnabled) {
-											await disable();
-											void debug('disabled autostart with the system');
-										}
-									} catch (e) {
-										void error('could set autostart with the system');
-									}
-								})
-								.catch(async () => {
-									void error('could not get autostart status');
-								});
-						}
-					}
-				>
-					{t('chk-system-start')}
-				</Checkbox>
-				<LanguageSwitcher/>
-				{!isSessionRunning && <Button disableRipple className='w-20' variant='solid' color='primary' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
-					async () => {
-						setShowLoading(true);
-						const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
-						if (isSuccess) {
-							setIsSessionRunning(true);
-						}
+				}}
+				onClose={() => {
+					void appWindow.close();
+				}}
+			>
+				<Chip className='border-0' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
+				<div className='flex gap-4 items-center'>
+					<SettingsButton />
+					{!isSessionRunning && <Button disableRipple radius='sm' className='w-20 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
+						async () => {
+							setShowLoading(true);
+							const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
+							if (isSuccess) {
+								setIsSessionRunning(true);
+							}
 
-						setShowLoading(false);
-					}
-				} >
-					{t('btn-start')}
-				</Button>}
-				{isSessionRunning && <Button disableRipple className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
-					async () => {
-						setShowLoading(true);
-						const stopApproved = await stopIpc(rpcHandlerTranslator);
-						if (stopApproved) {
-							setIsSessionRunning(false);
+							setShowLoading(false);
 						}
+					} >
+						{t('btn-start')}
+					</Button>}
+					{isSessionRunning && <Button disableRipple radius='sm' className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
+						async () => {
+							setShowLoading(true);
+							const stopApproved = await stopIpc(rpcHandlerTranslator);
+							if (stopApproved) {
+								setIsSessionRunning(false);
+							}
 
-						setShowLoading(false);
-					}
-				} >
-					{t('btn-stop')}
-				</Button>}
-			</div>
+							setShowLoading(false);
+						}
+					} >
+						{t('btn-stop')}
+					</Button>}
+				</div>
+			</AppTitleBar>
 		</div>
 	);
 }
