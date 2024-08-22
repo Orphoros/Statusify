@@ -18,6 +18,8 @@ use sysinfo::{Pid, ProcessExt, System, SystemExt};
 use tauri::{
     AppHandle, CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, Wry
 };
+#[cfg(target_os = "macos")]
+use tauri::LogicalPosition;
 use tauri::{Manager, State};
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::LogTarget;
