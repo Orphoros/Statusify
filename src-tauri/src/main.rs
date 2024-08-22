@@ -10,12 +10,13 @@ use discord_rich_presence::activity::Party;
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use log::{debug, error, info, trace, warn};
 use serde_json::Value;
+#[cfg(target_os = "macos")]
 use tauri_plugin_trafficlights_positioner::WindowExt as _;
 use std::env;
 use std::sync::Mutex;
 use sysinfo::{Pid, ProcessExt, System, SystemExt};
 use tauri::{
-    AppHandle, CustomMenuItem, LogicalPosition, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, Wry
+    AppHandle, CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, Wry
 };
 use tauri::{Manager, State};
 use tauri_plugin_autostart::MacosLauncher;
@@ -26,6 +27,9 @@ use webbrowser::{open_browser, Browser};
 
 #[cfg(target_os = "macos")]
 use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
+
+#[cfg(target_os = "windows")]
+use window_shadows::set_shadow;
 
 #[derive(Clone, serde::Serialize)]
 struct RpcStatePayload {
@@ -212,10 +216,10 @@ fn show_main_window(window: tauri::Window) {
     #[cfg(not(target_os = "macos"))]
     main_window.set_decorations(false).unwrap();
 
-    main_window.show().unwrap();
+    #[cfg(target_os = "windows")]
+    set_shadow(&window, true).unwrap();
 
-    #[cfg(not(target_os = "macos"))]
-    main_window.set_decorations(true).unwrap();
+    main_window.show().unwrap();
 
     main_window
         .restore_state(

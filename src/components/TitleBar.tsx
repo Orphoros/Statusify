@@ -37,21 +37,20 @@ export default function TitleBar() {
 	}, []);
 
 	useEffect(() => {
-		setPlatform('darwin');
-		// Switch (osType) {
-		// 	case 'Darwin':
-		// 		setPlatform('darwin');
-		// 		break;
-		// 	case 'Windows_NT':
-		// 		setPlatform('win32');
-		// 		break;
-		// 	case 'Linux':
-		// 		setPlatform('linux');
-		// 		break;
-		// 	default:
-		// 		setPlatform('darwin');
-		// 		break;
-		// }
+		switch (osType) {
+			case 'Darwin':
+				setPlatform('darwin');
+				break;
+			case 'Windows_NT':
+				setPlatform('win32');
+				break;
+			case 'Linux':
+				setPlatform('linux');
+				break;
+			default:
+				setPlatform('darwin');
+				break;
+		}
 	}, [osType]);
 
 	useEffect(() => {
@@ -78,6 +77,9 @@ export default function TitleBar() {
 						background: '#006FEE',
 						height: '50px',
 						borderBottom: 'none',
+						title: {
+							align: platform === 'darwin' ? 'center' : 'left',
+						},
 					},
 					controls: {
 						border: 'none',
@@ -118,7 +120,7 @@ export default function TitleBar() {
 					}
 				}}
 				onClose={() => {
-					void appWindow.close();
+					void appWindow.hide();
 				}}
 			>
 				<Chip className='border-0' color={indicatorColor} variant='dot'>{indicatorText}</Chip>

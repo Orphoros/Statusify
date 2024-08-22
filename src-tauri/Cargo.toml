@@ -22,6 +22,7 @@ tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-works
 tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-context-menu = { git = "https://github.com/c2r0b/tauri-plugin-context-menu", branch = "main" }
 tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+window-shadows = "0.2.2"
 mimalloc = "^0.1"
 log = "0.4.18"
 sysinfo = "0.27.7"
