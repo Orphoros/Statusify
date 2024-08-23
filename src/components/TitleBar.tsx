@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import {appWindow} from '@tauri-apps/api/window';
 import {default as AppTitleBar} from 'frameless-titlebar-fork';
 import {SettingsButton} from '.';
+import {debug} from 'tauri-plugin-log-api';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, osType} = useTauriContext();
@@ -28,12 +29,15 @@ export default function TitleBar() {
 	const [showLoading, setShowLoading] = React.useState<boolean>(false);
 
 	useEffect(() => {
-		async function init() {
-			const isMaximized = await appWindow.isMaximized();
-			setMaximized(isMaximized);
-		}
-
-		void init();
+		(async () => {
+			const unlisten = await appWindow.onResized(async () => {
+				const isMaximized = await appWindow.isMaximized();
+				setMaximized(isMaximized);
+			});
+			return () => {
+				unlisten();
+			};
+		})();
 	}, []);
 
 	useEffect(() => {
@@ -113,10 +117,8 @@ export default function TitleBar() {
 				onMaximize={() => {
 					if (maximized) {
 						void appWindow.unmaximize();
-						setMaximized(false);
 					} else {
 						void appWindow.maximize();
-						setMaximized(true);
 					}
 				}}
 				onClose={() => {
