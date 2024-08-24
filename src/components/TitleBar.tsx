@@ -9,7 +9,6 @@ import {useTranslation} from 'react-i18next';
 import {appWindow} from '@tauri-apps/api/window';
 import {default as AppTitleBar} from 'frameless-titlebar-fork';
 import {SettingsButton} from '.';
-import {debug} from 'tauri-plugin-log-api';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, osType} = useTauriContext();
@@ -58,16 +57,9 @@ export default function TitleBar() {
 	}, [osType]);
 
 	useEffect(() => {
-		const titlebar = document.querySelector('.statusify-titlebar');
+		const titlebar = document.querySelector('.style_Bar__nNJjZ');
 		if (titlebar) {
-			const elements = titlebar.querySelectorAll('*');
-			elements.forEach(element => {
-				if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'INPUT') {
-					return;
-				}
-
-				element.setAttribute('data-tauri-drag-region', 'true');
-			});
+			titlebar.setAttribute('data-tauri-drag-region', 'true');
 		}
 	}, []);
 
