@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleExclamation} from '@fortawesome/free-solid-svg-icons';
-import {MudaMantle} from '@/components/muda';
+import {MudaMantle, MudaTitlebar} from '@/components/muda';
 import {useTauriContext} from '@/context';
 
 function ErrorView({error}: {error?: string}) {
@@ -9,6 +9,7 @@ function ErrorView({error}: {error?: string}) {
 
 	return (
 		<MudaMantle osType={osType!}>
+			<MudaTitlebar osType={osType!} transparent hiddenTitle blend/>
 			<div className='flex h-screen cursor-default select-none' data-tauri-drag-region>
 				<div className='m-auto' data-tauri-drag-region>
 					<div className='flex flex-col text-center' data-tauri-drag-region>

@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import {appWindow} from '@tauri-apps/api/window';
 import {default as AppTitleBar} from 'frameless-titlebar-fork';
 import {SettingsButton} from '.';
+import {MudaTitlebar} from './muda';
 
 export default function TitleBar() {
 	const {isSessionRunning, setIsSessionRunning, ipcProps, osType} = useTauriContext();
@@ -64,90 +65,37 @@ export default function TitleBar() {
 	}, []);
 
 	return (
-		<div className={'statusify-titlebar *:cursor-default *:select-none'}>
-			<AppTitleBar
-				platform={platform}
-				title='Statusify'
-				theme={{
-					bar: {
-						background: '#006FEE',
-						height: '50px',
-						borderBottom: 'none',
-						title: {
-							align: platform === 'darwin' ? 'center' : 'left',
-						},
-					},
-					controls: {
-						border: 'none',
-						layout: 'right',
-						normal: {
-							default: {
-								color: 'inherit',
-								background: 'transparent',
-							},
-							hover: {
-								color: '#fff',
-								background: 'rgba(255,255,255,0.3)',
-							},
-						},
-						close: {
-							default: {
-								color: 'inherit',
-								background: 'transparent',
-							},
-							hover: {
-								color: '#fff',
-								background: '#e81123',
-							},
-						},
-					},
-				}}
-				onMinimize={() => {
-					void appWindow.minimize();
-				}}
-				maximized={maximized}
-				onMaximize={() => {
-					if (maximized) {
-						void appWindow.unmaximize();
-					} else {
-						void appWindow.maximize();
+		<MudaTitlebar osType={osType!}>
+			<Chip className='border-0 text-white' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
+			<div className='flex gap-4 items-center'>
+				<SettingsButton />
+				{!isSessionRunning && <Button disableRipple radius='sm' className='w-20 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
+					async () => {
+						setShowLoading(true);
+						const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
+						if (isSuccess) {
+							setIsSessionRunning(true);
+						}
+
+						setShowLoading(false);
 					}
-				}}
-				onClose={() => {
-					void appWindow.hide();
-				}}
-			>
-				<Chip className='border-0 text-white' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
-				<div className='flex gap-4 items-center'>
-					<SettingsButton />
-					{!isSessionRunning && <Button disableRipple radius='sm' className='w-20 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
-						async () => {
-							setShowLoading(true);
-							const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
-							if (isSuccess) {
-								setIsSessionRunning(true);
-							}
-
-							setShowLoading(false);
+				} >
+					{t('btn-start')}
+				</Button>}
+				{isSessionRunning && <Button disableRipple radius='sm' className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
+					async () => {
+						setShowLoading(true);
+						const stopApproved = await stopIpc(rpcHandlerTranslator);
+						if (stopApproved) {
+							setIsSessionRunning(false);
 						}
-					} >
-						{t('btn-start')}
-					</Button>}
-					{isSessionRunning && <Button disableRipple radius='sm' className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
-						async () => {
-							setShowLoading(true);
-							const stopApproved = await stopIpc(rpcHandlerTranslator);
-							if (stopApproved) {
-								setIsSessionRunning(false);
-							}
 
-							setShowLoading(false);
-						}
-					} >
-						{t('btn-stop')}
-					</Button>}
-				</div>
-			</AppTitleBar>
-		</div>
+						setShowLoading(false);
+					}
+				} >
+					{t('btn-stop')}
+				</Button>}
+			</div>
+		</MudaTitlebar>
 	);
 }
