@@ -20,7 +20,7 @@ export default function AppOptionForm() {
 	const {t} = useTranslation('cpt-otp-app');
 
 	const helper = useMemo(() => validateNumberInput({
-		t: errorTranslator, text: ipcProps.id, minLength: 18, maxLength: 19, required: true,
+		t: errorTranslator, text: ipcProps.id, required: true,
 	}), [ipcProps.id]);
 
 	useEffect(() => {
