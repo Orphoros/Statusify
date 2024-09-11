@@ -72,7 +72,7 @@ export default function Settings() {
 						</Switch>
 					</DropdownItem>
 					<DropdownItem
-						key='system-start'
+						key='ipc-start'
 						isReadOnly
 						className='hover:cursor-auto hover:border-transparent'
 						showDivider
@@ -91,11 +91,18 @@ export default function Settings() {
 						</Switch>
 					</DropdownItem>
 					<DropdownItem
-						key='system-start'
+						key='lang-switcher'
 						isReadOnly
 						className='hover:cursor-auto hover:border-transparent'
 					>
 						<LanguageSwitcher />
+					</DropdownItem>
+					<DropdownItem
+						key='meta-info'
+						isReadOnly
+						className='hover:cursor-auto hover:border-transparent select-none'
+					>
+						<p className='text-xs text-default-500 dark:text-default-400 select-none'>Copyright © {new Date().getFullYear()} Orphoros</p>
 					</DropdownItem>
 				</DropdownSection>
 			</DropdownMenu>
