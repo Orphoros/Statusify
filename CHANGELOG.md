@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.15] - TBA
+
+### Added
+
+- New custom blue title bar
+- DMG installer has a new background image
+- Log level can be changed in the launch config
+
+### Changed
+
+- Locale flags are now the same static icon for consistency
+- The entire loading and error screens are movable
+- Settings are grouped up in a new settings dropdown menu
+
+### Removed
+
+- App ID length is no longer validated to future-proof the app
+
 ## [0.0.14] - 2024-08-04
 
 ### Fixed
@@ -23,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - App supports new, 19 character long Discord application IDs
+
 
 ## [0.0.12] - 2024-05-19
 
