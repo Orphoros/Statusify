@@ -1,23 +1,23 @@
 {
-  "version": "0.0.14",
-  "notes": "Hotfix for a bug that caused the locales to not load properly on some systems.",
-  "pub_date": "2024-08-04T10:10:00.000Z",
+  "version": "0.0.15",
+  "notes": "New window control design",
+  "pub_date": "2024-09-12T10:10:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.darwin-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify-update.darwin-x86_64.tar.gz"
     },
     "darwin-aarch64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.darwin-aarch64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify-update.darwin-aarch64.tar.gz"
     },
     "linux-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.linux-x86_64.tar.gz"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify-update.linux-x86_64.tar.gz"
     },
     "windows-x86_64": {
       "signature": "signature-string",
-      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.14/Statusify-update.windows-x86_64.zip"
+      "url": "https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify-update.windows-x86_64.zip"
     }
   }
 }

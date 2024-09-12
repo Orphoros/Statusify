@@ -3691,7 +3691,7 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "statusify"
-version = "0.0.14"
+version = "0.0.15"
 dependencies = [
  "dirs 5.0.1",
  "discord-rich-presence",

@@ -11,8 +11,8 @@
 </div>
 
 <p align="middle">
-    <img src="./img/statusify_v0.0.13_macos_darktheme.png" width="40%" />
-    <img src="./img/statusify_v0.0.13_macos_lighttheme.png" width="40%" />
+    <img src="./img/statusify_v0.0.15_macos_darktheme.png" width="40%" />
+    <img src="./img/statusify_v0.0.15_macos_lighttheme.png" width="40%" />
 </p>
 
 ## About
@@ -127,6 +127,8 @@ If Statusify is not working as expected, you can locate the log files in the fol
 - Windows: `%APPDATA%\com.orphoros.statusify\logs`
 - macOS: `~/Library/Logs/com.orphoros.statusify/`
 - Linux: `~/.config/com.orphoros.statusify/logs`
+
+The log level is set to *debug* by default. This can be changed in the `launch.conf` file by setting the `logLevel` to "*off*", "*trace*", "*debug*", "*info*", "*warn*", or "*error*".
 
 ### Developer's guide
 
