@@ -1,5 +1,5 @@
 import React from 'react';
-import {Spinner} from "@heroui/react";
+import {Spinner} from '@heroui/react';
 import {MudaMantle, MudaTitlebar} from '@/components/muda';
 import {useTauriContext} from '@/context';
 

@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 
-import {Input, Switch} from "@heroui/react";
+import {Input, Switch} from '@heroui/react';
 import {containsText, validateTextInput, validateUrlInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
@@ -14,11 +14,11 @@ export default function ButtonOptionForm() {
 	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-opt-btn');
 
-	const buttonUrlHelper = useMemo(() => validateUrlInput(errorTranslator, ipcProps.buttonUrl), [ipcProps.buttonUrl]);
-	const buttonTextHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.buttonText, maxStrLength: 20}), [ipcProps.buttonText]);
+	const buttonUrlHelper = validateUrlInput(errorTranslator, ipcProps.buttonUrl);
+	const buttonTextHelper = validateTextInput({t: errorTranslator, prop: ipcProps.buttonText, maxStrLength: 20});
 
-	const button2UrlHelper = useMemo(() => validateUrlInput(errorTranslator, ipcProps.button2Url), [ipcProps.button2Url]);
-	const button2TextHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.button2Text, maxStrLength: 20}), [ipcProps.button2Text]);
+	const button2UrlHelper = validateUrlInput(errorTranslator, ipcProps.button2Url);
+	const button2TextHelper = validateTextInput({t: errorTranslator, prop: ipcProps.button2Text, maxStrLength: 20});
 
 	const handleUrlProtocol = (path: string, defaultProtocol?: string): [string, string] => {
 		if (path.isWebsite()) {

@@ -22,7 +22,7 @@ export function useTauriStore<T extends Record<string, unknown>>(key: string, de
 	const [state, setState] = useState<T>(defaultValue);
 	const [loading, setLoading] = useState(true);
 	const store = getTauriStore(storeName);
-	const timeoutRef = useRef<ReturnType<typeof setInterval>>();
+	const timeoutRef = useRef<ReturnType<typeof setInterval> | undefined>(null);
 
 	useLayoutEffect(() => {
 		let allow = true;
@@ -62,7 +62,10 @@ export function useTauriStore<T extends Record<string, unknown>>(key: string, de
 		// Do not allow setState to be called before data has even been loaded!
 		// this prevents overwriting
 		if (!loading) {
-			clearTimeout(timeoutRef.current);
+			if (timeoutRef.current !== null) {
+				clearTimeout(timeoutRef.current);
+			}
+
 			void store.set(key, state).then(() => {
 				timeoutRef.current = setTimeout(() => {
 					void store.save().catch(() => {

@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 
-import {Input, Switch} from "@heroui/react";
+import {Input, Switch} from '@heroui/react';
 import {containsText, validateTextInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
@@ -14,10 +14,10 @@ export default function ImageOptionForm() {
 	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-opt-image');
 
-	const largeImageTooltipHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.largeImageTooltip, maxStrLength: 20}), [ipcProps.largeImageTooltip]);
-	const smallImageTooltipHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.smallImageTooltip, maxStrLength: 20}), [ipcProps.smallImageTooltip]);
-	const largeImageUrlHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.largeImage, maxStrLength: 255}), [ipcProps.largeImage]);
-	const smallImageUrlHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.smallImage, maxStrLength: 255}), [ipcProps.smallImage]);
+	const largeImageTooltipHelper = validateTextInput({t: errorTranslator, prop: ipcProps.largeImageTooltip, maxStrLength: 20});
+	const smallImageTooltipHelper = validateTextInput({t: errorTranslator, prop: ipcProps.smallImageTooltip, maxStrLength: 20});
+	const largeImageUrlHelper = validateTextInput({t: errorTranslator, prop: ipcProps.largeImage, maxStrLength: 255});
+	const smallImageUrlHelper = validateTextInput({t: errorTranslator, prop: ipcProps.smallImage, maxStrLength: 255});
 
 	useEffect(() => {
 		setIpcProps(prev => ({

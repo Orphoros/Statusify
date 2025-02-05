@@ -1,5 +1,5 @@
-import React, {useEffect, useMemo} from 'react';
-import {Button, ButtonGroup, Input} from "@heroui/react";
+import React, {useEffect} from 'react';
+import {Button, ButtonGroup, Input} from '@heroui/react';
 import {isFormCorrect, validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
@@ -19,9 +19,9 @@ export default function AppOptionForm() {
 	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-otp-app');
 
-	const helper = useMemo(() => validateNumberInput({
+	const helper = validateNumberInput({
 		t: errorTranslator, text: ipcProps.id, required: true,
-	}), [ipcProps.id]);
+	});
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, idError: helper.error}));

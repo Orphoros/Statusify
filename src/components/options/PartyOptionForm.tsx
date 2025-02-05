@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 
-import {Input, Switch} from "@heroui/react";
+import {Input, Switch} from '@heroui/react';
 import {validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
@@ -14,12 +14,12 @@ export default function PartyOptionForm() {
 	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-otp-party');
 
-	const minHelper = useMemo(() => validateNumberInput({
+	const minHelper = validateNumberInput({
 		t: errorTranslator, text: ipcProps.partySize?.toString(), min: 1, max: 100,
-	}), [ipcProps.partySize]);
-	const maxHelper = useMemo(() => validateNumberInput({
+	});
+	const maxHelper = validateNumberInput({
 		t: errorTranslator, text: ipcProps.partyMax?.toString(), min: 1, max: 100,
-	}), [ipcProps.partyMax]);
+	});
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, partyError: minHelper.error || maxHelper.error}));

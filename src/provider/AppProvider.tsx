@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useState} from 'react';
-import {HeroUIProvider} from "@heroui/react";
+import {HeroUIProvider} from '@heroui/react';
 import {ThemeProvider as NextThemesProvider} from 'next-themes';
 import TauriProvider from './TauriProvider';
 import {type OsType, type} from '@tauri-apps/api/os';

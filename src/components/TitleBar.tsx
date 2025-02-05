@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {
 	Button, Chip,
-} from "@heroui/react";
+} from '@heroui/react';
 import {useTauriContext} from '@/context';
 import {isFormCorrect, startIpc, stopIpc} from '@/lib';
 import {type ColorBrand} from '@/types';

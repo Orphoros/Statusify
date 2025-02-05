@@ -29,7 +29,7 @@ export default function TauriProvider({children, osType, locales}: TauriProvider
 	}, 'launch.conf');
 
 	return (
-		<TauriContext.Provider value={{
+		<TauriContext value={{
 			osType,
 			showVibrancy: osType === 'Darwin',
 			isSessionRunning,
@@ -44,6 +44,6 @@ export default function TauriProvider({children, osType, locales}: TauriProvider
 				? <LoadingView/>
 				: children
 			}
-		</TauriContext.Provider>
+		</TauriContext>
 	);
 }

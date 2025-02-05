@@ -1,6 +1,6 @@
-import React, {useMemo, useEffect} from 'react';
+import React, {useEffect} from 'react';
 
-import {Input, Switch} from "@heroui/react";
+import {Input, Switch} from '@heroui/react';
 import {containsText, validateTextInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
@@ -14,8 +14,8 @@ export default function DetailsOptionForm() {
 	const {t: rpcHandlerTranslator} = useTranslation('lib-rpc-handle');
 	const {t} = useTranslation('cpt-otp-details');
 
-	const detailsHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 35}), [ipcProps.details]);
-	const stateHelper = useMemo(() => validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 20}), [ipcProps.state]);
+	const detailsHelper = validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 35});
+	const stateHelper = validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 20});
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, detailsError: detailsHelper.error, stateError: stateHelper.error}));

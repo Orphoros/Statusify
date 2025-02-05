@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
 	Checkbox, Switch, TimeInput,
-} from "@heroui/react";
+} from '@heroui/react';
 import {useTauriContext} from '@/context';
 import {Time} from '@internationalized/date';
 import {useTranslation} from 'react-i18next';
@@ -40,10 +40,8 @@ export default function TimeOptionForm() {
 								setIpcProps(prev => ({...prev, timeIsCurrent: true, timeAsStart: today.getTime()}));
 							}
 
-							const {hour, minute} = t;
-
-							today.setHours(hour);
-							today.setMinutes(minute);
+							today.setHours(t!.hour);
+							today.setMinutes(t!.minute);
 
 							if (today.getTime() > Date.now()) {
 								today.setDate(today.getDate() - 1);
