@@ -6,7 +6,7 @@ import {faGear} from '@fortawesome/free-solid-svg-icons';
 import {
 	Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownSection, DropdownItem,
 	Switch,
-} from '@nextui-org/react';
+} from "@heroui/react";
 import {error, debug} from 'tauri-plugin-log-api';
 import {isEnabled, enable, disable} from 'tauri-plugin-autostart-api';
 import {useTranslation} from 'react-i18next';

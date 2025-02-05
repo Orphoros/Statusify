@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardBody, Divider} from '@nextui-org/react';
+import {Card, CardBody, Divider} from "@heroui/react";
 import {
 	AppOptionForm, ButtonOptionForm, DetailsOptionForm, ImageOptionForm, PartyOptionForm, TimeOptionForm,
 } from './options';

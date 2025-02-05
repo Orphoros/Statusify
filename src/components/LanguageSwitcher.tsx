@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {Select, SelectItem} from '@nextui-org/select';
+import {Select, SelectItem} from "@heroui/select";
 import localeCode from 'locale-code';
 import i18next from 'i18next';
 import {useTauriContext} from '@/context';

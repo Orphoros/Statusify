@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useState} from 'react';
-import {NextUIProvider} from '@nextui-org/react';
+import {HeroUIProvider} from "@heroui/react";
 import {ThemeProvider as NextThemesProvider} from 'next-themes';
 import TauriProvider from './TauriProvider';
 import {type OsType, type} from '@tauri-apps/api/os';
@@ -18,7 +18,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 
 	const getLocales = async () => {
 		try {
-			const newLine = await os.type() === 'Windows_NT' ? '\r\n' : '\n';
+			const newLine = (await os.type()) === 'Windows_NT' ? '\r\n' : '\n';
 			const manifestPath = await join('locales', 'Manifest.txt');
 			const localeFileList = await resolveResource(manifestPath);
 			const localeFileListContent = await readTextFile(localeFileList);
@@ -55,13 +55,13 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 
 	return (
 		<div className={platformName === 'Windows_NT' || platformName === 'Linux' ? 'bg-background' : ''}>
-			<NextUIProvider>
+			<HeroUIProvider>
 				<NextThemesProvider attribute='class' defaultTheme='system'>
 					<TauriProvider osType={platformName} locales={locales}>
 						{children}
 					</TauriProvider>
 				</NextThemesProvider>
-			</NextUIProvider>
+			</HeroUIProvider>
 		</div>
 	);
 }

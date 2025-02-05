@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
 	Checkbox, Switch, TimeInput,
-} from '@nextui-org/react';
+} from "@heroui/react";
 import {useTauriContext} from '@/context';
 import {Time} from '@internationalized/date';
 import {useTranslation} from 'react-i18next';

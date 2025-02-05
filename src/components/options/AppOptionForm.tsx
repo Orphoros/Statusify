@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo} from 'react';
-import {Button, ButtonGroup, Input} from '@nextui-org/react';
+import {Button, ButtonGroup, Input} from "@heroui/react";
 import {isFormCorrect, validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';

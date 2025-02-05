@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo} from 'react';
 
-import {Input, Switch} from '@nextui-org/react';
+import {Input, Switch} from "@heroui/react";
 import {containsText, validateTextInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';

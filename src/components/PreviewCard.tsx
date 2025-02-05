@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
 	Image, Button, Card, Tooltip, Badge, CardHeader, Divider, CardBody,
-} from '@nextui-org/react';
+} from "@heroui/react";
 import {message} from '@tauri-apps/api/dialog';
 import {resolveResource} from '@tauri-apps/api/path';
 import {useTauriContext} from '@/context';
