@@ -6,7 +6,7 @@ import {faGear} from '@fortawesome/free-solid-svg-icons';
 import {
 	Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownSection, DropdownItem,
 	Switch,
-} from "@heroui/react";
+} from '@heroui/react';
 import {error, debug} from 'tauri-plugin-log-api';
 import {isEnabled, enable, disable} from 'tauri-plugin-autostart-api';
 import {useTranslation} from 'react-i18next';
@@ -35,12 +35,12 @@ export default function Settings() {
 					<FontAwesomeIcon icon={faGear} />
 				</Button>
 			</DropdownTrigger>
-			<DropdownMenu variant='faded'>
+			<DropdownMenu variant='bordered' disabledKeys={['meta-info']}>
 				<DropdownSection title={t('lbl-title')}>
 					<DropdownItem
 						key='system-start'
 						isReadOnly
-						className='hover:cursor-auto hover:border-transparent'
+						className='hover:cursor-auto border-none'
 					>
 						<Switch
 							size='sm'
@@ -74,7 +74,7 @@ export default function Settings() {
 					<DropdownItem
 						key='ipc-start'
 						isReadOnly
-						className='hover:cursor-auto hover:border-transparent'
+						className='hover:cursor-auto border-none'
 						showDivider
 					>
 						<Switch
@@ -93,14 +93,14 @@ export default function Settings() {
 					<DropdownItem
 						key='lang-switcher'
 						isReadOnly
-						className='hover:cursor-auto hover:border-transparent'
+						className='hover:cursor-auto border-none'
 					>
 						<LanguageSwitcher />
 					</DropdownItem>
 					<DropdownItem
 						key='meta-info'
 						isReadOnly
-						className='hover:cursor-auto hover:border-transparent select-none'
+						className='hover:cursor-auto border-none select-none'
 					>
 						<p className='text-xs text-default-500 dark:text-default-400 select-none'>Copyright © {new Date().getFullYear()} Orphoros</p>
 					</DropdownItem>

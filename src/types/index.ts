@@ -12,6 +12,6 @@ export type FormValidation = {
 };
 
 /**
- * ColorBrand is a type alias for a string literal type that NextUI uses for color branding.
+ * ColorBrand is a type alias for a string literal type that HeroUI uses for color branding.
  */
 export type ColorBrand = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
