@@ -27,20 +27,20 @@
     "lint": "eslint --ext .ts,.tsx,.js,.jsx ."
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.6.0",
-    "@fortawesome/free-brands-svg-icons": "^6.6.0",
-    "@fortawesome/free-regular-svg-icons": "^6.6.0",
-    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/fontawesome-svg-core": "^6",
+    "@fortawesome/free-brands-svg-icons": "^6",
+    "@fortawesome/free-regular-svg-icons": "^6",
+    "@fortawesome/free-solid-svg-icons": "^6",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroui/react": "2.6.14",
     "@tauri-apps/api": "^1.6.0",
-    "framer-motion": "^11.5.6",
-    "i18next": "^23.15.1",
+    "framer-motion": "^12",
+    "i18next": "^24",
     "locale-code": "^2.0.2",
     "next-themes": "^0.4.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-i18next": "^15.0.2",
+    "react-i18next": "^15",
     "tauri-plugin-autostart-api": "github:tauri-apps/tauri-plugin-autostart#v1",
     "tauri-plugin-context-menu": "^0.8.0",
     "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.6.2",
-    "@types/node": "^22.7.0",
+    "@types/node": "^22",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
@@ -58,11 +58,12 @@
     "eslint": "^8.57.0",
     "eslint-config-xo": "^0.45.0",
     "eslint-config-xo-typescript": "^5.0.0",
-    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react": "^7",
     "frameless-titlebar-fork": "^2.1.6",
-    "postcss": "^8.4.47",
+    "globals": "^15.14.0",
+    "postcss": "^8",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.8"
+    "typescript": "^5",
+    "vite": "^6"
   }
 }
