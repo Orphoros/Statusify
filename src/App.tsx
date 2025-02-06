@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {
 	debug, error, info,
 	warn,
@@ -17,8 +17,8 @@ import {locale as sysLocale} from '@tauri-apps/api/os';
 
 function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning, osType} = useTauriContext();
-	const [appReady, setAppReady] = React.useState<boolean>(false);
-	const [appError, setAppError] = React.useState<string | undefined>(undefined);
+	const [appReady, setAppReady] = useState<boolean>(false);
+	const [appError, setAppError] = useState<string | undefined>(undefined);
 
 	const registerHandlers = () => {
 		window.addEventListener('error', event => {
@@ -170,7 +170,7 @@ function App() {
 		}
 	};
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		(async () => {
 			void initializeLocales();
 

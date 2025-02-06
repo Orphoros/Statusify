@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {type OsType} from '@tauri-apps/api/os';
 import {appWindow} from '@tauri-apps/api/window';
 
@@ -8,7 +8,7 @@ type MudaMantleProps = {
 };
 
 export default function MudaMantle({children, osType}: MudaMantleProps) {
-	const [maximized, setMaximized] = React.useState<boolean>(false);
+	const [maximized, setMaximized] = useState<boolean>(false);
 
 	useEffect(() => {
 		(async () => {

@@ -1,6 +1,6 @@
 import {type LaunchConfProps, type IpcProps} from '@/types';
 import {type OsType} from '@tauri-apps/api/os';
-import React, {useContext} from 'react';
+import React, {use} from 'react';
 import {warn} from 'tauri-plugin-log-api';
 
 export type TauriContextType = {
@@ -33,4 +33,5 @@ export const TauriContext = React.createContext<TauriContextType>({
 	},
 });
 
-export const useTauriContext = () => useContext(TauriContext);
+export const useTauriContext = () => use(TauriContext);
+

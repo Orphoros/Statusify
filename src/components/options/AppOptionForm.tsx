@@ -66,7 +66,7 @@ export default function AppOptionForm() {
 				<ButtonGroup size='sm' className='mb-6'>
 					<Button
 						disableRipple
-						onClick={async () => {
+						onPress={async () => {
 							try {
 								const filePath = await open({
 									title: t('dlg-import-title'),
@@ -97,7 +97,7 @@ export default function AppOptionForm() {
 					<Button
 						disableRipple
 						isDisabled={!isFormCorrect(ipcProps)}
-						onClick={async () => {
+						onPress={async () => {
 							try {
 								const filePath = await save({
 									title: t('dlg-export-title'),

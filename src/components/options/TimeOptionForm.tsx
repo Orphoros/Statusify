@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
 	Checkbox, Switch, TimeInput,
@@ -10,7 +10,7 @@ import {useTranslation} from 'react-i18next';
 export default function TimeOptionForm() {
 	const {ipcProps, setIpcProps} = useTauriContext();
 
-	const [time, setTime] = React.useState(new Date(ipcProps.timeAsStart!));
+	const [time, setTime] = useState(new Date(ipcProps.timeAsStart!));
 	const {t} = useTranslation('cpt-opt-time');
 
 	return (

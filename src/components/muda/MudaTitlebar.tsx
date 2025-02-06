@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {appWindow} from '@tauri-apps/api/window';
 import {default as AppTitleBar} from 'frameless-titlebar-fork';
 import {type OsType} from '@tauri-apps/api/os';
@@ -21,8 +21,8 @@ export default function MudaTitlebar({
 	blend = false,
 }: MudaTitlebarProps) {
 	type Platform = 'win32' | 'linux' | 'darwin';
-	const [platform, setPlatform] = React.useState<Platform | undefined>('darwin');
-	const [maximized, setMaximized] = React.useState<boolean>(false);
+	const [platform, setPlatform] = useState<Platform | undefined>('darwin');
+	const [maximized, setMaximized] = useState<boolean>(false);
 
 	useEffect(() => {
 		(async () => {
@@ -34,6 +34,11 @@ export default function MudaTitlebar({
 				unlisten();
 			};
 		})();
+
+		const titlebar = document.querySelector('.style_Bar__nNJjZ');
+		if (titlebar) {
+			titlebar.setAttribute('data-tauri-drag-region', 'true');
+		}
 	}, []);
 
 	useEffect(() => {
@@ -49,13 +54,6 @@ export default function MudaTitlebar({
 				break;
 		}
 	}, [osType]);
-
-	useEffect(() => {
-		const titlebar = document.querySelector('.style_Bar__nNJjZ');
-		if (titlebar) {
-			titlebar.setAttribute('data-tauri-drag-region', 'true');
-		}
-	}, []);
 
 	return (
 		<div className={`statusify-titlebar *:cursor-default *:select-none ${blend ? ' *:absolute *:top-0 *:left-0 *:right-0 *:z-50' : ''}`}>

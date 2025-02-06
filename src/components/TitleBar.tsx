@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
 	Button, Chip,
 } from '@heroui/react';
@@ -19,7 +19,7 @@ export default function TitleBar() {
 
 	const indicatorColor = isSessionRunning ? 'success' : 'warning' as ColorBrand;
 	const indicatorText = isSessionRunning ? t('lbl-status-playing') : t('lbl-status-idle');
-	const [showLoading, setShowLoading] = React.useState<boolean>(false);
+	const [showLoading, setShowLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 		const titlebar = document.querySelector('.style_Bar__nNJjZ');
@@ -33,7 +33,7 @@ export default function TitleBar() {
 			<Chip className='border-0 text-white' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
 			<div className='flex gap-4 items-center'>
 				<SettingsButton />
-				{!isSessionRunning && <Button disableRipple radius='sm' className='w-20 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onClick={
+				{!isSessionRunning && <Button disableRipple radius='sm' className='w-20 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onPress={
 					async () => {
 						setShowLoading(true);
 						const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
@@ -46,7 +46,7 @@ export default function TitleBar() {
 				} >
 					{t('btn-start')}
 				</Button>}
-				{isSessionRunning && <Button disableRipple radius='sm' className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onClick={
+				{isSessionRunning && <Button disableRipple radius='sm' className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onPress={
 					async () => {
 						setShowLoading(true);
 						const stopApproved = await stopIpc(rpcHandlerTranslator);
