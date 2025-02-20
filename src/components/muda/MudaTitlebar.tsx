@@ -56,7 +56,9 @@ export default function MudaTitlebar({
 	}, [osType]);
 
 	return (
-		<div className={`statusify-titlebar *:cursor-default *:select-none ${blend ? ' *:absolute *:top-0 *:left-0 *:right-0 *:z-50' : ''}`}>
+		<div className={
+			`statusify-titlebar *:cursor-default *:select-none ${osType === 'Darwin' ? '*:px-2' : ''} ${blend ? ' *:absolute *:top-0 *:left-0 *:right-0 *:z-50' : ''
+			}`}>
 			<AppTitleBar
 				platform={platform}
 				title={hiddenTitle ? '' : title}

@@ -22,7 +22,7 @@ export default function Settings() {
 			closeOnSelect={false}
 			classNames={{
 				base: 'before:bg-default-200',
-				content: 'py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black',
+				content: 'w-72 py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black',
 			}}
 		>
 			<DropdownTrigger>

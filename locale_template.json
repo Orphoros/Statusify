@@ -8,7 +8,7 @@
 	"cpt-settings": {
 		"lbl-title": "Settings",
 		"chk-system-start": "Start app with system",
-		"chk-rpc-autostart": "Autostart status with app launch"
+		"chk-rpc-autostart": "Start status with app launch"
 	},
 	"cpt-preview": {
 		"lbl-title": "Preview",

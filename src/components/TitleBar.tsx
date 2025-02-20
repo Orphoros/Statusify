@@ -33,7 +33,7 @@ export default function TitleBar() {
 			<Chip className='border-0 text-white' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
 			<div className='flex gap-4 items-center'>
 				<SettingsButton />
-				{!isSessionRunning && <Button disableRipple radius='sm' className='w-20 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onPress={
+				{!isSessionRunning && <Button disableRipple radius='sm' className='w-28 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onPress={
 					async () => {
 						setShowLoading(true);
 						const isSuccess = await startIpc(rpcHandlerTranslator, ipcProps);
@@ -46,7 +46,7 @@ export default function TitleBar() {
 				} >
 					{t('btn-start')}
 				</Button>}
-				{isSessionRunning && <Button disableRipple radius='sm' className='w-20' variant='solid' color='danger' size='sm' isLoading={showLoading} onPress={
+				{isSessionRunning && <Button disableRipple radius='sm' className='w-28' variant='solid' color='danger' size='sm' isLoading={showLoading} onPress={
 					async () => {
 						setShowLoading(true);
 						const stopApproved = await stopIpc(rpcHandlerTranslator);
