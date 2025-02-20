@@ -30,11 +30,11 @@ You can download the precompiled binaries for your platform from the table below
 
 | Platform |  Architecture  | Version | Download |
 | -------- | -------------- | ------- |-------- |
-| Windows  | x64            | v0.0.12 | [Statusify.windows-x86_64.exe](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.windows-x86_64.exe) |
-| macOS    | x64 (Intel)    | v0.0.12 | [Statusify.darwin-x86_64.dmg](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.darwin-x86_64.dmg) |
-| macOS    | Apple Silicon  | v0.0.12 | [Statusify.darwin-aarch64.dmg](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.darwin-aarch64.dmg) |
-| Debian   | x64            | v0.0.12 | [Statusify.linux-x86_64.deb](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.linux-x86_64.deb) |
-| Linux (AppImage) | x64    | v0.0.12 | [Statusify.linux-x86_64.AppImage](https://github.com/Orphoros/Statusify/releases/download/v0.0.12/Statusify.linux-x86_64.AppImage) |
+| Windows  | x64            | v0.0.15 | [Statusify.windows-x86_64.exe](https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify.windows-x86_64.exe) |
+| macOS    | x64 (Intel)    | v0.0.15 | [Statusify.darwin-x86_64.dmg](https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify.darwin-x86_64.dmg) |
+| macOS    | Apple Silicon  | v0.0.15 | [Statusify.darwin-aarch64.dmg](https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify.darwin-aarch64.dmg) |
+| Debian   | x64            | v0.0.15 | [Statusify.linux-x86_64.deb](https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify.linux-x86_64.deb) |
+| Linux (AppImage) | x64    | v0.0.15 | [Statusify.linux-x86_64.AppImage](https://github.com/Orphoros/Statusify/releases/download/v0.0.15/Statusify.linux-x86_64.AppImage) |
 
 For the latest release, visit the [releases page](https://github.com/Orphoros/Statusify/releases). Please note that the latest images might not be notarized yet for Windows as the process takes time.
 
@@ -89,7 +89,7 @@ Statusify is available for the following platforms:
 Statusify is officially supported and tested on:
 
 - Windows 10
-- macOS Sonoma (Apple Silicon)
+- macOS Sequoia (Apple Silicon)
 
 ## Supported Languages
 
