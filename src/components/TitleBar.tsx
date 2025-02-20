@@ -31,7 +31,7 @@ export default function TitleBar() {
 	return (
 		<MudaTitlebar osType={osType!}>
 			<Chip className='border-0 text-white' color={indicatorColor} variant='dot'>{indicatorText}</Chip>
-			<div className='flex gap-4 items-center'>
+			<div className={`flex gap-4 items-center ${osType === 'Darwin' ? '' : 'px-2'}`}>
 				<SettingsButton />
 				{!isSessionRunning && <Button disableRipple radius='sm' className='w-28 bg-white text-[#006FEE]' variant='solid' size='sm' isDisabled={buttonDisabled} isLoading={showLoading} onPress={
 					async () => {
