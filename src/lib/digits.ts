@@ -78,6 +78,16 @@ export const validateNumberInput = (({t, text, min, max, minLength, maxLength, r
 		} satisfies FormValidation;
 	}
 
+	if (!isNaN(Number(min)) && (isNaN(Number(max)) || !isDefined(max))) {
+		max = 1;
+		return {
+			text: t('lbl-error-range', {min, max}),
+			color: 'danger',
+			error: true,
+			validation: 'invalid',
+		} satisfies FormValidation;
+	}
+
 	if (isDefined(min) && isDefined(max) && !isDigitBetween(text!, min!, max!)) {
 		return {
 			text: t('lbl-error-range', {min, max}),

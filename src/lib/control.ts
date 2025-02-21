@@ -4,5 +4,5 @@
  * @returns true if variable is defined
  */
 export function isDefined(v: any): boolean {
-	return typeof v !== 'undefined';
+	return v !== null && typeof v !== 'undefined';
 }

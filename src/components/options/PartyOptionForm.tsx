@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import {Input, Switch} from '@heroui/react';
+import {NumberInput, Switch} from '@heroui/react';
 import {validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
 import {showMenu} from 'tauri-plugin-context-menu';
@@ -15,7 +15,7 @@ export default function PartyOptionForm() {
 	const {t} = useTranslation('cpt-otp-party');
 
 	const minHelper = validateNumberInput({
-		t: errorTranslator, text: ipcProps.partySize?.toString(), min: 1, max: 100,
+		t: errorTranslator, text: ipcProps.partySize?.toString(), min: 1, max: ipcProps.partyMax,
 	});
 	const maxHelper = validateNumberInput({
 		t: errorTranslator, text: ipcProps.partyMax?.toString(), min: 1, max: 100,
@@ -29,11 +29,13 @@ export default function PartyOptionForm() {
 		<div>
 			<p className='mb-5 capitalize'>{t('lbl-title')}</p>
 			<div className='flex gap-6'>
-				<Input
+				<NumberInput
 					variant='bordered'
+					isClearable
+					hideStepper
 					label={t('inp-party-size')}
-					placeholder='0'
-					defaultValue={ipcProps.partySize?.toString()}
+					placeholder='1'
+					value={ipcProps.partySize}
 					errorMessage={minHelper.text}
 					isInvalid={minHelper.error}
 					color={minHelper.color}
@@ -42,6 +44,8 @@ export default function PartyOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					width='100%'
+					minValue={1}
+					maxValue={100}
 					onContextMenu={e => {
 						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
@@ -55,15 +59,17 @@ export default function PartyOptionForm() {
 							.build(),
 						);
 					}}
-					onChange={e => {
-						setIpcProps(prev => ({...prev, partySize: parseInt(e.target.value, 10), partyEnabled: e.target.value.isInteger()}));
+					onValueChange={e => {
+						setIpcProps(prev => ({...prev, partySize: e}));
 					}}
 				/>
-				<Input
+				<NumberInput
 					variant='bordered'
+					isClearable
+					hideStepper
 					label={t('inp-party-max')}
-					placeholder='0'
-					defaultValue={ipcProps.partyMax?.toString()}
+					placeholder='1'
+					value={ipcProps.partyMax}
 					errorMessage={maxHelper.text}
 					color={maxHelper.color}
 					isInvalid={maxHelper.error}
@@ -72,6 +78,8 @@ export default function PartyOptionForm() {
 					labelPlacement='outside'
 					size='sm'
 					width='100%'
+					minValue={1}
+					maxValue={100}
 					onContextMenu={e => {
 						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
 							.addCopy()
@@ -85,8 +93,8 @@ export default function PartyOptionForm() {
 							.build(),
 						);
 					}}
-					onChange={e => {
-						setIpcProps(prev => ({...prev, partyMax: parseInt(e.target.value, 10), partyEnabled: e.target.value.isInteger()}));
+					onValueChange={e => {
+						setIpcProps(prev => ({...prev, partyMax: e}));
 					}}
 				/>
 
