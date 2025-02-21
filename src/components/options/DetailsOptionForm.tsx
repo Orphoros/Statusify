@@ -15,7 +15,7 @@ export default function DetailsOptionForm() {
 	const {t} = useTranslation('cpt-otp-details');
 
 	const detailsHelper = validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 35});
-	const stateHelper = validateTextInput({t: errorTranslator, prop: ipcProps.details, maxStrLength: 20});
+	const stateHelper = validateTextInput({t: errorTranslator, prop: ipcProps.state, maxStrLength: 20});
 
 	useEffect(() => {
 		setIpcProps(prev => ({...prev, detailsError: detailsHelper.error, stateError: stateHelper.error}));
