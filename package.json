@@ -42,7 +42,6 @@
     "react-dom": "^19.0.0",
     "react-i18next": "^15",
     "tauri-plugin-autostart-api": "github:tauri-apps/tauri-plugin-autostart#v1",
-    "tauri-plugin-context-menu": "^0.8.0",
     "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log",
     "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1"
   },

@@ -308,7 +308,6 @@ fn main() {
         .manage(SysInfo(Mutex::new(System::new())))
         .manage(DiscordPid(Mutex::new(None)))
         .plugin(tauri_plugin_store::Builder::default().build())
-        .plugin(tauri_plugin_context_menu::init())
         .plugin(tauri_plugin_autostart::init(
             MacosLauncher::LaunchAgent,
             None,

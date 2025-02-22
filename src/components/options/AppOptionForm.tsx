@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {Button, ButtonGroup, Input} from '@heroui/react';
 import {isFormCorrect, validateNumberInput} from '@/lib';
 import {MenuOptionBuilder, useTauriContext} from '@/context';
-import {showMenu} from 'tauri-plugin-context-menu';
 import {save, open, message} from '@tauri-apps/api/dialog';
 import {debug} from 'tauri-plugin-log-api';
 import {BaseDirectory, readTextFile, writeTextFile} from '@tauri-apps/api/fs';
@@ -11,6 +10,7 @@ import {
 	faFolderOpen, faSave,
 } from '@fortawesome/free-regular-svg-icons';
 import {useTranslation} from 'react-i18next';
+import {MudaContextMenu} from '@/components/muda';
 
 export default function AppOptionForm() {
 	const {ipcProps, setIpcProps, osType, setIsSessionRunning, isSessionRunning} = useTauriContext();
@@ -31,38 +31,37 @@ export default function AppOptionForm() {
 		<div>
 			<p className='capitalize'>{t('lbl-title')}</p>
 			<div className='flex items-center justify-center mt-2 gap-2 h-[4.5rem]'>
-				<Input
-					isRequired
-					className='max-w-[11.5rem] h-[4.5rem]'
-					size='sm'
-					defaultValue={ipcProps.id}
-					label={t('inp-app-id')}
-					key='primary'
-					color={helper.color}
-					isInvalid={helper.error}
-					errorMessage={helper.text}
-					value={ipcProps.id}
-					onContextMenu={e => {
-						void showMenu(new MenuOptionBuilder(ctxMenuTranslator, e, osType)
-							.addCopy()
-							.addCut(() => {
-								setIpcProps(prev => ({...prev, id: ''}));
-							})
-							.addPaste(() => {
-								void navigator.clipboard.readText().then(text => {
-									setIpcProps(prev => ({...prev, id: text}));
-								});
-							})
-							.addSeparator()
-							.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
-							.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
-							.build());
-					}}
-					onChange={e => {
-						const {value} = e.target;
-						setIpcProps(prev => ({...prev, id: value}));
-					}}
-				/>
+				<MudaContextMenu menuItems={
+					() => new MenuOptionBuilder(ctxMenuTranslator, osType)
+						.addCopy(ipcProps.id)
+						.addCut(ipcProps.id, () => {
+							setIpcProps(prev => ({...prev, id: ''}));
+						})
+						.addPaste(t => {
+							setIpcProps(prev => ({...prev, id: t}));
+						})
+						.addSeparator()
+						.addStartIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning, ipcProps)
+						.addStopIpc(rpcHandlerTranslator, isSessionRunning, setIsSessionRunning)
+						.build()
+				}>
+					<Input
+						isRequired
+						className='max-w-[11.5rem] h-[4.5rem]'
+						size='sm'
+						defaultValue={ipcProps.id}
+						label={t('inp-app-id')}
+						key='primary'
+						color={helper.color}
+						isInvalid={helper.error}
+						errorMessage={helper.text}
+						value={ipcProps.id}
+						onChange={e => {
+							const {value} = e.target;
+							setIpcProps(prev => ({...prev, id: value}));
+						}}
+					/>
+				</MudaContextMenu>
 				<ButtonGroup size='sm' className='mb-6'>
 					<Button
 						disableRipple

@@ -1,36 +1,37 @@
+import {useId} from 'react';
 import {type OsType} from '@tauri-apps/api/os';
-import {type Options, type Item} from 'tauri-plugin-context-menu/dist/types';
+import {readText, writeText} from '@tauri-apps/api/clipboard';
 import {isFormCorrect, startIpc, stopIpc} from '@/lib';
 import {type IpcProps} from '@/types';
 import {invoke} from '@tauri-apps/api';
 import {type TFunction} from 'i18next';
+import {type Item} from '@/components/muda';
+import {
+	faCopy, faCut, faEraser, faGlobe, faPaste, faPlay, faStop,
+	faToggleOff,
+} from '@fortawesome/free-solid-svg-icons';
 
 export class MenuOptionBuilder {
 	private readonly options: Item[];
-	constructor(private readonly t: TFunction<'lib-ctx-menu'>, private readonly e: React.MouseEvent<HTMLDivElement>, private readonly osType: OsType | undefined) {
-		e.preventDefault();
-		e.stopPropagation();
+	constructor(private readonly t: TFunction<'lib-ctx-menu'>, private readonly osType: OsType | undefined) {
 		this.options = [];
 	}
 
 	addSeparator(): this {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		this.options.push({is_separator: true});
+		this.options[this.options.length - 1].isSeparator = true;
 		return this;
 	}
 
-	addCut(callback?: () => any): this {
+	addCut(text: string | undefined, callback?: () => any): this {
 		this.options.push({
 			label: this.t('lbl-cut'),
+			key: useId(),
 			disabled: false,
-			shortcut: this.osType! === 'Darwin' ? 'cmd+x' : 'ctrl+x',
-			event() {
-				const selection = window.getSelection();
-				if (selection) {
-					const text = selection.toString();
-					if (text) {
-						void navigator.clipboard.writeText(text);
-					}
+			icon: faCut,
+			shortcut: this.osType! === 'Darwin' ? '⌘ X' : 'Ctrl X',
+			onClick() {
+				if (text) {
+					void writeText(text);
 				}
 
 				if (callback) {
@@ -41,18 +42,16 @@ export class MenuOptionBuilder {
 		return this;
 	}
 
-	addCopy(callback?: () => any): this {
+	addCopy(text: string | undefined, callback?: () => any): this {
 		this.options.push({
 			label: this.t('lbl-copy'),
+			key: useId(),
 			disabled: false,
-			shortcut: this.osType! === 'Darwin' ? 'cmd+c' : 'ctrl+c',
-			event() {
-				const selection = window.getSelection();
-				if (selection) {
-					const text = selection.toString();
-					if (text) {
-						void navigator.clipboard.writeText(text);
-					}
+			icon: faCopy,
+			shortcut: this.osType! === 'Darwin' ? '⌘ C' : 'Ctrl C',
+			onClick() {
+				if (text) {
+					void writeText(text);
 				}
 
 				if (callback) {
@@ -63,14 +62,18 @@ export class MenuOptionBuilder {
 		return this;
 	}
 
-	addPaste(callback: () => any): this {
+	addPaste(callback?: (t: string | undefined) => any): this {
 		this.options.push({
 			label: this.t('lbl-paste'),
+			key: useId(),
 			disabled: false,
-			shortcut: this.osType! === 'Darwin' ? 'cmd+v' : 'ctrl+v',
-			event() {
+			icon: faPaste,
+			shortcut: this.osType! === 'Darwin' ? '⌘ V' : 'Ctrl V',
+			onClick() {
 				if (callback) {
-					callback();
+					void readText().then(t => {
+						callback(t as string | undefined);
+					});
 				}
 			},
 		});
@@ -80,19 +83,23 @@ export class MenuOptionBuilder {
 	addOpenInBrowser(url?: string): this {
 		this.options.push({
 			label: this.t('lbl-open-browser'),
+			key: useId(),
 			disabled: !url,
-			event() {
+			icon: faGlobe,
+			onClick() {
 				void invoke('open_url', {url: url!});
 			},
 		});
 		return this;
 	}
 
-	addToggleDisableOption(callback: () => any): this {
+	addToggleDisableOption(callback?: () => any): this {
 		this.options.push({
 			label: this.t('lbl-toggle'),
+			key: useId(),
 			disabled: false,
-			event() {
+			icon: faToggleOff,
+			onClick() {
 				if (callback) {
 					callback();
 				}
@@ -101,11 +108,13 @@ export class MenuOptionBuilder {
 		return this;
 	}
 
-	addClearOption(callback: () => any): this {
+	addClearOption(callback?: () => any): this {
 		this.options.push({
 			label: this.t('lbl-clear'),
 			disabled: false,
-			event() {
+			icon: faEraser,
+			key: useId(),
+			onClick() {
 				if (callback) {
 					callback();
 				}
@@ -117,8 +126,10 @@ export class MenuOptionBuilder {
 	addStartIpc(t: TFunction<'lib-rpc-handle'>, isSessionRunning: boolean, setIsSessionRunning: React.Dispatch<React.SetStateAction<boolean>>, ipcProps: IpcProps, callback?: () => any): this {
 		this.options.push({
 			label: this.t('lbl-start'),
+			key: useId(),
 			disabled: isSessionRunning || !ipcProps.id || !isFormCorrect(ipcProps),
-			event() {
+			icon: faPlay,
+			onClick() {
 				void startIpc(t, ipcProps, true).then(isSuccess => {
 					if (isSuccess) {
 						setIsSessionRunning(true);
@@ -136,7 +147,9 @@ export class MenuOptionBuilder {
 		this.options.push({
 			label: this.t('lbl-stop'),
 			disabled: !isSessionRunning,
-			event() {
+			icon: faStop,
+			key: useId(),
+			onClick() {
 				void stopIpc(t, false);
 				setIsSessionRunning(false);
 				if (callback) {
@@ -147,7 +160,7 @@ export class MenuOptionBuilder {
 		return this;
 	}
 
-	build(): Options {
-		return {items: this.options};
+	build(): Item[] {
+		return this.options;
 	}
 }
