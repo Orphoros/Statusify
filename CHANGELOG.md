@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.16] - NO ETA
+
+### Added
+
+- Settings to change the app's theme (light, dark, and system)
+- Custom right-click menu to better suit the app's theme
+
+### Fixed
+
+- Removed the empty space on the right side of the title bar on macOS
+- Added padding to the title bar on Windows
+- Fixed error handling for text length for the details and state fields
+
+### Changed
+
+- Improved the party size number input
+
 ## [0.0.15] - 2024-09-12
 
 ### Added
