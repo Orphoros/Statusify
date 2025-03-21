@@ -251,6 +251,7 @@ fn open_url(url: &str) {
 
 fn main() {
     let client = DiscordIpcClient::new("-1").unwrap();
+    let mut ctx = tauri::generate_context!();
 
     #[cfg(target_os = "macos")]
     let quit =
@@ -308,6 +309,7 @@ fn main() {
         .manage(SysInfo(Mutex::new(System::new())))
         .manage(DiscordPid(Mutex::new(None)))
         .plugin(tauri_plugin_store::Builder::default().build())
+        .plugin(tauri_plugin_theme::init(ctx.config_mut()))
         .plugin(tauri_plugin_autostart::init(
             MacosLauncher::LaunchAgent,
             None,
@@ -475,7 +477,7 @@ fn main() {
             },
             _ => {}
         })
-        .run(tauri::generate_context!())
+        .run(ctx)
         .expect("error while running tauri application");
     info!("exiting");
 }

@@ -9,6 +9,9 @@ export const systemLocale = {
 		'lbl-title': 'Settings',
 		'chk-system-start': 'Start app with system',
 		'chk-rpc-autostart': 'Start status with app launch',
+		'opt-theme-light': 'Light',
+		'opt-theme-dark': 'Dark',
+		'opt-theme-sys': 'System',
 	},
 	'cpt-preview': {
 		'lbl-title': 'Preview',

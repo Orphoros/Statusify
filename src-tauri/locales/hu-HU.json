@@ -8,7 +8,10 @@
 	"cpt-settings": {
 		"lbl-title": "Beállítások",
 		"chk-system-start": "Futtatás rendszerindításkor",
-		"chk-rpc-autostart": "Aktivitás automatikus indítása"
+		"chk-rpc-autostart": "Aktivitás automatikus indítása",
+		"opt-theme-light": "Világos",
+		"opt-theme-dark": "Sötét",
+		"opt-theme-sys": "Alapértelmezett"
 	},
 	"cpt-preview": {
 		"lbl-title": "Előnézet",

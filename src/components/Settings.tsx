@@ -11,6 +11,7 @@ import {error, debug} from 'tauri-plugin-log-api';
 import {isEnabled, enable, disable} from 'tauri-plugin-autostart-api';
 import {useTranslation} from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Settings() {
 	const {launchConfProps, setLaunchConfProps} = useTauriContext();
@@ -96,6 +97,13 @@ export default function Settings() {
 						className='hover:cursor-auto border-none'
 					>
 						<LanguageSwitcher />
+					</DropdownItem>
+					<DropdownItem
+						key='theme-switcher'
+						isReadOnly
+						className='hover:cursor-auto border-none'
+					>
+						<ThemeSwitcher />
 					</DropdownItem>
 					<DropdownItem
 						key='meta-info'

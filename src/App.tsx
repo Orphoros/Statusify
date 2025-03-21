@@ -7,18 +7,21 @@ import {useTauriContext} from '@/context';
 import {startIpc} from '@/lib';
 import {listen} from '@tauri-apps/api/event';
 import {basename, join, resolveResource} from '@tauri-apps/api/path';
-import i18n, {type Resource} from 'i18next';
+import i18n, {init, type Resource} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {ErrorView, LoadingView, MainView} from '@/views';
 import {readTextFile} from '@tauri-apps/api/fs';
 import localeCode from 'locale-code';
 import {systemLocale} from '@/systemLocale';
 import {locale as sysLocale} from '@tauri-apps/api/os';
+import {useTheme} from 'next-themes';
+import {invoke} from '@tauri-apps/api';
 
 function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning, osType} = useTauriContext();
 	const [appReady, setAppReady] = useState<boolean>(false);
 	const [appError, setAppError] = useState<string | undefined>(undefined);
+	const {setTheme} = useTheme();
 
 	const registerHandlers = () => {
 		window.addEventListener('error', event => {
@@ -170,8 +173,23 @@ function App() {
 		}
 	};
 
+	const initTheme = () => {
+		const themeCode = launchConfProps.theme ?? 'system';
+
+		invoke('plugin:theme|set_theme', {
+			theme: themeCode === 'system' ? 'auto' : themeCode,
+		}).then(() => {
+			setTheme(themeCode);
+			void debug(`set theme to ${themeCode}`);
+		}).catch(e => {
+			void debug(`failed to set theme to auto: ${e}`);
+		});
+	};
+
 	useLayoutEffect(() => {
 		(async () => {
+			initTheme();
+
 			void initializeLocales();
 
 			registerHandlers();

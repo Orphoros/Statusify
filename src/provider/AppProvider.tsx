@@ -56,7 +56,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 	return (
 		<div className={platformName === 'Windows_NT' || platformName === 'Linux' ? 'bg-background' : ''}>
 			<HeroUIProvider>
-				<NextThemesProvider attribute='class' defaultTheme='system'>
+				<NextThemesProvider attribute='class' defaultTheme='system' disableTransitionOnChange>
 					<TauriProvider osType={platformName} locales={locales}>
 						{children}
 					</TauriProvider>

@@ -8,7 +8,10 @@
 	"cpt-settings": {
 		"lbl-title": "Instellingen",
 		"chk-system-start": "Start app met systeem",
-		"chk-rpc-autostart": "Autostart status met app"
+		"chk-rpc-autostart": "Autostart status met app",
+		"opt-theme-light": "Licht",
+		"opt-theme-dark": "Donker",
+		"opt-theme-sys": "Systeem"
 	},
 	"cpt-preview": {
 		"lbl-title": "Voorvertoning",
