@@ -14,7 +14,6 @@ import {readTextFile} from '@tauri-apps/api/fs';
 import localeCode from 'locale-code';
 import {systemLocale} from '@/systemLocale';
 import {locale as sysLocale} from '@tauri-apps/api/os';
-import {useTheme} from 'next-themes';
 import {invoke} from '@tauri-apps/api';
 import {ThemeProvider as NextThemesProvider} from 'next-themes';
 
@@ -22,7 +21,6 @@ function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning, osType} = useTauriContext();
 	const [appReady, setAppReady] = useState<boolean>(false);
 	const [appError, setAppError] = useState<string | undefined>(undefined);
-	const {setTheme} = useTheme();
 
 	const registerHandlers = () => {
 		window.addEventListener('error', event => {
