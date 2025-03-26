@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {Select, SelectItem} from '@heroui/select';
 import {useTauriContext} from '@/context';
@@ -42,7 +42,7 @@ function codeToTheme(code: string | undefined) {
 }
 
 export default function ThemeSwitcher() {
-	const {setLaunchConfProps} = useTauriContext();
+	const {setLaunchConfProps, osType} = useTauriContext();
 	const {theme, setTheme} = useTheme();
 	const {t} = useTranslation('cpt-settings');
 
@@ -73,6 +73,13 @@ export default function ThemeSwitcher() {
 				}
 
 				const themeCode = themeToCode(theme);
+
+				if (osType !== 'Darwin') {
+					setTheme(themeCode);
+					setLaunchConfProps(prev => ({...prev, theme: themeCode}));
+					void debug(`set theme to ${themeCode}`);
+					return;
+				}
 
 				invoke('plugin:theme|set_theme', {
 					theme: themeCode === 'system' ? 'auto' : themeCode,

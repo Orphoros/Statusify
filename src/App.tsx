@@ -173,6 +173,10 @@ function App() {
 	};
 
 	const initTheme = () => {
+		if (osType !== 'Darwin') {
+			return;
+		}
+
 		const themeCode = launchConfProps.theme ?? 'system';
 
 		invoke('plugin:theme|set_theme', {
