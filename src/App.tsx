@@ -7,7 +7,7 @@ import {useTauriContext} from '@/context';
 import {startIpc} from '@/lib';
 import {listen} from '@tauri-apps/api/event';
 import {basename, join, resolveResource} from '@tauri-apps/api/path';
-import i18n, {init, type Resource} from 'i18next';
+import i18n, {type Resource} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {ErrorView, LoadingView, MainView} from '@/views';
 import {readTextFile} from '@tauri-apps/api/fs';
@@ -16,6 +16,7 @@ import {systemLocale} from '@/systemLocale';
 import {locale as sysLocale} from '@tauri-apps/api/os';
 import {useTheme} from 'next-themes';
 import {invoke} from '@tauri-apps/api';
+import {ThemeProvider as NextThemesProvider} from 'next-themes';
 
 function App() {
 	const {ipcProps, setIpcProps, launchConfProps, setIsSessionRunning, osType} = useTauriContext();
@@ -179,7 +180,6 @@ function App() {
 		invoke('plugin:theme|set_theme', {
 			theme: themeCode === 'system' ? 'auto' : themeCode,
 		}).then(() => {
-			setTheme(themeCode);
 			void debug(`set theme to ${themeCode}`);
 		}).catch(e => {
 			void debug(`failed to set theme to auto: ${e}`);
@@ -213,12 +213,14 @@ function App() {
 		})();
 	}, []);
 
-	return (<>
-		{appReady && appError === undefined
-			? <MainView/>
-			: appError === undefined ? <LoadingView/> : <ErrorView error={appError}/>
-		}
-	</>);
+	return (
+		<NextThemesProvider attribute='class' defaultTheme={launchConfProps.theme ?? 'system'} disableTransitionOnChange>
+			{appReady && appError === undefined
+				? <MainView/>
+				: appError === undefined ? <LoadingView/> : <ErrorView error={appError}/>
+			}
+		</NextThemesProvider>
+	);
 }
 
 export default App;
