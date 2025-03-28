@@ -1,7 +1,7 @@
 {
   "version": "0.0.16",
-  "notes": "New window control design",
-  "pub_date": "2025-03-28T109:00:00.000Z",
+  "notes": "Added theme switching and custom context menu",
+  "pub_date": "2025-03-28T09:00:00.000Z",
   "platforms": {
     "darwin-x86_64": {
       "signature": "signature-string",
