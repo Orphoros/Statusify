@@ -47,12 +47,6 @@ When creating a commit, please, use the conventional commit message format. This
 
 Use this format at all times: <https://www.conventionalcommits.org/en/v1.0.0/>
 
-## Pre-commit scripts
-
-To prevent unnecessary waits, resource use, and commits when interacting with this repository's CI pipeline, a set of `pre-commit` scripts are available in the `ci/pre-commit` directory. These scripts can automatically run before every commit to simulate some of the pipeline actions on your machine and report any problems.
-
-To enable them, follow the `pre-commit` Quick Start steps from [this link](https://pre-commit.com/#quick-start).
-
 ## Give Credit
 
 If you are working together with someone else, please give credit to them in the commit message. This will help us to keep track of who did what.

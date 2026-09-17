@@ -50,13 +50,18 @@ scoop bucket add orphoros_scoop-bucket https://github.com/Orphoros/scoop-bucket
 scoop install statusify
 ```
 
-### Homebrew installation for macOS
+### Homebrew installation for macOS and Linux
 
 You can install Statusify on macOS using [Homebrew](https://brew.sh/).
 
 ```bash
 brew tap orphoros/core
 ```
+Make sure to trust the tap before installing Statusify.
+```
+brew trust orphoros/core
+```
+And then install Statusify.
 
 ```bash
 brew install --cask statusify
@@ -119,6 +124,10 @@ Make sure to follow the [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md) and the [CONTRIB
 ## Motivation
 
 Statusify was created as a proof of concept to test the capabilities of the Tauri framework. Electron is a popular choice for creating cross-platform desktop applications, however the produced binaries have a large base size due to the inclusion of the Chromium browser. Also, Electron applications are known to consume a lot of memory. This project aims to validate the Tauri framework as a lightweight alternative to Electron for building cross platform desktop applications.
+
+### Remarks from the developer
+
+Currently the project is on hold, because it is still on Tauri version 1, and migration to version 2 takes a lot of time and effort. Migration is the highest priority for the project as a next step before implementing new features to reduce the maintenance burden. But migration is a nightmare, so updates about the project will come in the future.
 
 ## Troubleshoot
 
